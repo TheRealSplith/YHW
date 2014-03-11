@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div id="fb-root"></div>
+<script>
+  (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=273612212799967";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
+<h1 class="text-center">Join the movement!</h1>
+<div class="col-xs-6">
+  <h3>Join us on Facebook!</h3>
+  @*This is the facebbok like button*@
+  <div class="fb-follow" data-href="https://www.facebook.com/youheardwrong" data-colorscheme="light" data-layout="standard" data-show-faces="true"></div>
+</div>
+
+<div class="col-xs-6">
+  <h3>Join us on Twitter!</h3>
+  <a href="https://twitter.com/youheardwrong" class="twitter-follow-button" data-show-count="false" data-lang="en" data-size="large">Follow @@YouHeardWrong</a>
+</div>

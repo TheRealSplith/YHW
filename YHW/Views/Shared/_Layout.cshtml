@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>@ViewBag.Title</title>
+
+  <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+  @Styles.Render("~/Content/Site.css")
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="../../assets/js/html5shiv.js"></script>
+    <script src="../../assets/js/respond.min.js"></script>
+  <![endif]-->
+  <style type="text/css"></style>
+</head>
+
+<body>
+  <div class="row navbar navbar-green navbar-fixed-top">
+    <div class="col-xs-2">
+      <div class="navbar-inner">
+        <a class="brand" href="@Url.Action("Index", "Home")"><img src="@Url.Content("~/Content/images/yhw_resize.png")" /></a>
+      </div>
+    </div>
+    <div class="col-xs-10">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li>@Html.ActionLink("Home", "Index", "Home")</li>
+          <li><a href="#">About (Coming Soon)</a></li>
+          <li><a href="#">Issues (Coming Soon)</a></li>
+          <li><a href="#">Donations (Coming Soon)</a></li>
+          @*
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>@Html.ActionLink("About", "About", "Home")</li>
+        <li>@Html.ActionLink("Issues", "Index", "Issue")</li>
+        <li>@Html.ActionLink("Donations", "Index", "Donation")</li>
+          *@
+          @Html.Partial("_LoginPartial")
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-md-8">
+        @RenderBody()
+      </div>
+      <div class="col-md-4 col-xs-6">
+        <a class="twitter-timeline" href="https://twitter.com/youheardwrong" data-widget-id="440022171801231360">Tweets by @@youheardwrong</a>
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  @Scripts.Render("~/bundles/jquery")
+  @Scripts.Render("~/Scripts/bootstrap.min.js")
+  <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+  @RenderSection("scripts", required: false)
+
+</body>
+</html>
