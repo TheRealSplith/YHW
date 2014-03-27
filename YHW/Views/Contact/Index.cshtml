@@ -1,0 +1,96 @@
+﻿@model YHW.Models.Feedback
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" style="padding-bottom:10px">
+  <div class="col-md-3">
+    @Html.Partial(
+   "~/Views/Shared/_TextColumnWithHeader.cshtml",
+   new YHW.Models.SharedViews.TextColumnWithHeaderVM()
+   {
+     Header = "Contact Us",
+     Items = YHW.Controllers.ContactController.ContactNavData("contact")
+   })
+  </div>
+
+  <h1>Contact Us / Contact and Feedback</h1>
+  <h3>Questions or Concerns?</h3>
+</div>
+
+<div class="row">
+  <form role="form" class="form-horizontal">
+    <div data-bind="css: { 'has-error': !Name.isValid() && Name.isModified() }">
+      <div class="form-group">
+        <label for="inputName" class="col-sm-2 control-label">Name</label>
+        <div class="col-sm-10">
+          <input data-bind="value: Name, valueUpdate: 'afterkeydown'" class="form-control" id="inputName" placeholder="Name" />
+          <span class="help-block" data-bind="validationMessage: Name"></span>
+        </div>
+      </div>
+    </div>
+    <div data-bind="css: { 'has-error': !Email.isValid() && Email.isModified() }">
+      <div class="form-group">
+        <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+        <div class="col-sm-10">
+          <input data-bind="value: Email" class="form-control" id="inputEmail" placeholder="Email" />
+          <span class="help-block" data-bind="validationMessage: Email"></span>
+        </div>
+      </div>
+    </div>
+    <div data-bind="css: { 'has-error': !Message.isValid() && Message.isModified() }">
+      <div class="form-group">
+        <label for="inputMessage" class="col-sm-2 control-label">Message</label>
+        <div class="col-sm-10">
+          <input data-bind="value: Message, valueUpdate: 'afterkeydown'" class="form-control" id="inputMessage" placeholder="Message" />
+          <span class="help-block" data-bind="validationMessage: Message"></span>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-default" data-bind="click: Submit, enable: validationModel.isValid()">Submit</button>
+  </form>
+</div>
+
+@section scripts {
+<script type="text/javascript">
+    function FeedbackFormVM() {
+      var self = this;
+      this.Name = ko.validatedObservable("").extend({ required: true });
+      this.Email = ko.validatedObservable().extend({
+        required: true, pattern: {
+          message: 'Must be formatted as Email',
+          params: /^[A-Za-z0-9._%+-]+@@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/
+        }});
+      this.Message = ko.validatedObservable().extend({ required: true });
+
+      this.validationModel = ko.validatedObservable({
+        name: this.Name,
+        email: this.Email,
+        message: this.Message
+      });
+
+      this.Submit = function () {
+        $.post(
+          "@Url.Action("Index", "Contact")",
+          { ID: -1, Name: self.Name, Email: self.Email, Message: self.Message },
+          function (data) {
+            window.location.href = "@Url.Action("Index")"
+          }).error(function () {
+            console.log("Error");
+          });
+      };
+    }
+
+    ko.validation.configure({
+      registerExtenders: true,
+      insertMessages: false
+    });
+    ko.validation.init({ messagesOnModified: false, grouping: { deep: true, observable: true } });
+
+    // init
+    var vm = new FeedbackFormVM();
+    ko.applyBindings(vm);
+</script>
+}

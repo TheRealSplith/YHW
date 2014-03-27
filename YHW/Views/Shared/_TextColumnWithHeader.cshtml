@@ -1,0 +1,21 @@
+﻿@model YHW.Models.SharedViews.TextColumnWithHeaderVM
+
+<h3>@Model.Header</h3>
+
+<div class="btn-group-vertical">
+  @foreach (var item in Model.Items)
+  {
+    if (item.Active)
+    {
+      <button class="btn btn-default btn-lg" style="font-weight:bold;white-space:normal">
+        @Html.ActionLink(item.Label, item.Action, item.Controller)
+      </button>
+    }
+    else
+    {
+      <button class="btn btn-default" style="white-space:normal;">
+        @Html.ActionLink(item.Label, item.Action, item.Controller)
+      </button>
+    }
+  }
+</div>

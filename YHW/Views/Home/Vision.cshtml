@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Vision";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-3">
+  @Html.Partial(
+   "~/Views/Shared/_TextColumnWithHeader.cshtml",
+   new YHW.Models.SharedViews.TextColumnWithHeaderVM()
+   {
+     Header = "About Us",
+     Items = YHW.Controllers.HomeController.AboutUsNavData("vision")
+   })
+</div>
+
+<h2>About Us / Vision</h2>
+<p>You Heard Wrong (YHW) has a vision to transform the opinions of
+  stakeholders in education. We envision a world where people are knowledgeable
+  about education facts and laws, and take the time to consider others
+  opinions, in order to make a fully informed decision (without bias).</p>

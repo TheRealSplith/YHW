@@ -1,0 +1,53 @@
+﻿@model IEnumerable<YHW.Models.TeamProfile>
+
+@{
+    ViewBag.Title = "Team";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-md-2">
+  @Html.Partial(
+   "~/Views/Shared/_TextColumnWithHeader.cshtml",
+   new YHW.Models.SharedViews.TextColumnWithHeaderVM()
+   {
+     Header = "About Us",
+     Items = YHW.Controllers.HomeController.AboutUsNavData("team")
+   })
+</div>
+
+<h2>About Us / Vision</h2>
+
+<div class="col-md-10">
+  @foreach (var item in Model)
+  {
+    <div class="col-md-6 col-sm-6">
+      <div class="thumbnail">
+        @if (String.IsNullOrEmpty(item.PortraitURL))
+        {
+          <img src="http://placehold.it/300x200" />
+        }
+        else
+        {
+          <img src="@Url.Content(item.PortraitURL)" alt="..." />
+        }
+        <div class="caption">
+          <h3>@item.Name</h3>
+          <h5>@item.Title</h5>
+          <ul>
+            @if (!String.IsNullOrEmpty(item.FacebookLink))
+            {
+              <li style="display:inline-block"><a href="@item.FacebookLink"><img src="@Url.Content("~/Content/images/icon_facebook_32.png")" /></a></li>
+            }
+            @if (!String.IsNullOrEmpty(item.TwitterLink))
+            {
+              <li style="display:inline-block"><a href="@item.TwitterLink"><img src="@Url.Content("~/Content/images/icon_twitter_32.png")" /></a></li>
+            }
+            @if (!string.IsNullOrEmpty(item.LinkedIn))
+            {
+              <li style="display:inline-block"><a href="@item.LinkedIn"><img src="@Url.Content("~/Content/images/icon_linkedin_32.png")" /></a></li>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  }
+</div>

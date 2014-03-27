@@ -1,34 +1,19 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "About Us";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>@ViewBag.Message</h2>
-</hgroup>
+<div class="col-md-3">
+  @Html.Partial(
+   "~/Views/Shared/_TextColumnWithHeader.cshtml",
+   new YHW.Models.SharedViews.TextColumnWithHeaderVM() {
+     Header = "About Us",
+     Items = YHW.Controllers.HomeController.AboutUsNavData("about")
+   })
+</div>
 
-<article>
-    <p>
-        Use this area to provide additional information.
-    </p>
+<h1>About Us / Mission</h1>
+<p>You Heard Wrong (YHW) is a not-for-profit organization that takes the
+  biases out of educational topics through the conjunctions of facts and
+  opinions, allowing users to create their own unbiased, educated, opinions.</p>
 
-    <p>
-        Use this area to provide additional information.
-    </p>
-
-    <p>
-        Use this area to provide additional information.
-    </p>
-</article>
-
-<aside>
-    <h3>Aside Title</h3>
-    <p>
-        Use this area to provide additional information.
-    </p>
-    <ul>
-        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-        <li>@Html.ActionLink("About", "About", "Home")</li>
-        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-    </ul>
-</aside>
+<p>501 (c) (3) status explanation</p>
