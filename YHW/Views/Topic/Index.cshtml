@@ -1,0 +1,176 @@
+﻿@model YHW.Models.TopicSideBar
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+  <div class="col-md-3 col-sm-4">
+    <h2>Filters</h2>
+    <div data-bind="foreach: { data: sections }">
+      <h3><span data-bind="text: Header"></span></h3>
+      <ul Data-bind="foreach: {data: ChildItems}" class="list-group">
+        <li class="list-group-item">
+          <input type="checkbox" data-bind="checked: IsActive" />&nbsp;&nbsp;<span data-bind="text: Label"></span>
+        </li>
+      </ul>
+    </div>
+    <button class="btn btn-success" data-bind="click: Submit">Submit</button>
+  </div>
+  <div class="col-md-9 col-sm-8">
+    <ul class="media-list" data-bind="foreach: { data: searchResults }">
+      <div data-bind="if: TYPE() == 'blog'">
+        <li class="media" style="margin-bottom: 10px; border: solid 2px #00C68F; border-radius: 4px; box-shadow: 2px 2px 2px #999999">
+          <div class="media-body" style="margin: 5px 5px 5px 5px">
+            <h4 class="media-heading">
+              <a data-bind="attr: {href: $root.BlogURL.concat('/',ID()) }">
+                <span data-bind="text: Title"></span>
+              </a>
+            </h4>
+            <span data-bind="text: ShortBlogText"></span>
+          </div>
+        </li>
+      </div>
+      <div data-bind="if: TYPE() == 'video'">
+        <li class="media" style="margin-bottom:10px;border: solid 2px #ff0000; border-radius:4px; box-shadow: 2px 2px 2px #999999">
+          <div class="media-body" style="margin: 5px 5px 5px 5px">
+            <h4>
+              <span data-bind="text: Title"></span>
+            </h4>
+            <iframe width="430" height="310" frameborder="0" allowfullscreen
+                    data-bind="attr: { src: VideoURL() }"></iframe>
+          </div>
+        </li>
+      </div>
+      <div data-bind="if: TYPE() == 'quote'">
+        <li class="media" style="margin-bottom:10px;border: solid 2px #1a00ff; border-radius:4px; box-shadow: 2px 2px 2px #999999">
+          <div class="media-body" style="margin: 5px 5px 5px 5px">
+            <h4 class="media-heading">
+              <a data-bind="attr: {href: $root.QuoteURL.concat('/',ID()) }">
+                <span data-bind="text: Title"></span>
+              </a>
+            </h4>
+            <span data-bind="text: ShortBlogText"></span>
+          </div>
+        </li>
+      </div>
+</ul>
+  </div>
+</div>
+
+@section scripts {
+  <script type="text/javascript">
+    var data = @Html.Raw(Json.Encode(Model));
+    function BlogPost(id, title, blogText, createdDate, authorID) {
+      var self = this;
+      self.TYPE = ko.observable("blog");
+
+      self.ID = ko.observable(id);
+      self.Title = ko.observable(title);
+      self.BlogText = ko.observable(blogText);
+      self.CreatedDate = ko.observable(createdDate);
+      self.AuthorID = ko.observable(authorID);
+      self.ShortBlogText = ko.computed(function() {
+        if (self.BlogText() == null)
+          return "";
+        else
+          return self.BlogText().substring(0,Math.min(160,self.BlogText().length)) + "...";
+      });
+    }
+    function QuotePost(id, title, quoteText, createdDate, authorID) {
+      var self = this;
+      self.TYPE = ko.observable("quote");
+
+      self.ID = ko.observable(id);
+      self.Title = ko.observable(title);
+      self.QuoteText = ko.observable(quoteText);
+      self.CreatedDate = ko.observable(createdDate);
+      self.AuthorID = ko.observable(authorID);
+      self.ShortBlogText = ko.computed(function() {
+        if (self.QuoteText() == null)
+          return "";
+        else
+          return self.QuoteText().substring(0,Math.min(160,self.QuoteText().length)) + "...";
+      });
+    }
+    function VideoPost(id, title, videoURL, isOpinion, createdDate) {
+      var self = this;
+      self.TYPE = ko.observable("video");
+
+      self.ID = ko.observable(id);
+      self.Title = ko.observable(title);
+      self.VideoURL = ko.observable(videoURL);
+      self.IsOpinion = ko.observable(isOpinion);
+      self.CreatedDate = ko.observable(createdDate);
+    }
+    function CBSection() {
+      var self = this;
+      self.Header = ko.observable();
+      self.ChildItems = ko.observableArray();
+    }
+    function CBItem() {
+      var self = this;
+      self.Label = ko.observable();
+      self.IsActive = ko.observable();
+    }
+    function FeedbackFormVM() {
+      var self = this;
+      self.BlogURL = "@Url.Action("Item", "Blog")";
+      self.QuoteURL = "@Url.Action("Item", "Quote")";
+
+      self.searchResults = ko.observableArray();
+      self.sections = ko.observableArray();
+      this.Submit = function () {
+        var param = ko.toJSON(self.sections);
+        $.post(
+          "@Url.Action("RequestData", "Topic")",
+          { everything: param },
+          function (data) {
+            vm.searchResults([]);
+            data.forEach(function (topic) {
+              var JStopic = JSON.parse(topic);
+              if (JStopic.Type == "blog") {
+                console.log(JStopic);
+                vm.searchResults.push(new BlogPost(JStopic.Data.ID, JStopic.Data.Title, JStopic.Data.BlogText, JStopic.Data.CreatedDate, JStopic.Data.AuthorID));
+              }
+              else if (JStopic.Type == "quote") {
+                console.log(JStopic);
+                vm.searchResults.push(new QuotePost(JStopic.Data.ID, JStopic.Data.Title, JStopic.Data.QuoteText, JStopic.Data.CreatedDate, JStopic.Data.AuthorID));
+              }
+              else if (JStopic.Type == "video") {
+                console.log(JStopic);
+                vm.searchResults.push(new VideoPost(JStopic.Data.ID, JStopic.Data.Title, JStopic.Data.VideoURL, JStopic.Data.IsOpinion, JStopic.Data.CreatedDate));
+              }
+            });
+            //window.location.href = "@Url.Action("Success")"
+          }).error(function () {
+            console.log("Error");
+          });
+      };
+    }
+
+    ko.validation.configure({
+      registerExtenders: true,
+      insertMessages: false
+    });
+    ko.validation.init({ messagesOnModified: false, grouping: { deep: true, observable: true } });
+
+    // init
+    var vm = new FeedbackFormVM();
+    data.CBSections.forEach(function(section) {
+      var Section = new CBSection();
+      Section.Header(section.Header);
+      section.ChildItems.forEach(function(item) {
+        var cbItem = new CBItem();
+        cbItem.IsActive(item.IsActive);
+        cbItem.Label(item.Label);
+        Section.ChildItems.push(cbItem);
+      });
+
+      vm.sections.push(Section);
+    });
+
+    ko.applyBindings(vm);
+  </script>
+}

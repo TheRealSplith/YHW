@@ -182,17 +182,26 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\QuoteController.cs" />
+    <Compile Include="Controllers\StatusController.cs" />
+    <Compile Include="Controllers\TopicController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\BlogModels.cs" />
     <Compile Include="Models\ContactModels.cs" />
+    <Compile Include="Models\QuoteModels.cs" />
     <Compile Include="Models\SharedViews\TextColumnWithHeaderVM.cs" />
     <Compile Include="Models\SocialContext.cs" />
+    <Compile Include="Models\StatusModels.cs" />
     <Compile Include="Models\TeamView.cs" />
+    <Compile Include="Models\TopicModels.cs" />
+    <Compile Include="Models\VideoModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +209,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\2014_0326_1349_58.jpg" />
     <Content Include="Content\images\carousel1.png" />
+    <Content Include="Content\images\carousel2.png" />
     <Content Include="Content\images\icon_facebook_32.png" />
     <Content Include="Content\images\icon_linkedin_32.png" />
     <Content Include="Content\images\icon_twitter_32.png" />
@@ -330,6 +340,13 @@
     <Content Include="Views\Shared\_TextColumnWithHeader.cshtml" />
     <Content Include="Views\Home\Team.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\Contact\Success.cshtml" />
+    <Content Include="Views\Contact\Collaborate.cshtml" />
+    <Content Include="Views\Status\Http404.cshtml" />
+    <Content Include="Views\Blog\PartItem.cshtml" />
+    <Content Include="Views\Topic\Index.cshtml" />
+    <Content Include="Views\Blog\Item.cshtml" />
+    <Content Include="Views\Quote\Item.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

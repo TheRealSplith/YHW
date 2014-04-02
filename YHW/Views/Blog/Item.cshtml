@@ -1,0 +1,12 @@
+﻿@model YHW.Models.Blog
+@{
+    ViewBag.Title = "Item";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Title &nbsp;<small>@Model.CreatedDate</small></h2>
+
+@foreach (var item in Model.BlogText.Split('\n'))
+{
+<p>@item</p>
+}

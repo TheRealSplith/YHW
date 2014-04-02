@@ -1,0 +1,15 @@
+﻿@model YHW.Models.Quote
+@{
+    ViewBag.Title = "Item";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Title &nbsp;<small>@Model.CreatedDate</small></h2>
+
+@if (!String.IsNullOrEmpty(Model.QuoteText))
+{
+  foreach (var item in Model.QuoteText.Split('\n'))
+  {
+    <p>@item</p>
+  }
+}

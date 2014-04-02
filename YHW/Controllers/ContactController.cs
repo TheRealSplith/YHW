@@ -33,6 +33,31 @@ namespace YHW.Controllers
             return View();
         }
 
+        public ActionResult Collaborate()
+        {
+            return View(new CollabRequest());
+        }
+
+        [HttpPost]
+        public ActionResult Collaborate(CollabRequest request)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var context = new SocialContext())
+                {
+                    context.CollabRequest.Add(request);
+                    context.SaveChanges();
+                }
+                return RedirectToAction("Collaborate");
+            }
+            return View();
+        }
+
+        public ActionResult Success()
+        {
+            return View();
+        }
+
         public static List<TextColumnHeaderData> ContactNavData(String active)
         {
             var data = new List<TextColumnHeaderData>();

@@ -14,5 +14,6 @@ namespace YHW.Models
         public String FacebookLink { get; set; }
         public String TwitterLink { get; set; }
         public String LinkedIn { get; set; }
+        public Boolean YHWTeam { get; set; }
     }
 }
