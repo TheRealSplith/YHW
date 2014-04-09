@@ -16,7 +16,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44300</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -193,15 +193,16 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\BlogModels.cs" />
+    <Compile Include="Models\Content\BlogModels.cs" />
     <Compile Include="Models\ContactModels.cs" />
-    <Compile Include="Models\QuoteModels.cs" />
+    <Compile Include="Models\Content\QuoteModels.cs" />
+    <Compile Include="Models\Content\ITopicContent.cs" />
     <Compile Include="Models\SharedViews\TextColumnWithHeaderVM.cs" />
     <Compile Include="Models\SocialContext.cs" />
     <Compile Include="Models\StatusModels.cs" />
     <Compile Include="Models\TeamView.cs" />
     <Compile Include="Models\TopicModels.cs" />
-    <Compile Include="Models\VideoModels.cs" />
+    <Compile Include="Models\Content\VideoModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -210,6 +211,7 @@
     <Content Include="Content\images\2014_0326_1349_58.jpg" />
     <Content Include="Content\images\carousel1.png" />
     <Content Include="Content\images\carousel2.png" />
+    <Content Include="Content\images\Common-Core-350x200.jpg" />
     <Content Include="Content\images\icon_facebook_32.png" />
     <Content Include="Content\images\icon_linkedin_32.png" />
     <Content Include="Content\images\icon_twitter_32.png" />

@@ -49,3 +49,8 @@ p {
 .icon-bar {
   background-color: #FFFFFF;
 }
+
+.carousel-caption {
+  background: #333333;
+  opacity:0.6;
+}

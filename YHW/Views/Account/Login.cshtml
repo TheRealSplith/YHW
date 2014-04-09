@@ -4,41 +4,73 @@
     ViewBag.Title = "Log in";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-</hgroup>
+<h2>Register</h2>
+<div class="row" style="padding-bottom:10px">
+  <form role="form" class="form-horizontal">
+    <div data-bind="css: { 'has-error': !rUserName.isValid() && rUserName.isModified() }">
+      <div class="form-group">
+        <label for="inputrUserName" class="col-sm-2 control-label">UserName</label>
+        <div class="col-sm-6 col-md-6">
+          <input data-bind="value: rUserName, valueUpdate: 'afterkeydown'" class="form-control" id="inputrUserName" placeholder="UserName / Email" />
+          <span class="help-block" data-bind="validationMessage: rUserName"></span>
+        </div>
+      </div>
+    </div>
+    <div data-bind="css: { 'has-error': !rPassword.isValid() && rPassword.isModified() }">
+      <div class="form-group">
+        <label for="inputrPassword" class="col-sm-2 control-label">Password</label>
+        <div class="col-sm-6 col-md-6">
+          <input type="Password" data-bind="value: rPassword" class="form-control" id="inputrPassword" placeholder="Password" />
+          <span class="help-block" data-bind="validationMessage: rPassword"></span>
+        </div>
+      </div>
+    </div>
+    <div data-bind="css: { 'has-error': !rConfirmPassword.isValid() && rConfirmPassword.isModified() }">
+      <div class="form-group">
+        <label for="inputrConfirmPassword" class="col-sm-2 control-label">Confirm Password</label>
+        <div class="col-sm-6 col-md-6">
+          <input type="Password" data-bind="value: rConfirmPassword" class="form-control" id="inputrConfirmPassword" placeholder="Confirm Password" />
+          <span class="help-block" data-bind="validationMessage: rConfirmPassword"></span>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-offset-7 col-sm-5">
+      <button class="btn btn-default" data-bind="click: SubmitRegister, enable: registerValidation.isValid()">Submit</button>
+    </div>
+  </form>
+</div>
 
-<section id="loginForm">
-<h2>Use a local account to log in.</h2>
-@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-
-    <fieldset>
-        <legend>Log in Form</legend>
-        <ol>
-            <li>
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName)
-                @Html.ValidationMessageFor(m => m.UserName)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-                @Html.ValidationMessageFor(m => m.Password)
-            </li>
-            <li>
-                @Html.CheckBoxFor(m => m.RememberMe)
-                @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
-            </li>
-        </ol>
-        <input type="submit" value="Log in" />
-    </fieldset>
-    <p>
-        @Html.ActionLink("Register", "Register") if you don't have an account.
-    </p>
-}
-</section>
+<h2>Log In!</h2>
+<div class="row" style="padding-bottom:10px">
+  <form role="form" class="form-horizontal">
+    <div data-bind="css: { 'has-error': !UserName.isValid() && UserName.isModified() }">
+      <div class="form-group">
+        <label for="inputUserName" class="col-sm-2 control-label">UserName</label>
+        <div class="col-sm-6 col-md-6">
+          <input data-bind="value: UserName, valueUpdate: 'afterkeydown'" class="form-control" id="inputUserName" placeholder="UserName / Email" />
+          <span class="help-block" data-bind="validationMessage: UserName"></span>
+        </div>
+      </div>
+    </div>
+    <div data-bind="css: { 'has-error': !Password.isValid() && Password.isModified() }">
+      <div class="form-group">
+        <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+        <div class="col-sm-6 col-md-6">
+          <input type="password" data-bind="value: Password" class="form-control" id="inputPassword" placeholder="Password" />
+          <span class="help-block" data-bind="validationMessage: Password"></span>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-offset-1 col-sm-5">
+      <label>
+        <input type="checkbox" data-bind="value: RememberMe" />  Remember Me?
+      </label>
+    </div>
+    <div class="col-sm-offset-1 col-sm-5">
+      <button class="btn btn-default" data-bind="click: SubmitLogin, enable: loginValidation.isValid()">Submit</button>
+    </div>
+  </form>
+</div>
 
 <section class="social" id="socialLoginForm">
     <h2>Use another service to log in.</h2>
@@ -46,5 +78,74 @@
 </section>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+  <script type="text/javascript">
+    function FeedbackFormVM() {
+      var self = this;
+      this.UserName = ko.validatedObservable("").extend({ required: true });
+      this.Password = ko.validatedObservable().extend({ required: true });
+      this.RememberMe = ko.observable(false);
+
+      this.rUserName = ko.validatedObservable("").extend({ required: true });
+      this.rPassword = ko.validatedObservable().extend({ required: true });
+      this.rConfirmPassword = ko.validatedObservable()
+        .extend({ areSame: { params: self.rPassword, message: "Passwords must match" }, required: true });
+
+      this.loginValidation = ko.validatedObservable({
+        name: this.UserName,
+        password: this.Password,
+      });
+
+      this.registerValidation = ko.validatedObservable({
+        name: this.rUserName,
+        pw: this.rPassword,
+        cpw: this.rConfirmPassword
+      });
+
+      this.SubmitLogin = function () {
+        $.post(
+          "@Url.Action("Login", "Account")",
+          {
+            UserName: self.UserName(), Password: self.Password(), RememberMe: self.RememberMe()
+          },
+          function (data) {
+            window.location.href = "@Url.Action("Index", "Home")"
+          }).error(function () {
+            console.log("Error");
+          });
+      };
+
+      this.SubmitRegister = function () {
+        $.post(
+          "@Url.Action("Register", "Account")",
+        {
+          UserName: self.rUserName(), Password: self.rPassword(), ConfirmPassword: self.rConfirmPassword()
+        },
+          function (data) {
+            window.location.href = "@Url.Action("Index", "Home")"
+          }).error(function () {
+            console.log("Error");
+          });
+      };
+    }
+
+    ko.validation.rules['areSame'] = {
+      getValue: function (o) {
+        return (typeof o === 'function' ? o() : o);
+      },
+      validator: function (val, otherField) {
+        return val === this.getValue(otherField);
+      },
+      message: 'The fields must have the same value'
+    };
+
+    ko.validation.configure({
+      registerExtenders: true,
+      insertMessages: false
+    });
+    ko.validation.init({ messagesOnModified: false, grouping: { deep: true, observable: true } });
+
+    // init
+    var vm = new FeedbackFormVM();
+    ko.applyBindings(vm);
+  </script>
 }

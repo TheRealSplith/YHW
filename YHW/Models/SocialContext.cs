@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using YHW.Models.Content;
+using YHW.Models;
 
 namespace YHW.Models
 {
@@ -50,6 +52,8 @@ namespace YHW.Models
 "\n\n"+
 "Despite her own decision to homeschool her kids, the author says, “Homeschooling is NOT the answer for everyone”. Different states have different regulations for home schooling, and in some states, even with homeschooling, “you are still subject to Common Core and it's many tentacles.” ",
                     IsOpinion = true,
+                    ImageURL = "~/Content/images/Common-Core-350x200.jpg",
+                    SubText = "Common Core Standards Leave Parents Feeling Powerless",
                     CreatedDate = DateTime.Now
                 });
             context.QuotePost.Add(
@@ -57,14 +61,17 @@ namespace YHW.Models
                 {
                     Title = "The Common Core Standards do not include guidelines for sex education.",
                     IsOpinion = false,
+                    ImageURL = "~/Content/images/Common-Core-350x200.jpg",
+                    SubText = "The Common Core Standards do not include guidelines for sex education.",
                     CreatedDate = DateTime.Now
                 });
             context.QuotePost.Add(
                 new Quote 
                 {
                     Title = "Standards teach what kids should know, not how they should learn",
-                    QuoteText = "The Standards establish what students need to learn but do not dictate how teachers should teach. Instead, schools and teachers will decide how best to help students reach the standards.",
+                    SubText = "The Standards establish what students need to learn but do not dictate how teachers should teach. Instead, schools and teachers will decide how best to help students reach the standards.",
                     IsOpinion = false,
+                    ImageURL = "~/Content/images/Common-Core-350x200.jpg",
                     CreatedDate = DateTime.Now
                 });
             context.VideoPost.Add(
@@ -73,7 +80,9 @@ namespace YHW.Models
                     Title = "Common Core Questions",
                     VideoURL = "//www.youtube.com/embed/N37exrQC7VA",
                     IsOpinion = true,
-                    CreateDate = DateTime.Now
+                    ImageURL = "~/Content/images/Common-Core-350x200.jpg",
+                    SubText = "Watch our latest video on the Common Core!",
+                    CreatedDate = DateTime.Now
                 });
             context.YHWTeam.Add(
                 new TeamProfile
