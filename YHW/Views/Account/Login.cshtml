@@ -5,13 +5,34 @@
 }
 
 <h2>Register</h2>
+<div data-bind="if: showRegisterError">
+  <div class="alert alert-danger">
+    <strong><span data-bind="text: registerError"></span></strong>
+  </div>
+</div>
 <div class="row" style="padding-bottom:10px">
   <form role="form" class="form-horizontal">
+    <div class="form-group">
+      <div data-bind="css: { 'has-error': !rFirstName.isValid() && rFirstName.isModified() }">
+        <label for="inputrFirstName" class="col-sm-2 control-label">First Name</label>
+        <div class="col-sm-4 col-md-4">
+          <input data-bind="value: rFirstName, valueUpdate: 'afterkeydown'" class="form-control" id="inputrFirstName" placeholder="First Name" />
+          <span class="help-block" data-bind="validationMessage: rFirstName"></span>
+        </div>
+      </div>
+      <div data-bind="css: { 'has-error': !rLastName.isValid() && rLastName.isModified() }">
+        <label for="inputrLastName" class="col-sm-2 control-label">Last Name</label>
+        <div class="col-sm-4 col-md-4">
+          <input data-bind="value: rLastName, valueUpdate: 'afterkeydown'" class="form-control" id="inputrLastName" placeholder="Last Name" />
+          <span class="help-block" data-bind="validationMessage: rLastName"></span>
+        </div>
+      </div>
+    </div>
     <div data-bind="css: { 'has-error': !rUserName.isValid() && rUserName.isModified() }">
       <div class="form-group">
-        <label for="inputrUserName" class="col-sm-2 control-label">UserName</label>
+        <label for="inputrUserName" class="col-sm-2 control-label">Email</label>
         <div class="col-sm-6 col-md-6">
-          <input data-bind="value: rUserName, valueUpdate: 'afterkeydown'" class="form-control" id="inputrUserName" placeholder="UserName / Email" />
+          <input data-bind="value: rUserName" class="form-control" id="inputrUserName" placeholder="Email" />
           <span class="help-block" data-bind="validationMessage: rUserName"></span>
         </div>
       </div>
@@ -34,6 +55,32 @@
         </div>
       </div>
     </div>
+    <div class="form-group">
+      <label class=" col-sm-2 control-label">Birthday</label>
+      <div data-bind="css: { 'has-error': !rMonth.isValid() && rMonth.isModified() }" class="col-sm-2 col-xs-3" >
+        <select data-bind="options: MonthList,
+                           optionsText: 'Name',
+                           value: rMonth,
+                           optionsCaption: 'Month'" class="form-control"></select>
+        <span class="help-block" data-bind="validationMessage: rMonth"></span>
+      </div>
+      <div data-bind="css: { 'has-error': !rDay.isValid() && rDay.isModified() }" class="col-sm-2 col-xs-3">
+        <select data-bind="options: DayList,
+                           value: rDay,
+                           optionsCaption: 'Day'" class="form-control"></select>
+        <span class="help-block" data-bind="validationMessage: rDay"></span>
+      </div>
+      <div data-bind="css: { 'has-error': !rYear.isValid() && rYear.isModified() }" class="col-sm-2 col-xs-3">
+        <select data-bind="options: YearList,
+                           value: rYear,
+                           optionsCaption: 'Year'" class="form-control"></select>
+        <span class="help-block" data-bind="validationMessage: rYear"></span>
+      </div>
+    </div>
+    <div class="col-sm-offset-1 form-group" >
+      <label class="col-xs-offset-1"><input type="radio" value="true" data-bind="checked: rGender" />  Male</label>
+      <label class="col-xs-offset-1"><input type="radio" value="false" data-bind="checked: rGender" />  Female</label>
+    </div>
     <div class="col-sm-offset-7 col-sm-5">
       <button class="btn btn-default" data-bind="click: SubmitRegister, enable: registerValidation.isValid()">Submit</button>
     </div>
@@ -41,6 +88,11 @@
 </div>
 
 <h2>Log In!</h2>
+<div data-bind="if: showLoginError">
+  <div class="alert alert-danger">
+    <strong><span data-bind="text: loginError"></span></strong>
+  </div>
+</div>
 <div class="row" style="padding-bottom:10px">
   <form role="form" class="form-horizontal">
     <div data-bind="css: { 'has-error': !UserName.isValid() && UserName.isModified() }">
@@ -73,23 +125,50 @@
 </div>
 
 <section class="social" id="socialLoginForm">
-    <h2>Use another service to log in.</h2>
     @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
 </section>
 
 @section Scripts {
   <script type="text/javascript">
+    function Month(name, val, days) {
+      this.Name = name;
+      this.Value = val;
+      this.DayList = ko.observableArray([]);
+      for (var i = 1; i <= days; ++i) {
+        this.DayList().push(i);
+      }
+    }
+
     function FeedbackFormVM() {
       var self = this;
+      // Login model
       this.UserName = ko.validatedObservable("").extend({ required: true });
       this.Password = ko.validatedObservable().extend({ required: true });
       this.RememberMe = ko.observable(false);
 
-      this.rUserName = ko.validatedObservable("").extend({ required: true });
-      this.rPassword = ko.validatedObservable().extend({ required: true });
+      // Register model
+      this.rUserName = ko.validatedObservable("").extend({
+        required: true, pattern: {
+          message: 'Must be formatted as Email',
+          params: /^[A-Za-z0-9._%+-]+@@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/
+        }});
+      this.rPassword = ko.validatedObservable().extend({ required: true, minLength: 6 });
       this.rConfirmPassword = ko.validatedObservable()
         .extend({ areSame: { params: self.rPassword, message: "Passwords must match" }, required: true });
+      this.rFirstName = ko.validatedObservable().extend({ required: true });
+      this.rLastName = ko.validatedObservable().extend({ required: true });
+      this.rMonth = ko.validatedObservable().extend({ required: true });
+      this.rDay = ko.validatedObservable().extend({ required: true });
+      this.rYear = ko.validatedObservable().extend({ required: true });
+      this.rGender = ko.observable();
 
+      // Server response objects
+      this.showRegisterError = ko.observable(false);
+      this.registerError = ko.observable("");
+      this.showLoginError = ko.observable(false);
+      this.loginError = ko.observable("");
+
+      // Validation objects
       this.loginValidation = ko.validatedObservable({
         name: this.UserName,
         password: this.Password,
@@ -98,9 +177,43 @@
       this.registerValidation = ko.validatedObservable({
         name: this.rUserName,
         pw: this.rPassword,
-        cpw: this.rConfirmPassword
+        cpw: this.rConfirmPassword,
+        fName: this.rFirstName,
+        lName: this.rLastName,
+        month: this.rMonth,
+        day: this.rDay,
+        year: this.rYear
       });
 
+      // Date models
+      this.DayList = ko.computed(function () {
+        if (self.rMonth() == null)
+          return ko.observableArray([]);
+        else
+          return self.rMonth().DayList();
+      });
+
+      this.MonthList = ko.observableArray([
+        new Month("January", 1, 31),
+        new Month("February", 2, 29),
+        new Month("March", 3, 31),
+        new Month("April", 4, 30),
+        new Month("May", 5, 31),
+        new Month("June", 6, 30),
+        new Month("July", 7, 31),
+        new Month("August", 8, 31),
+        new Month("September", 9, 30),
+        new Month("October", 10, 31),
+        new Month("November", 11, 30),
+        new Month("December", 12, 31)
+      ]);
+
+      this.YearList = ko.observableArray([]);
+      for (var i = new Date().getFullYear() ; i > new Date().getFullYear() - 100; --i) {
+        this.YearList().push(i);
+      }
+
+      // Commands
       this.SubmitLogin = function () {
         $.post(
           "@Url.Action("Login", "Account")",
@@ -108,7 +221,12 @@
             UserName: self.UserName(), Password: self.Password(), RememberMe: self.RememberMe()
           },
           function (data) {
-            window.location.href = "@Url.Action("Index", "Home")"
+            if (data.Success == true)
+              window.location.href = data.Redirect
+            else {
+              self.showLoginError(true);
+              self.loginError(data.Error);
+            }
           }).error(function () {
             console.log("Error");
           });
@@ -118,10 +236,15 @@
         $.post(
           "@Url.Action("Register", "Account")",
         {
-          UserName: self.rUserName(), Password: self.rPassword(), ConfirmPassword: self.rConfirmPassword()
+          UserName: self.rUserName(), Password: self.rPassword(), ConfirmPassword: self.rConfirmPassword(), FirstName: self.rFirstName(), LastName: self.rLastName(), Birthday:  self.rYear() + "-" + self.rMonth().Value + "-" + self.rDay() + "T04:00:00Z", IsMale: self.rGender()
         },
           function (data) {
-            window.location.href = "@Url.Action("Index", "Home")"
+            if (data.Success == true)
+              window.location.href = data.Redirect;
+            else {
+              self.showRegisterError(true);
+              self.registerError(data.Error);
+            }
           }).error(function () {
             console.log("Error");
           });

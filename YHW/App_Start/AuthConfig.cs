@@ -18,13 +18,13 @@ namespace YHW
             //    clientId: "",
             //    clientSecret: "");
 
-            //OAuthWebSecurity.RegisterTwitterClient(
-            //    consumerKey: "",
-            //    consumerSecret: "");
+            OAuthWebSecurity.RegisterTwitterClient(
+                consumerKey: "gyJVnQshv35yuy30g0WA",
+                consumerSecret: "eK7LSztiuu7Mt843981ZhUSJK067Ox2X8qjbpoLww4");
 
-            //OAuthWebSecurity.RegisterFacebookClient(
-            //    appId: "273612212799967",
-            //    appSecret: "c5a64b38dc86770b556a02f497fc1727");
+            OAuthWebSecurity.RegisterFacebookClient(
+                appId: "273612212799967",
+                appSecret: "c5a64b38dc86770b556a02f497fc1727");
 
             //OAuthWebSecurity.RegisterGoogleClient();
         }

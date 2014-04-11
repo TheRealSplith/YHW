@@ -9,17 +9,29 @@
 }
 else
 {
-    using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
+  using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
+  {
+  @Html.AntiForgeryToken()
+    foreach (AuthenticationClientData p in Model)
     {
-    @Html.AntiForgeryToken()
-    <fieldset id="socialLoginList">
-        <legend>Log in using another service</legend>
-        <p>
-        @foreach (AuthenticationClientData p in Model)
-        {
-            <button type="submit" name="provider" value="@p.AuthenticationClient.ProviderName" title="Log in using your @p.DisplayName account">@p.DisplayName</button>
-        }
-        </p>
-    </fieldset>
+      if (p.AuthenticationClient.ProviderName == "facebook")
+      {
+        <div class="col-xs-4">
+          <button type="submit" name="provider" value="@p.AuthenticationClient.ProviderName"
+                  class="btn btn-block btn-social btn-facebook" style="margin-left: 20px">
+            <i class="fa fa-facebook"></i> Sign in with Facebook!
+          </button>
+        </div>
+      }
+      if (p.AuthenticationClient.ProviderName == "twitter")
+      {
+        <div class="col-xs-4">
+          <button type="submit" name="provider" value="@p.AuthenticationClient.ProviderName"
+                  class="btn btn-block btn-social btn-twitter" style="margin-left: 20px">
+            <i class="fa fa-twitter"></i> Sign in with Twitter!
+          </button>
+        </div>
+      }
     }
+  }
 }

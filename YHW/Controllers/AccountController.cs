@@ -32,28 +32,27 @@ namespace YHW.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Login(LoginModel model, string returnUrl)
+        public JsonResult Login(LoginModel model, string returnUrl)
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
-                return RedirectToLocal(returnUrl);
+                return Json(new { Success = true, Redirect = Url.Action("Index", "Home") });
             }
 
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
-            return View(model);
+            return Json(new { Success = false, Error = "The Email or password provided is incorrect." });
         }
 
         //
         // POST: /Account/LogOff
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult LogOff()
+        public JsonResult LogOff()
         {
             WebSecurity.Logout();
 
-            return RedirectToAction("Index", "Home");
+            return Json(new { Success = true, Redirect = Url.Action("Index", "Home") });
         }
 
         //
@@ -70,16 +69,31 @@ namespace YHW.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Register(RegisterModel model)
+        public JsonResult Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
                 try
                 {
+                    if (WebSecurity.UserExists(model.UserName))
+                        return Json(new { Success = false, Error = "User Name exists"});
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     WebSecurity.Login(model.UserName, model.Password);
-                    return RedirectToAction("Index", "Home");
+
+                    using (var context = new SocialContext())
+                    {
+                        context.UserProfile.Add(new YHWProfile
+                            {
+                                UserName = model.UserName,
+                                FirstName = model.FirstName,
+                                LastName = model.LastName,
+                                Birthday = model.Birthday,
+                                IsMale = model.IsMale
+                            });
+                        context.SaveChanges();
+                    }
+                    return Json(new { Success = true, Redirect = Url.Action("Index", "Home") });
                 }
                 catch (MembershipCreateUserException e)
                 {
@@ -88,7 +102,7 @@ namespace YHW.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return Json(new { Success = false, Error = "Serverside Error!" });
         }
 
         //
@@ -247,21 +261,21 @@ namespace YHW.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult ExternalLoginConfirmation(RegisterExternalLoginModel model, string returnUrl)
+        public JsonResult ExternalLoginConfirmation(RegisterExternalLoginModel model, string returnUrl)
         {
             string provider = null;
             string providerUserId = null;
 
             if (User.Identity.IsAuthenticated || !OAuthWebSecurity.TryDeserializeProviderUserId(model.ExternalLoginData, out provider, out providerUserId))
             {
-                return RedirectToAction("Manage");
+                return Json(new { Success = false, Error = "External Login Data invalid! Please try again." });
             }
 
             if (ModelState.IsValid)
             {
                 // Insert a new user into the database
                 using (UsersContext db = new UsersContext())
+                using (SocialContext context = new SocialContext())
                 {
                     UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
                     // Check if user already exists
@@ -274,18 +288,24 @@ namespace YHW.Controllers
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
                         OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
 
-                        return RedirectToLocal(returnUrl);
+                        context.UserProfile.Add(new YHWProfile
+                        {
+                            UserName = model.UserName,
+                            FirstName = model.FirstName,
+                            LastName = model.LastName,
+                            Birthday = model.Birthday,
+                            IsMale = model.IsMale
+                        });
+                        context.SaveChanges();
+                        return Json(new { Success = true, Redirect = Url.Action("Index", "Home") });
                     }
                     else
                     {
-                        ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
+                        return Json(new { Success = false, Error = "User Name exists" });
                     }
                 }
             }
-
-            ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;
-            ViewBag.ReturnUrl = returnUrl;
-            return View(model);
+            return Json(new { Success = false, Error = "Server side Error, Registration failed, please try again!" });
         }
 
         //

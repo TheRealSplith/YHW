@@ -32,8 +32,21 @@ namespace YHW.Models
         [Required]
         [Display(Name = "User name")]
         public string UserName { get; set; }
-
         public string ExternalLoginData { get; set; }
+
+        // Custom members
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
+        public DateTime Birthday { get; set; }
+
+        public Boolean? IsMale { get; set; }
     }
 
     public class LocalPasswordModel
@@ -59,6 +72,7 @@ namespace YHW.Models
     {
         [Required]
         [Display(Name = "User name")]
+        [RegularExpression("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$",ErrorMessage="Must be formatted as Email Address")]
         public string UserName { get; set; }
 
         [Required]
@@ -86,6 +100,19 @@ namespace YHW.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
+        public DateTime Birthday { get; set; }
+
+        public Boolean? IsMale { get; set; }
     }
 
     public class ExternalLogin

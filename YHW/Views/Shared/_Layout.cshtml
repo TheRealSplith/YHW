@@ -8,6 +8,8 @@
   <title>@ViewBag.Title</title>
 
   <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+  @Styles.Render("~/Content/bootstrap-social.css")
+  @Styles.Render("~/Content/font-awesome.min.css")
   @Styles.Render("~/Content/Site.css")
 
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -35,18 +37,31 @@
           </button>
         </div>
         <div class="collapse navbar-collapse" id="header-collapse">
-          <ul class="nav navbar-nav">
+          <ul class="nav navbar-nav navbar-left">
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
             <li>@Html.ActionLink("About", "About", "Home")</li>
             <li>@Html.ActionLink("Topics", "Index", "Topic")</li>
             <li><a href="#">Events  </a></li>
             <li>@Html.ActionLink("Contact Us", "Index", "Contact")</li>
             <li><a href="#">Support  </a></li>
-            @*
-          <li>@Html.ActionLink("Issues", "Index", "Issue")</li>
-          <li>@Html.ActionLink("Donations", "Index", "Donation")</li>
-            *@
-            @*Html.Partial("_LoginPartial")*@
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            @if (Request.IsAuthenticated)
+            {
+              using (var context = new YHW.Models.SocialContext())
+              {
+                var profile = context.UserProfile.Where(p => p.UserName == User.Identity.Name).FirstOrDefault();
+                if (profile != null)
+                {
+                  <li><a href="#">Hello, @Html.Encode(profile.FirstName)</a></li>
+                }
+              }
+              <li><a id="logoff" href="#" >Log Off</a></li>
+            }
+            else
+            {
+              <li>@Html.ActionLink("Log In", "Login", "Account")</li>
+            }
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -70,7 +85,21 @@
   @Scripts.Render("~/Scripts/knockout-3.1.0.js")
   @Scripts.Render("~/Scripts/knockout.validation.js")
   <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+  @if (Request.IsAuthenticated)
+  {
+    <script type="text/javascript">
+      window.onload = function() {
+        var logoff = document.getElementById("logoff")
+        logoff.onclick = function () {
+          $.post("@Url.Action("LogOff", "Account")", null, function (result) {
+            if (result.Success) {
+              window.location.href = result.Redirect;
+            }
+          });
+        }
+      }
+    </script>
+  }
   @RenderSection("scripts", required: false)
-
 </body>
 </html>

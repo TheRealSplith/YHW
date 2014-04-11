@@ -31,6 +31,7 @@ namespace YHW.Models
         public DbSet<Blog> BlogPost { get; set; }
         public DbSet<Quote> QuotePost { get; set; }
         public DbSet<Video> VideoPost { get; set; }
+        public DbSet<YHWProfile> UserProfile { get; set; }
     }
 
     public class SocialContextInit : DropCreateDatabaseAlways<SocialContext>
