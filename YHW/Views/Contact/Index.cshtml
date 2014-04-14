@@ -2,11 +2,11 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutRightTwitter.cshtml";
 }
 
 <div class="row" style="padding-bottom:10px">
-  <div class="col-md-3">
+  <div class="col-sm-3">
     @Html.Partial(
    "~/Views/Shared/_TextColumnWithHeader.cshtml",
    new YHW.Models.SharedViews.TextColumnWithHeaderVM()
@@ -16,8 +16,10 @@
    })
   </div>
 
-  <h1>Contact Us / Contact and Feedback</h1>
-  <h3>Questions or Concerns?</h3>
+  <div class="col-sm-9">
+    <h1>Contact / <small>Feedback</small></h1>
+    <p>Leave a comment or question. User feedback is ALWAYS greately appreciated and we will get back to you as soon as we can.</p>
+  </div>
 </div>
 
 <div class="row">
@@ -44,7 +46,7 @@
       <div class="form-group">
         <label for="inputMessage" class="col-sm-2 control-label">Message</label>
         <div class="col-sm-10 col-md-8">
-          <input data-bind="value: Message, valueUpdate: 'afterkeydown'" class="form-control" id="inputMessage" placeholder="Message" />
+          <textarea data-bind="value: Message, valueUpdate: 'afterkeydown'" class="form-control" id="inputMessage" placeholder="Message" ></textarea>
           <span class="help-block" data-bind="validationMessage: Message"></span>
         </div>
       </div>

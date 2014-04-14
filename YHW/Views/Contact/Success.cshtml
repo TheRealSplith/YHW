@@ -1,9 +1,9 @@
 ﻿@{
     ViewBag.Title = "Success";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutRightTwitter.cshtml";
 }
 
-<div class="col-md-3" style="padding-bottom:10px;">
+<div class="col-sm-3" style="padding-bottom:10px;">
     @Html.Partial(
    "~/Views/Shared/_TextColumnWithHeader.cshtml",
    new YHW.Models.SharedViews.TextColumnWithHeaderVM()
@@ -12,7 +12,7 @@
      Items = YHW.Controllers.ContactController.ContactNavData("")
    })
 </div>
-<div class="col-md-9">
+<div class="col-sm-9">
   <div class="alert alert-success" style="font-size:larger;">
     <b>Thank you!</b>
     We have received your message, thank you so much for your support!

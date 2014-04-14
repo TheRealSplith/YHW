@@ -2,9 +2,9 @@
 
 @{
     ViewBag.Title = "Team";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutHiddenTwitter.cshtml";
 }
-<div class="col-md-2">
+<div class="col-sm-3">
   @Html.Partial(
    "~/Views/Shared/_TextColumnWithHeader.cshtml",
    new YHW.Models.SharedViews.TextColumnWithHeaderVM()
@@ -14,12 +14,12 @@
    })
 </div>
 
-<h2>About Us / Vision</h2>
+<h2>About Us / <small>Team</small></h2>
 
-<div class="col-md-10">
+<div class="col-sm-9 col-md-9 col-md-offset-3">
   @foreach (var item in Model)
   {
-    <div class="col-md-6 col-sm-6">
+    <div class="col-sm-9 col-md-6">
       <div class="thumbnail">
         @if (String.IsNullOrEmpty(item.PortraitURL))
         {
@@ -35,15 +35,27 @@
           <ul>
             @if (!String.IsNullOrEmpty(item.FacebookLink))
             {
-              <li style="display:inline-block"><a href="@item.FacebookLink"><img src="@Url.Content("~/Content/images/icon_facebook_32.png")" /></a></li>
+              <li style="display:inline-block">
+                <a href="@item.FacebookLink" class="btn btn-social-icon btn-facebook">
+                  <i class="fa fa-facebook"></i>
+                </a>
+              </li>
             }
             @if (!String.IsNullOrEmpty(item.TwitterLink))
             {
-              <li style="display:inline-block"><a href="@item.TwitterLink"><img src="@Url.Content("~/Content/images/icon_twitter_32.png")" /></a></li>
+              <li style="display:inline-block">
+                <a href="@item.TwitterLink" class="btn btn-social-icon btn-twitter">
+                  <i class="fa fa-twitter"></i>
+                </a>
+              </li>
             }
             @if (!string.IsNullOrEmpty(item.LinkedIn))
             {
-              <li style="display:inline-block"><a href="@item.LinkedIn"><img src="@Url.Content("~/Content/images/icon_linkedin_32.png")" /></a></li>
+              <li style="display:inline-block">
+                <a href="@item.LinkedIn" class="btn btn-social-icon btn-linkedin">
+                  <i class="fa fa-linkedin"></i>
+                </a>
+              </li>
             }
           </ul>
         </div>

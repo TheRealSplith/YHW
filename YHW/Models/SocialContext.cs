@@ -88,10 +88,32 @@ namespace YHW.Models
             context.YHWTeam.Add(
                 new TeamProfile
                 {
+                    Name = "Carolyn Spencer",
+                    Title = "Chief Executive Officer",
+                    PortraitURL = "",
+                    //FacebookLink = "https://www.facebook.com/carolynnspencer",
+                    TwitterLink = "https://twitter.com/CarolynNSpencer",
+                    LinkedIn = "http://www.linkedin.com/in/carolynnspencer",
+                    YHWTeam = true
+                });
+            context.YHWTeam.Add(
+                new TeamProfile
+                {
+                    Name = "Anastasia Rzhevskaya",
+                    Title = "Chief Marketing Officer",
+                    PortraitURL = "",
+                    //FacebookLink = "https://www.facebook.com/arzhevskaya",
+                    TwitterLink = "https://twitter.com/AnastasiaRzhev",
+                    LinkedIn = "http://www.linkedin.com/pub/anastasia-rzhevskaya/57/9a8/a7a/",
+                    YHWTeam = true
+                });
+            context.YHWTeam.Add(
+                new TeamProfile
+                {
                     Name = "William McGraw",
-                    Title = "Supreme Commander",
+                    Title = "Chief Technology Officer",
                     PortraitURL = "~/Content/images/WilliamMcGrawPortrait.jpg",
-                    FacebookLink = "http://facebook.com/splith",
+                    //FacebookLink = "http://facebook.com/splith",
                     TwitterLink = "http://twitter.com/therealsplith",
                     LinkedIn = "",
                     YHWTeam = true
@@ -99,45 +121,23 @@ namespace YHW.Models
             context.YHWTeam.Add(
                 new TeamProfile
                 {
-                    Name = "Carolyn Spencer",
-                    Title = "Project Leader",
-                    PortraitURL = "",
-                    FacebookLink = "https://www.facebook.com/carolynnspencer",
-                    TwitterLink = "https://twitter.com/CarolynNSpencer",
-                    LinkedIn = "",
-                    YHWTeam = true
-                });
-            context.YHWTeam.Add(
-                new TeamProfile
-                {
-                    Name = "Anastasia Rzhevskaya",
-                    Title = "Social Media Manager",
-                    PortraitURL = "",
-                    //FacebookLink = "https://www.facebook.com/carolynnspencre",
-                    TwitterLink = "https://twitter.com/AnastasiaRzhev",
-                    LinkedIn = "",
-                    YHWTeam = true
-                });
-            context.YHWTeam.Add(
-                new TeamProfile
-                {
                     Name = "Justin Hambrecht",
-                    Title = "Forced Graphic Designer",
+                    Title = "Chief Visualization Officer",
                     PortraitURL = "",
-                    FacebookLink = "https://www.facebook.com/justin.hambrecht",
+                    //FacebookLink = "https://www.facebook.com/justin.hambrecht",
                     TwitterLink = "https://twitter.com/JustinH____",
-                    LinkedIn = "",
+                    LinkedIn = "http://www.linkedin.com/in/justinhambrecht/",
                     YHWTeam = true
                 });
             context.YHWTeam.Add(
                 new TeamProfile
                 {
                     Name = "Colleen Shiflet",
-                    Title = "",
+                    Title = "Video Production Manager",
                     PortraitURL = "",
                     //FacebookLink = "https://www.facebook.com/carolynnspencre",
                     //TwitterLink = "https://twitter.com/CarolynNSpencer",
-                    LinkedIn = "",
+                    LinkedIn = "http://www.linkedin.com/in/colleenshiflet",
                     YHWTeam = true
                 });
         }

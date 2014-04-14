@@ -4,6 +4,49 @@
     ViewBag.Title = "Log in";
 }
 
+
+<h2>Log In</h2>
+<div data-bind="if: showLoginError">
+  <div class="alert alert-danger">
+    <strong><span data-bind="text: loginError"></span></strong>
+  </div>
+</div>
+<div class="row" style="padding-bottom:10px">
+  <form role="form" class="form-horizontal">
+    <div data-bind="css: { 'has-error': !UserName.isValid() && UserName.isModified() }">
+      <div class="form-group">
+        <label for="inputUserName" class="col-sm-2 control-label">UserName</label>
+        <div class="col-sm-6 col-md-6">
+          <input data-bind="value: UserName, valueUpdate: 'afterkeydown'" class="form-control" id="inputUserName" placeholder="UserName / Email" />
+          <span class="help-block" data-bind="validationMessage: UserName"></span>
+        </div>
+      </div>
+    </div>
+    <div data-bind="css: { 'has-error': !Password.isValid() && Password.isModified() }">
+      <div class="form-group">
+        <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+        <div class="col-sm-6 col-md-6">
+          <input type="password" data-bind="value: Password" class="form-control" id="inputPassword" placeholder="Password" />
+          <span class="help-block" data-bind="validationMessage: Password"></span>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-bottom:5px;">
+      <div class="col-sm-offset-1 col-sm-5">
+        <label>
+          <input type="checkbox" data-bind="value: RememberMe" />  Remember Me?
+        </label>
+      </div>
+      <div class="col-sm-offset-1 col-sm-5">
+        <button class="btn btn-default" data-bind="click: SubmitLogin, enable: loginValidation.isValid()">Submit</button>
+      </div>
+    </div>
+    <section class="social" id="socialLoginForm">
+      @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+    </section>
+  </form>
+</div>
+
 <h2>Register</h2>
 <div data-bind="if: showRegisterError">
   <div class="alert alert-danger">
@@ -41,7 +84,7 @@
       <div class="form-group">
         <label for="inputrPassword" class="col-sm-2 control-label">Password</label>
         <div class="col-sm-6 col-md-6">
-          <input type="Password" data-bind="value: rPassword" class="form-control" id="inputrPassword" placeholder="Password" />
+          <input type="Password" data-bind="value: rPassword" class="form-control" id="inputrPassword" placeholder="Password (Min 6 Characters)" />
           <span class="help-block" data-bind="validationMessage: rPassword"></span>
         </div>
       </div>
@@ -87,46 +130,6 @@
   </form>
 </div>
 
-<h2>Log In!</h2>
-<div data-bind="if: showLoginError">
-  <div class="alert alert-danger">
-    <strong><span data-bind="text: loginError"></span></strong>
-  </div>
-</div>
-<div class="row" style="padding-bottom:10px">
-  <form role="form" class="form-horizontal">
-    <div data-bind="css: { 'has-error': !UserName.isValid() && UserName.isModified() }">
-      <div class="form-group">
-        <label for="inputUserName" class="col-sm-2 control-label">UserName</label>
-        <div class="col-sm-6 col-md-6">
-          <input data-bind="value: UserName, valueUpdate: 'afterkeydown'" class="form-control" id="inputUserName" placeholder="UserName / Email" />
-          <span class="help-block" data-bind="validationMessage: UserName"></span>
-        </div>
-      </div>
-    </div>
-    <div data-bind="css: { 'has-error': !Password.isValid() && Password.isModified() }">
-      <div class="form-group">
-        <label for="inputPassword" class="col-sm-2 control-label">Password</label>
-        <div class="col-sm-6 col-md-6">
-          <input type="password" data-bind="value: Password" class="form-control" id="inputPassword" placeholder="Password" />
-          <span class="help-block" data-bind="validationMessage: Password"></span>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-offset-1 col-sm-5">
-      <label>
-        <input type="checkbox" data-bind="value: RememberMe" />  Remember Me?
-      </label>
-    </div>
-    <div class="col-sm-offset-1 col-sm-5">
-      <button class="btn btn-default" data-bind="click: SubmitLogin, enable: loginValidation.isValid()">Submit</button>
-    </div>
-  </form>
-</div>
-
-<section class="social" id="socialLoginForm">
-    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-</section>
 
 @section Scripts {
   <script type="text/javascript">

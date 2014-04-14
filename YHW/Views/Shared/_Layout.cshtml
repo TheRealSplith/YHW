@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
+  <meta name="robots" content="noindex">
   <title>@ViewBag.Title</title>
 
   <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
@@ -25,7 +26,7 @@
     <div class="content">
       <div class="col-xs-2">
         <div class="navbar-inner">
-          <a class="brand" href="@Url.Action("Index", "Home")"><img src="@Url.Content("~/Content/images/yhw_resize.png")" /></a>
+          <a href="@Url.Action("Index", "Home")"><img height="50" src="@Url.Content("~/Content/images/logo_name.jpg")" /></a>
         </div>
       </div>
       <div class="col-xs-10">
@@ -39,13 +40,13 @@
         <div class="collapse navbar-collapse" id="header-collapse">
           <ul class="nav navbar-nav navbar-left">
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
-            <li>@Html.ActionLink("About", "About", "Home")</li>
+            <li>@Html.ActionLink("About Us", "About", "Home")</li>
             <li>@Html.ActionLink("Topics", "Index", "Topic")</li>
-            <li><a href="#">Events  </a></li>
+            @*<li><a href="#">Events  </a></li>*@
             <li>@Html.ActionLink("Contact Us", "Index", "Contact")</li>
-            <li><a href="#">Support  </a></li>
+            @*<li><a href="#">Support  </a></li>*@
           </ul>
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right" style="margin-right:5px;">
             @if (Request.IsAuthenticated)
             {
               using (var context = new YHW.Models.SocialContext())
@@ -60,7 +61,7 @@
             }
             else
             {
-              <li>@Html.ActionLink("Log In", "Login", "Account")</li>
+              <li >@Html.ActionLink("Log In", "Login", "Account")</li>
             }
           </ul>
         </div><!--/.nav-collapse -->
@@ -68,14 +69,7 @@
     </div>
   </nav>
   <div class="container">
-    <div class="row">
-      <div class="col-xs-12 col-md-8">
-        @RenderBody()
-      </div>
-      <div class="col-md-4 col-xs-6">
-        <a class="twitter-timeline" href="https://twitter.com/youheardwrong" data-widget-id="440022171801231360">Tweets by @@youheardwrong</a>
-      </div>
-    </div>
+    @RenderBody()
   </div>
   <!-- Bootstrap core JavaScript
   ================================================== -->

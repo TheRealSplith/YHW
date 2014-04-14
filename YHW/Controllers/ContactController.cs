@@ -62,8 +62,8 @@ namespace YHW.Controllers
         public static List<TextColumnHeaderData> ContactNavData(String active)
         {
             var data = new List<TextColumnHeaderData>();
-            data.Add(new TextColumnHeaderData { Label = "Contact and Feedback", Active = active == "contact", Action = "Index", Controller = "Contact" });
-            data.Add(new TextColumnHeaderData { Label = "Collaboration", Active = active == "collaborate", Action = "Collaborate", Controller = "Contact" });
+            data.Add(new TextColumnHeaderData { Label = "Feedback", Active = active == "contact", Action = "Index", Controller = "Contact" });
+            data.Add(new TextColumnHeaderData { Label = "Collaborate", Active = active == "collaborate", Action = "Collaborate", Controller = "Contact" });
 
             return data;
         }

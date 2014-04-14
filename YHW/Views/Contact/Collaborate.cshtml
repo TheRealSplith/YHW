@@ -1,10 +1,10 @@
 ﻿@{
     ViewBag.Title = "Collaborate";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutRightTwitter.cshtml";
 }
 
 <div class="row" style="padding-bottom:10px">
-  <div class="col-md-3">
+  <div class="col-sm-3">
     @Html.Partial(
    "~/Views/Shared/_TextColumnWithHeader.cshtml",
    new YHW.Models.SharedViews.TextColumnWithHeaderVM()
@@ -14,11 +14,15 @@
    })
   </div>
 
-  <div class="col-md-9">
-    <h1>Contact Us / Collaborate</h1>
+  <div class="col-sm-9">
+    <h2>Contact Us / <small>Collaborate</small></h2>
     <p>
-        Would you like to collaborate with You Heard Wrong? Let us know exactly how you would like to collaborate
-        and we will respond to your request as soon as possible!
+        Would you like to collaborate with You Heard Wrong? 
+    </p>
+    <p>
+      At You Heard Wrong we cover Events, Speaking arangments, and conduct interviews for hot topics
+      concerning education. If you are planning this sort of event, let us know, and we will get
+      back to you as soon as we can.
     </p>
   </div>
 </div>

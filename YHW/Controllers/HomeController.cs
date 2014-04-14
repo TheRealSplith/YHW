@@ -69,13 +69,6 @@ namespace YHW.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your app description page.";
-
-            return View();
-        }
-
-        public ActionResult Vision()
-        {
             return View();
         }
 
@@ -100,8 +93,7 @@ namespace YHW.Controllers
         public static List<TextColumnHeaderData> AboutUsNavData(String active)
         {
             var data = new List<TextColumnHeaderData>();
-            data.Add(new TextColumnHeaderData { Label = "Mission", Active = active == "about", Action = "About", Controller = "Home" });
-            data.Add(new TextColumnHeaderData { Label = "Vision", Active = active == "vision", Action = "Vision", Controller = "Home" });
+            data.Add(new TextColumnHeaderData { Label = "Mission & Vision", Active = active == "about", Action = "About", Controller = "Home" });
             data.Add(new TextColumnHeaderData { Label = "Team", Active = active == "team", Action = "Team", Controller = "Home" });
 
             return data;
