@@ -21,12 +21,15 @@ namespace YHW.Controllers
         }
 
         [HttpPost]
-        public JsonResult RequestData(String everything)
+        public JsonResult RequestData(String paramJson)
         {
-            var result = Newtonsoft.Json.JsonConvert.DeserializeObject<IEnumerable<TopicSideBarCBSection>>(everything);
+            var result = Newtonsoft.Json.JsonConvert.DeserializeObject<TopicParams>(paramJson);
+            // Add one day to end date so it will include that day
+            result.EndDate = result.EndDate.Value.AddDays(1);
 
-            IList<String> TopicResults = new List<String>();
-            foreach(var section in result)
+            IList<ITopicContent> TopicResults = new List<ITopicContent>();
+            List<string> JsonResult = new List<string>();
+            foreach(var section in result.CheckBoxSections)
             {
                 var isOpinion = section.Header == "Opinion";
                 foreach(var item in section.ChildItems.Where(c => c.IsActive))
@@ -37,45 +40,36 @@ namespace YHW.Controllers
                         {
                             case "Blog":
                                 var blogPosts = context.BlogPost
-                                    .Where(b => b.IsOpinion == isOpinion);
-                                foreach(var res in blogPosts)
-                                    TopicResults.Add
-                                    (
-                                        Newtonsoft.Json.JsonConvert.SerializeObject
-                                        (
-                                            new { Type = "blog", Data = res }
-                                        )
-                                    );
+                                    .Where(b => b.IsOpinion == isOpinion && b.CreatedDate > result.StartDate && b.CreatedDate < result.EndDate);
+                                foreach (var res in blogPosts)
+                                    TopicResults.Add(res);
                                 break;
                             case "Quote":
                                 var quotePosts = context.QuotePost
-                                    .Where(q => q.IsOpinion == isOpinion);
+                                    .Where(q => q.IsOpinion == isOpinion && q.CreatedDate > result.StartDate && q.CreatedDate < result.EndDate);
                                 foreach (var res in quotePosts)
-                                    TopicResults.Add
-                                    (
-                                        Newtonsoft.Json.JsonConvert.SerializeObject
-                                        (
-                                            new { Type = "quote", Data = res }
-                                        )
-                                    );
+                                    TopicResults.Add(res);
                                 break;
                             case "Video":
                                 var videoPosts = context.VideoPost
-                                    .Where(p => p.IsOpinion == isOpinion);
-                                foreach(var res in videoPosts)
-                                    TopicResults.Add
-                                    (
-                                        Newtonsoft.Json.JsonConvert.SerializeObject
-                                        (
-                                            new { Type = "video", Data = res }
-                                        )
-                                    );
+                                    .Where(p => p.IsOpinion == isOpinion && p.CreatedDate > result.StartDate && p.CreatedDate < result.EndDate);
+                                foreach (var res in videoPosts)
+                                    TopicResults.Add(res);
                                 break;
                         };
                     }
                 }
             }
-            return Json(TopicResults.ToArray());
+
+            foreach(var item in TopicResults.OrderByDescending(i => i.CreatedDate))
+            {
+                JsonResult.Add(
+                    Newtonsoft.Json.JsonConvert.SerializeObject(
+                        new { Type = item.TypeName.ToLower(), IsOpinion = item.IsOpinion, Data = item }
+                        ));
+            }
+
+            return Json(JsonResult.ToArray());
         }
 
         public static TopicSideBar TopicFilter()

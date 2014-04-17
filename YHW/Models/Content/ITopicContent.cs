@@ -15,5 +15,6 @@ namespace YHW.Models.Content
         DateTime CreatedDate { get; set; }
         Int32? AuthorID { get; set; }
         String TypeName { get; set; }
+        Boolean IsOpinion { get; set; }
     }
 }

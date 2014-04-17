@@ -16,10 +16,14 @@
         </li>
       </ul>
     </div>
+    <label >Start Date</label>
+    <input data-bind="datepicker: startDate, datepickerOptions: { maxDate: new Date() }" />
+    <label >End Date</label>
+    <input data-bind="datepicker: endDate, datepickerOptions: { maxDate: new Date() }" />
     <button class="btn btn-success" data-bind="click: Submit">Submit</button>
   </div>
   <div class="col-md-9 col-sm-8">
-    <ul class="media-list" data-bind="foreach: { data: searchResults }">
+    <ul class="media-list" data-bind="foreach: { data: factResults }">
       <div data-bind="if: TYPE() == 'blog'">
         <li class="media" style="margin-bottom: 10px; border: solid 2px #00C68F; border-radius: 4px; box-shadow: 2px 2px 2px #999999">
           <div class="media-body" style="margin: 5px 5px 5px 5px">
@@ -62,6 +66,36 @@
 @section scripts {
   <script type="text/javascript">
     var data = @Html.Raw(Json.Encode(Model));
+    
+    ko.bindingHandlers.datepicker = {
+      init: function(element, valueAccessor, allBindingsAccessor) {
+        //initialize datepicker with some optional options
+        var options = allBindingsAccessor().datepickerOptions || {};
+        $(element).datepicker(options);
+          
+        //handle the field changing
+        ko.utils.registerEventHandler(element, "change", function () {
+          var observable = valueAccessor();
+          observable($(element).datepicker("getDate"));
+        });
+        
+        //handle disposal (if KO removes by the template binding)
+        ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
+          $(element).datepicker("destroy");
+        });
+    
+      },
+      //update the control when the view model changes
+      update: function(element, valueAccessor) {
+        var value = ko.utils.unwrapObservable(valueAccessor()),
+            current = $(element).datepicker("getDate");
+        
+        if (value - current !== 0) {
+          $(element).datepicker("setDate", value);   
+        }
+      }
+    };
+
     function BlogPost(id, title, blogText, createdDate, authorID) {
       var self = this;
       self.TYPE = ko.observable("blog");
@@ -119,28 +153,37 @@
       self.BlogURL = "@Url.Action("Item", "Blog")";
       self.QuoteURL = "@Url.Action("Item", "Quote")";
 
-      self.searchResults = ko.observableArray();
+      self.factResults = ko.observableArray();
+      self.opinionResults = ko.observableArray();
       self.sections = ko.observableArray();
+      self.startDate = ko.observable(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000));
+      self.endDate = ko.observable(new Date(Date.now()));
       this.Submit = function () {
-        var param = ko.toJSON(self.sections);
+        var param = ko.toJS(self.sections);
         $.post(
           "@Url.Action("RequestData", "Topic")",
-          { everything: param },
+          { paramJson: JSON.stringify(
+            { CheckBoxSections: param, 
+            StartDate: self.startDate().getFullYear() + "-" + (self.startDate().getMonth() + 1) + "-" + self.startDate().getDate() + "T04:00:00Z", 
+            EndDate: self.endDate().getFullYear() + "-" + (self.endDate().getMonth() + 1) + "-" + self.endDate().getDate() + "T04:00:00Z", 
+            Topics: [] }) },
           function (data) {
-            vm.searchResults([]);
+            vm.factResults([]);
+            vm.opinionResults([]);
             data.forEach(function (topic) {
               var JStopic = JSON.parse(topic);
+              var collection = JStopic.IsOpinion ? vm.opinionResults : vm.factResults;
               if (JStopic.Type == "blog") {
                 console.log(JStopic);
-                vm.searchResults.push(new BlogPost(JStopic.Data.ID, JStopic.Data.Title, JStopic.Data.BlogText, JStopic.Data.CreatedDate, JStopic.Data.AuthorID));
+                collection.push(new BlogPost(JStopic.Data.ID, JStopic.Data.Title, JStopic.Data.BlogText, JStopic.Data.CreatedDate, JStopic.Data.AuthorID));
               }
               else if (JStopic.Type == "quote") {
                 console.log(JStopic);
-                vm.searchResults.push(new QuotePost(JStopic.Data.ID, JStopic.Data.Title, JStopic.Data.QuoteText, JStopic.Data.CreatedDate, JStopic.Data.AuthorID));
+                collection.push(new QuotePost(JStopic.Data.ID, JStopic.Data.Title, JStopic.Data.QuoteText, JStopic.Data.CreatedDate, JStopic.Data.AuthorID));
               }
               else if (JStopic.Type == "video") {
                 console.log(JStopic);
-                vm.searchResults.push(new VideoPost(JStopic.Data.ID, JStopic.Data.Title, JStopic.Data.VideoURL, JStopic.Data.IsOpinion, JStopic.Data.CreatedDate));
+                collection.push(new VideoPost(JStopic.Data.ID, JStopic.Data.Title, JStopic.Data.VideoURL, JStopic.Data.IsOpinion, JStopic.Data.CreatedDate));
               }
             });
             //window.location.href = "@Url.Action("Success")"
