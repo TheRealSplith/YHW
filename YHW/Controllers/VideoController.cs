@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using YHW.Models.Content;
 using YHW.Models;
 
 namespace YHW.Controllers
 {
-    public class BlogController : Controller
+    public class VideoController : Controller
     {
         //
-        // GET: /Blog/
+        // GET: /Video/
 
         public ActionResult Index()
         {
@@ -22,7 +21,7 @@ namespace YHW.Controllers
         {
             using (var context = new SocialContext())
             {
-                var result = context.BlogPost.Where(b => b.ID == id).FirstOrDefault();
+                var result = context.VideoPost.Where(b => b.ID == id).FirstOrDefault();
                 if (result == null)
                     return RedirectToAction("Http404", "Status", new { id = id.ToString() });
                 else
@@ -30,10 +29,12 @@ namespace YHW.Controllers
             }
         }
 
+
         [Authorize]
         public ActionResult New()
         {
             return View();
         }
+
     }
 }

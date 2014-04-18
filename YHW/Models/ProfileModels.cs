@@ -21,8 +21,8 @@ namespace YHW.Models
 
     public class YHWProfile
     {
-        [Key]
-        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)]
+        public Int32 ID { get; set; }
+        [Required]
         public String UserName { get; set; }
         [Required]
         public String FirstName { get; set; }
@@ -35,5 +35,6 @@ namespace YHW.Models
         public String FacebookLink { get; set; }
         public String TwitterLink { get; set; }
         public String LinkedIn { get; set; }
+        public String Title { get; set; }
     }
 }

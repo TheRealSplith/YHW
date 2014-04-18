@@ -1,0 +1,39 @@
+﻿@model YHW.Models.YHWProfile
+
+
+<div class="row">
+  <div class="col-xs-4 col-sm-2 col-md-2">
+    <img width="100" src="@Url.Content(Model.PortraitURL)" />
+
+  </div>
+  <div class="col-xs-6 col-sm-3 col-md-4">
+    <span><strong>@Html.Encode(Model.FirstName) @Html.Encode(Model.LastName)</strong></span><br />
+    <span>@Model.Title</span>
+    <ul>
+      @if (!String.IsNullOrEmpty(Model.FacebookLink))
+      {
+        <li style="display:inline-block">
+          <a href="@Model.FacebookLink" class="btn btn-social-icon btn-facebook">
+            <i class="fa fa-facebook"></i>
+          </a>
+        </li>
+      }
+      @if (!String.IsNullOrEmpty(Model.TwitterLink))
+      {
+        <li style="display:inline-block">
+          <a href="@Model.TwitterLink" class="btn btn-social-icon btn-twitter">
+            <i class="fa fa-twitter"></i>
+          </a>
+        </li>
+      }
+      @if (!string.IsNullOrEmpty(Model.LinkedIn))
+      {
+        <li style="display:inline-block">
+          <a href="@Model.LinkedIn" class="btn btn-social-icon btn-linkedin">
+            <i class="fa fa-linkedin"></i>
+          </a>
+        </li>
+      }
+    </ul>
+  </div>
+</div>

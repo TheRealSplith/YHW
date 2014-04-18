@@ -19,7 +19,7 @@ namespace YHW.Controllers
 
             using (var content = new SocialContext())
             {
-                var results = (from b in content.BlogPost
+                var results = (from b in content.BlogPost.Where(b => !String.IsNullOrEmpty(b.ImageURL))
                                select new
                                    {
                                        ID = b.ID,
@@ -27,7 +27,7 @@ namespace YHW.Controllers
                                        CreatedDate = b.CreatedDate
                                    })
                               .Concat(
-                                from q in content.QuotePost
+                                from q in content.QuotePost.Where(q => !String.IsNullOrEmpty(q.ImageURL))
                                 select new
                                     {
                                         ID = q.ID,
@@ -35,7 +35,7 @@ namespace YHW.Controllers
                                         CreatedDate = q.CreatedDate
                                     })
                               .Concat(
-                                from v in content.VideoPost
+                                from v in content.VideoPost.Where(v => !String.IsNullOrEmpty(v.ImageURL))
                                 select new
                                     {
                                         ID = v.ID,
@@ -86,6 +86,13 @@ namespace YHW.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+        #endregion
+
+        #region "Partial"
+        public PartialViewResult ContentAuthorView(YHWProfile author)
+        {
+            return PartialView(author);
         }
         #endregion
 

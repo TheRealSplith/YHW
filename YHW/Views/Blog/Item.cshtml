@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_LayoutRightTwitter.cshtml";
 }
 
-<h2>@Model.Title &nbsp;<small>@Model.CreatedDate</small></h2>
+<h2>@Model.Title &nbsp;<small>@Model.CreatedDate.Date.ToString("D")</small></h2>
 
 @foreach (var item in Model.BlogText.Split('\n'))
 {

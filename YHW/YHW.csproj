@@ -182,12 +182,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\api\BlogAPIController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuoteController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
+    <Compile Include="Controllers\SubmitController.cs" />
     <Compile Include="Controllers\TopicController.cs" />
+    <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -200,7 +203,7 @@
     <Compile Include="Models\SharedViews\TextColumnWithHeaderVM.cs" />
     <Compile Include="Models\SocialContext.cs" />
     <Compile Include="Models\StatusModels.cs" />
-    <Compile Include="Models\TeamView.cs" />
+    <Compile Include="Models\ProfileModels.cs" />
     <Compile Include="Models\TopicModels.cs" />
     <Compile Include="Models\Content\VideoModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -375,6 +378,11 @@
     <Content Include="Views\Quote\Item.cshtml" />
     <Content Include="Views\Shared\_LayoutRightTwitter.cshtml" />
     <Content Include="Views\Shared\_LayoutHiddenTwitter.cshtml" />
+    <Content Include="Views\Home\ContentAuthorView.cshtml" />
+    <Content Include="Views\Submit\Index.cshtml" />
+    <Content Include="Views\Quote\New.cshtml" />
+    <Content Include="Views\Blog\New.cshtml" />
+    <Content Include="Views\Video\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
