@@ -39,7 +39,7 @@ namespace YHW.Models
         public DbSet<YHWProfile> UserProfile { get; set; }
     }
 
-    public class SocialContextInit : DropCreateDatabaseAlways<SocialContext>
+    public class SocialContextInit : DropCreateDatabaseIfModelChanges<SocialContext>
     {
         protected override void Seed(SocialContext context)
         {

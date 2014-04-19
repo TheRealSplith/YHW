@@ -3,4 +3,78 @@
     Layout = "~/Views/Shared/_LayoutHiddenTwitter.cshtml";
 }
 
-<h2>New</h2>
+
+<div class="row" style="padding-bottom:10px; padding-top:10px;">
+  <form role="form" class="form-horizontal">
+    <div class="col-md-offset-3" data-bind="css: { 'has-error': !Title.isValid() && Title.isModified() }">
+      <div class="form-group">
+        <label for="inputTitle" class="col-sm-2 control-label">Title</label>
+        <div class="col-sm-8 col-md-8">
+          <input data-bind="value: Title" class="form-control" id="inputTitle" placeholder="Title" />
+          <span class="help-block" data-bind="validationMessage: Title"></span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-offset-3" data-bind="css: { 'has-error': !BlogText.isValid() && BlogText.isModified() }">
+      <div class="form-group">
+        <label for="inputSubText" class="col-sm-2 control-label">Blog Text</label>
+        <div class="col-sm-8 col-md-8">
+          <textarea data-bind="value: BlogText" class="form-control" id="inputSubText" placeholder="Body of Blog Post"></textarea>
+          <span class="help-block" data-bind="validationMessage: BlogText"></span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-offset-3">
+      <div class="form-group">
+        <label for="inputOpinion" class="col-sm-2 control-label">Opinion</label>
+        <div class="col-sm-4 col-md-4">
+          <input type="checkbox" data-bind="checked: Opinion" />
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-offset-2">
+      <button class="btn btn-default" data-bind="click: Submit, enable: validationModel.isValid()">Submit</button>
+    </div>
+  </form>
+</div>
+
+@section scripts {
+  <script type="text/javascript">
+    function FeedbackFormVM() {
+      var self = this;
+      this.Title = ko.validatedObservable("").extend({ required: true });
+      this.BlogText = ko.validatedObservable("").extend({ required: true });
+      this.Opinion = ko.validatedObservable(true);
+
+      this.validationModel = ko.validatedObservable({
+        title: self.Title,
+        subText: self.BlogText
+      });
+
+      this.Submit = function () {
+        $.post(
+          "@Url.Action("New", "Blog")",
+          {
+            ID: -1, ThumbURL: "", ImageURL: "", Title: self.Title(), SubText: null, BlogText: self.BlogText(),
+            CreatedDate: null, AuthorID: null, IsOpinion: self.Opinion()
+          },
+          function (data) {
+            if (data.Success == true)
+              window.location.href = data.Redirect;
+          }).error(function () {
+            console.log("Error");
+          });
+      };
+    }
+
+    ko.validation.configure({
+      registerExtenders: true,
+      insertMessages: false
+    });
+    ko.validation.init({ messagesOnModified: false, grouping: { deep: true, observable: true } });
+
+    // init
+    var vm = new FeedbackFormVM();
+    ko.applyBindings(vm);
+  </script>
+}

@@ -41,10 +41,10 @@
         <button class="btn btn-default" data-bind="click: SubmitLogin, enable: loginValidation.isValid()">Submit</button>
       </div>
     </div>
-    <section class="social" id="socialLoginForm">
-      @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-    </section>
   </form>
+  <section class="social" id="socialLoginForm">
+    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+  </section>
 </div>
 
 <h2>Register</h2>
