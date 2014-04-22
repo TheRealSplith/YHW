@@ -1,0 +1,30 @@
+﻿@model YHW.Models.Content.Quote
+
+<div class="col-md-8 col-md-12" style="padding-top:10px;">
+  <div class="row">
+    <div class="col-xs-12">
+      @if (!String.IsNullOrEmpty(Model.Author.PortraitURL))
+      {
+        <img style="float:left;padding-right:5px;" src="@Url.Content(Model.Author.PortraitURL)" width="100" />
+        <span><a style="color:black;" href="@Url.Action("Item", "Quote", new { id = Model.ID})">@Model.SubText</a></span>
+        <br />
+      }
+      else
+      {
+        <span><a style="color:black;" href="@Url.Action("Item", "Quote", new { id = Model.ID})">@Model.SubText</a></span>
+      }
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-9">
+      <p>@Model.Author.FirstName @Model.Author.LastName</p>
+    </div>
+    <div class="col-md-3">
+      @{
+        var s = "http://youheardwrong.org" + Url.Action("Item", "Model", new { id = Model.ID });
+      }
+      <div class="fb-like" data-href="@s" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></div>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="@s" data-via="youheardwrong" data-lang="en">Tweet</a>
+    </div>
+  </div>
+</div>

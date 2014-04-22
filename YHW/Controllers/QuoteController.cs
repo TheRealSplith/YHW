@@ -23,7 +23,9 @@ namespace YHW.Controllers
         {
             using (var context = new SocialContext())
             {
-                var result = context.QuotePost.Include(q => q.Author).Where(b => b.ID == id).FirstOrDefault();
+                var result = context.QuotePost
+                    .Include(q => q.Author)
+                    .Where(b => b.ID == id).FirstOrDefault();
                 if (result == null)
                     return RedirectToAction("Http404", "Status", new { id = id.ToString() });
                 else

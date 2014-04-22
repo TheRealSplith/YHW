@@ -391,6 +391,10 @@
     <Content Include="Views\Topic\Generic.cshtml" />
     <Content Include="Views\Topic\Quote.cshtml" />
     <Content Include="Views\Topic\Blog.cshtml" />
+    <Content Include="Views\Shared\BlogItemPartial.cshtml" />
+    <Content Include="Views\Shared\QuoteItemPartial.cshtml" />
+    <Content Include="Views\Shared\VideoItemPartial.cshtml" />
+    <Content Include="Views\Video\Item.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

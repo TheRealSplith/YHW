@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 using YHW.Models;
 
 namespace YHW.Controllers
@@ -21,14 +22,15 @@ namespace YHW.Controllers
         {
             using (var context = new SocialContext())
             {
-                var result = context.VideoPost.Where(b => b.ID == id).FirstOrDefault();
+                var result = context.VideoPost
+                    .Include(v => v.Author)
+                    .Where(b => b.ID == id).FirstOrDefault();
                 if (result == null)
                     return RedirectToAction("Http404", "Status", new { id = id.ToString() });
                 else
                     return View(result);
             }
         }
-
 
         [Authorize]
         public ActionResult New()
