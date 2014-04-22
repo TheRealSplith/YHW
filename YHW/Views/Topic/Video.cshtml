@@ -10,6 +10,12 @@ else
   <span style="font-size:large; font-weight:bold; padding-left: 50px;">/ Fact <small>/ Video</small></span>
 }
 
+@* If there are no items, display a message indicating such *@
+@if (Model.Count == 0)
+{
+  <h2>No items found, Try another search!</h2>
+}
+
 @foreach (var video in Model)
 {
   <div class="col-md-6 col-md-12">
@@ -17,12 +23,12 @@ else
             src="@video.VideoURL" 
             frameborder="0" allowfullscreen></iframe>
     <div class="col-md-9">
-      <span style="font-size:large;font-weight:bold;">@video.Title</span>
+      <span style="font-size:large;font-weight:bold;"><a style="color:black;" href="@Url.Action("Item", "Blog", new { id = video.ID})">@video.Title</a></span>
       <p>@video.Author.FirstName @video.Author.LastName</p>
     </div>
     <div class="col-md-3">
       @{ 
-        var s = "http://youheardwrong.org" + Url.Action("Index", "Video", new { id = video.ID });
+        var s = "http://youheardwrong.org" + Url.Action("Item", "Video", new { id = video.ID });
       }
       <div class="fb-like" data-href="@s" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></div>
       <a href="https://twitter.com/share" class="twitter-share-button" data-url="@s" data-via="youheardwrong" data-lang="en">Tweet</a>

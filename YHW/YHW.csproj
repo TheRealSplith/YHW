@@ -389,6 +389,8 @@
     <Content Include="Views\Topic\TopicFilter.cshtml" />
     <Content Include="Views\Topic\Video.cshtml" />
     <Content Include="Views\Topic\Generic.cshtml" />
+    <Content Include="Views\Topic\Quote.cshtml" />
+    <Content Include="Views\Topic\Blog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,49 @@
+﻿@model List<YHW.Models.Content.Blog>
+
+<div style="font-size:xx-large; font-weight:bold">Common Core</div>
+@if (ViewBag.isOpinion == true)
+{
+  <span style="font-size:large; font-weight:bold; padding-left: 50px;">/ Opinion <small>/ Article</small></span>
+}
+else
+{
+  <span style="font-size:large; font-weight:bold; padding-left: 50px;">/ Fact <small>/ Article</small></span>
+}
+
+@* If there are no items, display a message indicating such *@
+@if (Model.Count == 0)
+{
+  <h2>No items found, Try another search!</h2>
+}
+
+@foreach (var quote in Model)
+{
+  <div class="col-md-8 col-md-12" style="padding-top:10px;">
+    <div class="row">
+      <div class="col-xs-12">
+        @if (!String.IsNullOrEmpty(quote.Author.PortraitURL))
+        {
+          <img style="float:left;padding-right:5px;" src="@Url.Content(quote.Author.PortraitURL)" width="100" />
+          <a style="color:black;" href="@Url.Action("Item", "Blog", new { id = quote.ID})">@quote.SubText</a>
+          <br />
+        }
+        else
+        {
+          <span><a style="color:black;" href="@Url.Action("Item", "Blog", new { id = quote.ID})">@quote.SubText</a></span>
+        }
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-9">
+        <p>@quote.Author.FirstName @quote.Author.LastName</p>
+      </div>
+      <div class="col-md-3">
+        @{
+          var s = "http://youheardwrong.org" + Url.Action("Item", "Blog", new { id = quote.ID });
+        }
+        <div class="fb-like" data-href="@s" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></div>
+        <a href="https://twitter.com/share" class="twitter-share-button" data-url="@s" data-via="youheardwrong" data-lang="en">Tweet</a>
+      </div>
+    </div>
+  </div>
+}

@@ -70,6 +70,32 @@ namespace YHW.Controllers
                 return PartialView(videos.ToList());
             }
         }
+
+        public PartialViewResult Quote(String header)
+        {
+            Boolean isOpinion = header == "opinion";
+            using (var context = new SocialContext())
+            {
+                var quotes = context.QuotePost
+                    .Include(v => v.Author)
+                    .Where(v => v.IsOpinion == isOpinion);
+                ViewBag.isOpinion = isOpinion;
+                return PartialView(quotes.ToList());
+            }
+        }
+
+        public PartialViewResult Blog(String header)
+        {
+            Boolean isOpinion = header == "opinion";
+            using (var context = new SocialContext())
+            {
+                var blogs = context.BlogPost
+                    .Include(v => v.Author)
+                    .Where(v => v.IsOpinion == isOpinion);
+                ViewBag.isOpinion = isOpinion;
+                return PartialView(blogs.ToList());
+            }
+        }
         #endregion
 
         #region "Helper Methods"
