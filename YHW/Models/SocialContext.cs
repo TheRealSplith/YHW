@@ -15,12 +15,17 @@ namespace YHW.Models
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Blog>()
-                .HasOptional(b => b.Author)
+                .HasRequired(b => b.Author)
                 .WithMany()
                 .HasForeignKey(b => b.AuthorID);
 
             modelBuilder.Entity<Quote>()
-                .HasOptional(b => b.Author)
+                .HasRequired(b => b.Author)
+                .WithMany()
+                .HasForeignKey(b => b.AuthorID);
+
+            modelBuilder.Entity<Quote>()
+                .HasRequired(b => b.Author)
                 .WithMany()
                 .HasForeignKey(b => b.AuthorID);
         }
@@ -34,11 +39,31 @@ namespace YHW.Models
         public DbSet<YHWProfile> UserProfile { get; set; }
     }
 
-    public class SocialContextInit : DropCreateDatabaseAlways<SocialContext>
+    public class SocialContextInit : DropCreateDatabaseIfModelChanges<SocialContext>
     {
         protected override void Seed(SocialContext context)
         {
             base.Seed(context);
+
+            context.UserProfile.Add(
+                new YHWProfile
+                {
+                    UserName = "billmcg90@gmail.com",
+                    FirstName = "William",
+                    LastName = "McGraw",
+                    Birthday = new DateTime(1990, 5, 22),
+                    FacebookLink = "",
+                    PortraitURL = "~/Content/images/WilliamMcGrawPortrait.jpg",
+                    TwitterLink = "http://twitter.com/therealsplith",
+                    IsMale = true,
+                    LinkedIn = "",
+                    Title = "Chief Technology Officer"
+                });
+            context.SaveChanges();
+
+            var rootUser = context.UserProfile.Where(u => u.UserName == "billmcg90@gmail.com").FirstOrDefault();
+            if (rootUser == null)
+                throw new KeyNotFoundException();
 
             context.BlogPost.Add(
                 new Blog
@@ -55,7 +80,8 @@ namespace YHW.Models
                     IsOpinion = true,
                     ImageURL = "~/Content/images/Common-Core-350x200.jpg",
                     SubText = "Common Core Standards Leave Parents Feeling Powerless",
-                    CreatedDate = DateTime.Now
+                    CreatedDate = DateTime.Now,
+                    Author = rootUser
                 });
             context.QuotePost.Add(
                 new Quote 
@@ -64,16 +90,18 @@ namespace YHW.Models
                     IsOpinion = false,
                     ImageURL = "~/Content/images/Common-Core-350x200.jpg",
                     SubText = "The Common Core Standards do not include guidelines for sex education.",
-                    CreatedDate = DateTime.Now
+                    CreatedDate = DateTime.Now,
+                    Author = rootUser
                 });
             context.QuotePost.Add(
                 new Quote 
                 {
-                    Title = "Standards teach what kids should know, not how they should learn",
-                    SubText = "The Standards establish what students need to learn but do not dictate how teachers should teach. Instead, schools and teachers will decide how best to help students reach the standards.",
+                    Title = "Common Core Standards Establish What To Teach, Not How To Teach",
+                    SubText = "\"The Standards establish what students need to learn but do not dictate how teachers should teach. Instead, schools and teachers will decide how best to help students reach the standards.\" - CoreStandards.org",
                     IsOpinion = false,
                     ImageURL = "~/Content/images/Common-Core-350x200.jpg",
-                    CreatedDate = DateTime.Now
+                    CreatedDate = DateTime.Now,
+                    Author = rootUser
                 });
             context.VideoPost.Add(
                 new Video
@@ -83,7 +111,8 @@ namespace YHW.Models
                     IsOpinion = true,
                     ImageURL = "~/Content/images/Common-Core-350x200.jpg",
                     SubText = "Watch our latest video on the Common Core!",
-                    CreatedDate = DateTime.Now
+                    CreatedDate = DateTime.Now,
+                    Author = rootUser
                 });
             context.YHWTeam.Add(
                 new TeamProfile

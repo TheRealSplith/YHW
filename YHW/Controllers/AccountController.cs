@@ -109,7 +109,6 @@ namespace YHW.Controllers
         // POST: /Account/Disassociate
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Disassociate(string provider, string providerUserId)
         {
             string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);
@@ -153,7 +152,6 @@ namespace YHW.Controllers
         // POST: /Account/Manage
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Manage(LocalPasswordModel model)
         {
             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
@@ -217,7 +215,6 @@ namespace YHW.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
             return new ExternalLoginResult(provider, Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));

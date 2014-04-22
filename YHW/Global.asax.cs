@@ -27,12 +27,12 @@ namespace YHW
 
             Database.SetInitializer(new YHW.Models.SocialContextInit());
 
+            /*
             using (var context = new YHW.Models.SocialContext())
             {
-                //if (context.Database.Exists() && !context.Database.CompatibleWithModel(false))
-                    //context.Database.Delete();
                 context.Database.Initialize(false);
             }
+            */
         }
     }
 }

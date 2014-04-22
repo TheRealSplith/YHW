@@ -34,17 +34,17 @@
     <div class="row" style="margin-bottom:5px;">
       <div class="col-sm-offset-1 col-sm-5">
         <label>
-          <input type="checkbox" data-bind="value: RememberMe" />  Remember Me?
+          <input type="checkbox" data-bind="checked: RememberMe" />  Remember Me?
         </label>
       </div>
       <div class="col-sm-offset-1 col-sm-5">
         <button class="btn btn-default" data-bind="click: SubmitLogin, enable: loginValidation.isValid()">Submit</button>
       </div>
     </div>
-    <section class="social" id="socialLoginForm">
-      @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-    </section>
   </form>
+  <section class="social" id="socialLoginForm">
+    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+  </section>
 </div>
 
 <h2>Register</h2>
@@ -63,6 +63,8 @@
           <span class="help-block" data-bind="validationMessage: rFirstName"></span>
         </div>
       </div>
+    </div>
+    <div class="form-group">
       <div data-bind="css: { 'has-error': !rLastName.isValid() && rLastName.isModified() }">
         <label for="inputrLastName" class="col-sm-2 control-label">Last Name</label>
         <div class="col-sm-4 col-md-4">

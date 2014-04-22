@@ -18,7 +18,7 @@ namespace YHW.Models.Content
         public Boolean IsOpinion { get; set; }
 
         [Newtonsoft.Json.JsonIgnore]
-        public virtual TeamProfile Author { get; set; }
+        public virtual YHWProfile Author { get; set; }
         [NotMapped]
         public String TypeName
         {

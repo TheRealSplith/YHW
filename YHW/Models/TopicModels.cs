@@ -5,6 +5,13 @@ using System.Web;
 
 namespace YHW.Models
 {
+    public class TopicParams
+    {
+        public IList<String> Topics { get; set; }
+        public IList<TopicSideBarCBSection> CheckBoxSections { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+    }
     public class TopicSideBar
     {
         public TopicSideBar()

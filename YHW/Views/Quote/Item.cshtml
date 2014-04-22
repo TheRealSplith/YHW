@@ -4,12 +4,18 @@
     Layout = "~/Views/Shared/_LayoutRightTwitter.cshtml";
 }
 
-<h2>@Model.Title &nbsp;<small>@Model.CreatedDate</small></h2>
 
-@if (!String.IsNullOrEmpty(Model.QuoteText))
+<h2 class="text-center">@Model.Title </h2>
+<h3><small>@Model.CreatedDate.Date.ToString("D")</small></h3>
+
+@if (!String.IsNullOrEmpty(Model.SubText))
 {
-  foreach (var item in Model.QuoteText.Split('\n'))
+  foreach (var item in Model.SubText.Split('\n'))
   {
     <p>@item</p>
   }
 }
+
+<hr />
+<h4>Posted By</h4>
+@Html.Action("ContentAuthorView", "Home", new { author = Model.Author })

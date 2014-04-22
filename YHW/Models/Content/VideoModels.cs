@@ -18,7 +18,7 @@ namespace YHW.Models.Content
         public DateTime CreatedDate { get; set; }
         public Int32? AuthorID { get; set; }
         [Newtonsoft.Json.JsonIgnore]
-        public virtual TeamProfile Author { get; set; }
+        public virtual YHWProfile Author { get; set; }
         [NotMapped]
         public String TypeName 
         {
