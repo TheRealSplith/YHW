@@ -1,0 +1,20 @@
+﻿@model YHW.Models.TopicSideBar
+
+<ul class="YHW-topic">
+  @foreach (var category in Model.CBSections)
+  {
+    var categoryClass = category.IsActive ? "YHW-topic-active" : "YHW-topic";
+    <li class="@categoryClass">
+      @Html.ActionLink(category.Header, category.Action, new { id = "" })
+      <ul class="YHW-topic">
+        @foreach (var content in category.ChildItems)
+        {
+          var contentclass = content.IsActive ? "YHW-topic-active" : "YHW-topic";
+          <li class="@contentclass">
+            @Html.ActionLink(content.Label, category.Action, new { id = content.Action })
+          </li>
+        }
+      </ul>
+    </li>
+  }
+</ul>

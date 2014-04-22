@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 using YHW.Models.SharedViews;
 using YHW.Models.Content;
 using YHW.Models;
@@ -14,96 +15,97 @@ namespace YHW.Controllers
         //
         // GET: /Topics/
 
+        #region "Entry Requests"
         public ActionResult Index()
         {
-            var model = TopicFilter();
-            return View(model);
+            var vm = new IndexVM("", "");
+            return View(vm);
         }
 
-        [HttpPost]
-        public JsonResult RequestData(String paramJson)
+        public ActionResult Fact(String id = "")
         {
-            var result = Newtonsoft.Json.JsonConvert.DeserializeObject<TopicParams>(paramJson);
-            // Add one day to end date so it will include that day
-            result.EndDate = result.EndDate.Value.AddDays(1);
-
-            IList<ITopicContent> TopicResults = new List<ITopicContent>();
-            List<string> JsonResult = new List<string>();
-            foreach(var section in result.CheckBoxSections)
-            {
-                var isOpinion = section.Header == "Opinion";
-                foreach(var item in section.ChildItems.Where(c => c.IsActive))
-                {
-                    using (var context = new SocialContext())
-                    {
-                        switch (item.Label)
-                        {
-                            case "Blog":
-                                var blogPosts = context.BlogPost
-                                    .Where(b => b.IsOpinion == isOpinion && b.CreatedDate > result.StartDate && b.CreatedDate < result.EndDate);
-                                foreach (var res in blogPosts)
-                                    TopicResults.Add(res);
-                                break;
-                            case "Quote":
-                                var quotePosts = context.QuotePost
-                                    .Where(q => q.IsOpinion == isOpinion && q.CreatedDate > result.StartDate && q.CreatedDate < result.EndDate);
-                                foreach (var res in quotePosts)
-                                    TopicResults.Add(res);
-                                break;
-                            case "Video":
-                                var videoPosts = context.VideoPost
-                                    .Where(p => p.IsOpinion == isOpinion && p.CreatedDate > result.StartDate && p.CreatedDate < result.EndDate);
-                                foreach (var res in videoPosts)
-                                    TopicResults.Add(res);
-                                break;
-                        };
-                    }
-                }
-            }
-
-            foreach(var item in TopicResults.OrderByDescending(i => i.CreatedDate))
-            {
-                JsonResult.Add(
-                    Newtonsoft.Json.JsonConvert.SerializeObject(
-                        new { Type = item.TypeName.ToLower(), IsOpinion = item.IsOpinion, Data = item }
-                        ));
-            }
-
-            return Json(JsonResult.ToArray());
+            var vm = new IndexVM("fact", id);
+            return View("Index", vm);
         }
 
-        public static TopicSideBar TopicFilter()
+        public ActionResult Opinion(String id = "")
         {
+            var vm = new IndexVM("opinion", id);
+            return View("Index", vm);
+        }
+        #endregion
+
+        #region "View Models"
+        public class IndexVM
+        {
+            public IndexVM(String header, String content)
+            {
+                Header = header;
+                Content = content;
+            }
+            public String Header { get; set; }
+            public String Content { get; set; }
+        }
+        #endregion
+
+        #region "Content Views"
+        public PartialViewResult Generic(String header)
+        {
+            Boolean isOpinion = header == "opinion";
+            using (var context = new SocialContext())
+            {
+                ViewBag.isOpinion = isOpinion;
+                return PartialView();
+            }
+        }
+        public PartialViewResult Video(String header)
+        {
+            Boolean isOpinion = header == "opinion";
+            using (var context = new SocialContext())
+            {
+                var videos = context.VideoPost
+                    .Include(v => v.Author)
+                    .Where(v => v.IsOpinion == isOpinion);
+                ViewBag.isOpinion = isOpinion;
+                return PartialView(videos.ToList());
+            }
+        }
+        #endregion
+
+        #region "Helper Methods"
+        public PartialViewResult TopicFilter(String header = "", String content = "")
+        {
+            var isOpinion = header == "opinion";
+            var isFact = header == "fact";
+
             var data = new TopicSideBar();
             data.CBSections.Add(
-                new TopicSideBarCBSection
+                new TopicSideBarCBSection("Opinion", "opinion", isOpinion)
                 {
-                    Header = "Opinion",
                     ChildItems =
                     new List<TopicSideBarCBItem> 
                     {
-                        new TopicSideBarCBItem{ Label = "Blog"},
-                        new TopicSideBarCBItem{ Label = "Quote"},
-                        new TopicSideBarCBItem{ Label = "Video"},
-                        new TopicSideBarCBItem{ Label = "Statistics"}
+                        new TopicSideBarCBItem("Blog", "blog", "Opinion", content == "blog" && isOpinion),
+                        new TopicSideBarCBItem("Quote", "quote", "Opinion", content == "quote" && isOpinion),
+                        new TopicSideBarCBItem("Video", "video", "Opinion", content == "video" && isOpinion),
                     }
                 }
             );
             data.CBSections.Add(
-                new TopicSideBarCBSection
+                new TopicSideBarCBSection("Fact", "fact", isFact)
                 {
                     Header = "Fact",
                     ChildItems =
                     new List<TopicSideBarCBItem>
                     {
-                        new TopicSideBarCBItem{ Label = "Blog"},
-                        new TopicSideBarCBItem{ Label = "Quote"},
-                        new TopicSideBarCBItem{ Label = "Video"},
-                        new TopicSideBarCBItem{ Label = "Statistics"}
+                        new TopicSideBarCBItem("Blog", "blog", "Fact", content == "blog" && isFact),
+                        new TopicSideBarCBItem("Quote", "quote", "Fact", content == "quote" && isFact),
+                        new TopicSideBarCBItem("Video", "video", "Fact", content == "video" && isFact),
                     }
                 }
             );
-            return data;
+            return PartialView(data);
         }
+        #endregion
     }
 }

@@ -61,3 +61,41 @@ p {
   background: #333333;
   opacity:0.6;
 }
+
+ul.YHW-topic {
+  list-style-type:none;
+  margin-left:0px;
+  padding-left:10px;
+  font-size: 16px;
+}
+
+li.YHW-topic-active {
+  background-image: url(images/icon_li_active.png);
+  background-repeat: no-repeat;
+  background-position: 0px 2px;
+  padding-left: 16px;
+  margin-left: 0px;
+}
+  li.YHW-topic-active a {
+    color:black;
+    font-weight: bold;
+  }
+
+    li.YHW-topic-active a:hover {
+      text-decoration:none;
+    }
+
+li.YHW-topic {
+  background-image: url(images/icon_li.png);
+  background-repeat: no-repeat;
+  background-position: 0px 2px;
+  padding-left: 16px;
+  margin-left: 0px;
+}
+  li.YHW-topic a {
+    color:black;
+    font-weight: normal;
+  }
+      li.YHW-topic a:hover {
+      text-decoration:none;
+    }

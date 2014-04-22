@@ -220,7 +220,9 @@
     <Content Include="Content\images\carousel2.png" />
     <Content Include="Content\images\Common-Core-350x200.jpg" />
     <Content Include="Content\images\icon_facebook_32.png" />
+    <Content Include="Content\images\icon_li.png" />
     <Content Include="Content\images\icon_linkedin_32.png" />
+    <Content Include="Content\images\icon_li_active.png" />
     <Content Include="Content\images\icon_twitter_32.png" />
     <Content Include="Content\images\logo_name.jpg" />
     <Content Include="Content\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -384,6 +386,9 @@
     <Content Include="Views\Blog\New.cshtml" />
     <Content Include="Views\Video\New.cshtml" />
     <Content Include="Views\Blog\Success.cshtml" />
+    <Content Include="Views\Topic\TopicFilter.cshtml" />
+    <Content Include="Views\Topic\Video.cshtml" />
+    <Content Include="Views\Topic\Generic.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
