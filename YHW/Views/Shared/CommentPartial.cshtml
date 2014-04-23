@@ -1,0 +1,63 @@
+﻿@model YHW.Controllers.CommentController.CommentPartialVM
+
+@if (Request.IsAuthenticated)
+{
+  <div class="row">
+    <div class="col-sm-12">      
+      @using (Ajax.BeginForm("FormPost", "Comment", new AjaxOptions() { HttpMethod = "Post", InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace, UpdateTargetId = "MessageForm" }))
+      {
+        @Html.Hidden("ContentKey", Model.ContentKey)
+        <div class="form-group">
+          <textarea class="form-control" name="Message" id="Message" placeholder="Leave a Comment"></textarea>
+        </div>
+        <div class="form-group">
+          <input type="submit" value="Post Comment" class="btn btn-info" />
+        </div>
+      }
+    </div>
+  </div>
+}
+
+@{
+  Int32[,] counts = new Int32[Model.Comments.Count, 2];
+  for(Int32 i = 0; i < Model.Comments.Count; ++i)
+  {
+    counts[i, 0] = Model.Comments[i].Ratings.Count(r => r.IsPositive);
+    counts[i, 1] = Model.Comments[i].Ratings.Count(r => !r.IsPositive);
+
+    if (String.IsNullOrEmpty(Model.Comments[i].MyAuthor.PortraitURL))
+    {
+      <div class="row">
+        @Html.Raw(Json.Encode(Model.Comments[i].MyAuthor.FirstName + " " + Model.Comments[i].MyAuthor.LastName))
+      </div>
+      <div style="margin-bottom:10px;" class="row">
+        <div class="col-md-12">
+          <span>@Html.Raw(Json.Encode(Model.Comments[i].Message))</span>
+        </div>
+      </div>
+    }
+    else
+    {
+      <div style="margin-bottom:10px;" class="row">
+        <div class="col-md-2 col-sm-2">
+          <img width="100" src="@Url.Content(Model.Comments[i].MyAuthor.PortraitURL)" />
+        </div>
+        <div class="col-md-8 col-sm-8">
+          <div class="row">
+            <span style="font-weight:bold;">
+              @Model.Comments[i].MyAuthor.FirstName @Model.Comments[i].MyAuthor.LastName 
+              <small>@Model.Comments[i].CreationDate.ToShortDateString()</small>
+              @if (User.Identity.Name == Model.Comments[i].MyAuthor.UserName)
+              {
+                @Ajax.ActionLink("Delete", "Delete", "Comment", new { id = Model.Comments[i].ID }, new AjaxOptions { HttpMethod = "Delete", UpdateTargetId = "MessageForm", InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace }, null)
+              }
+            </span>
+          </div>
+          <div class="row">
+            <span>@Model.Comments[i].Message</span>
+          </div>
+        </div>
+      </div>
+    }
+  }
+}

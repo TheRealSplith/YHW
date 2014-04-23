@@ -28,6 +28,23 @@ namespace YHW.Models
                 .HasRequired(b => b.Author)
                 .WithMany()
                 .HasForeignKey(b => b.AuthorID);
+
+            /*
+            modelBuilder.Entity<Rating>()
+                .HasRequired(r => r.MyComment)
+                .WithMany()
+                .HasForeignKey(r => r.CommentID);
+            */
+
+            modelBuilder.Entity<Comment>()
+                .HasRequired(c => c.MyAuthor)
+                .WithMany()
+                .HasForeignKey(c => c.AuthorID);
+
+            modelBuilder.Entity<Comment>()
+                .HasMany(c => c.Ratings)
+                .WithRequired(r => r.MyComment)
+                .HasForeignKey(r => r.CommentID);
         }
         public DbSet<TeamProfile> YHWTeam { get; set; }
         public DbSet<Feedback> Feedback { get; set; }
@@ -37,6 +54,8 @@ namespace YHW.Models
         public DbSet<Quote> QuotePost { get; set; }
         public DbSet<Video> VideoPost { get; set; }
         public DbSet<YHWProfile> UserProfile { get; set; }
+        public DbSet<Comment> ContentComment { get; set; }
+        public DbSet<Rating> CommentRating { get; set; }
     }
 
     public class SocialContextInit : DropCreateDatabaseIfModelChanges<SocialContext>

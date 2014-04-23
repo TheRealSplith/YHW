@@ -10,3 +10,7 @@
 {
 <p>@item</p>
 }
+
+<div id="MessageForm">
+  @Html.Action("CommentPartial", "Comment", new { id = "Blog:" + Model.ID })
+</div>

@@ -184,6 +184,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\api\BlogAPIController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuoteController.cs" />
@@ -196,6 +197,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\CommentModels.cs" />
     <Compile Include="Models\Content\BlogModels.cs" />
     <Compile Include="Models\ContactModels.cs" />
     <Compile Include="Models\Content\QuoteModels.cs" />
@@ -395,6 +397,7 @@
     <Content Include="Views\Shared\QuoteItemPartial.cshtml" />
     <Content Include="Views\Shared\VideoItemPartial.cshtml" />
     <Content Include="Views\Video\Item.cshtml" />
+    <Content Include="Views\Shared\CommentPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

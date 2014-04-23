@@ -19,3 +19,7 @@
 <hr />
 <h4>Posted By</h4>
 @Html.Action("ContentAuthorView", "Home", new { author = Model.Author })
+
+<div id="MessageForm">
+  @Html.Action("CommentPartial", "Comment", new { id = "Quote:" + Model.ID })
+</div>

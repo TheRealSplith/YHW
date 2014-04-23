@@ -6,3 +6,7 @@
 }
 
 @Html.Partial("VideoItemPartial", Model)
+
+<div id="MessageForm">
+  @Html.Action("CommentPartial", "Comment", new { id = "Video:" + Model.ID })
+</div>
