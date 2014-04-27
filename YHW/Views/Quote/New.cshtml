@@ -14,7 +14,7 @@
         <div class="form-group">
           <label for="inputTitle" class="col-xs-offset-1 col-sm-2 control-label">Title</label>
           <div class="col-xs-offset-1 col-sm-offset-0 col-sm-8 col-md-8">
-            <input data-bind="value: Title" class="form-control" id="Title" placeholder="Title" />
+            <input data-bind="value: Title" class="form-control" name="Title" id="Title" placeholder="Title" />
             <span class="help-block" data-bind="validationMessage: Title"></span>
           </div>
         </div>
@@ -23,7 +23,7 @@
         <div class="form-group">
           <label for="inputSubText" class="col-xs-offset-1 col-sm-2 control-label">Quote Text</label>
           <div class="col-xs-offset-1 col-sm-offset-0 col-sm-8 col-md-8">
-            <textarea data-bind="value: SubText" class="form-control" id="SubText" placeholder="Body of Quote"></textarea>
+            <textarea data-bind="value: SubText" class="form-control" name="SubText" id="SubText" placeholder="Body of Quote"></textarea>
             <span>Don't forget to attribute your quote!</span>
             <span class="help-block" data-bind="validationMessage: SubText"></span>
           </div>
@@ -33,16 +33,16 @@
         <div class="form-group">
           <label for="inputOpinion" class="col-xs-offset-1 col-sm-2 control-label">Opinion</label>
           <div class="col-xs-offset-1 col-sm-offset-0 col-sm-4 col-md-4">
-            <input type="checkbox" id="IsOpinion" data-bind="checked: Opinion" />
+            <input type="checkbox" name="IsOpinion" id="IsOpinion" data-bind="checked: Opinion" />
           </div>
         </div>
         <div class="form-group">
           <label class="col-xs-offset-1 col-sm-2 control-label" for="ThumbURL">Upload Thumbnail</label>
-          <input type="file" name="file" id="ThumbFile" data-filename-placement="inside">
+          <input type="file" name="ThumbFile" id="ThumbFile" data-filename-placement="inside">
         </div>
         <div class="form-group">
           <label class="col-xs-offset-1 col-sm-2 control-label" for="ThumbURL">Upload Image</label>
-          <input type="file" name="file" id="ImageFile" data-filename-placement="inside">
+          <input type="file" name="ImageFile" id="ImageFile" data-filename-placement="inside">
           <span>JPG or PNG, 350 width x 200 height</span>
         </div>
       </div>

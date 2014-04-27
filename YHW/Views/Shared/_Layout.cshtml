@@ -46,10 +46,6 @@
             @*<li><a href="#">Events  </a></li>*@
             <li>@Html.ActionLink("Contact Us", "Index", "Contact")</li>
             @*<li><a href="#">Support  </a></li>*@
-            @if (Request.IsAuthenticated)
-            {
-              <li>@Html.ActionLink("Submit Content", "Index", "Submit")</li>
-            }
           </ul>
           <ul class="nav navbar-nav navbar-right" style="margin-right:5px;">
             @if (Request.IsAuthenticated)
@@ -65,11 +61,12 @@
                     </a>
                     <ul class="dropdown-menu">
                       <li>@Html.ActionLink("Manage", "Manage", "Home")</li>
+                      <li>@Html.ActionLink("Submit Content", "Index", "Submit")</li>
+                      <li><a id="logoff" href="#">Log Off</a></li>
                     </ul>
                   </li>
                 }
               }
-              <li><a id="logoff" href="#" >Log Off</a></li>
             }
             else
             {

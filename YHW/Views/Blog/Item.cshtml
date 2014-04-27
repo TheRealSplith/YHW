@@ -4,12 +4,17 @@
     Layout = "~/Views/Shared/_LayoutRightTwitter.cshtml";
 }
 
-<h2>@Model.Title &nbsp;<small>@Model.CreatedDate.Date.ToString("D")</small></h2>
+<h2 class="text-center">@Model.Title </h2>
+<h3><small>@Model.CreatedDate.Date.ToString("D")</small></h3>
 
 @foreach (var item in Model.BlogText.Split('\n'))
 {
 <p>@item</p>
 }
+
+<hr />
+<h4>Posted By</h4>
+@Html.Action("ContentAuthorView", "Home", new { author = Model.Author })
 
 <div id="MessageForm">
   @Html.Action("CommentPartial", "Comment", new { id = "Blog:" + Model.ID })

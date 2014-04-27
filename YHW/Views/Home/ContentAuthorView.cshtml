@@ -2,10 +2,17 @@
 
 
 <div class="row">
+@if (Model.PortraitURL != null)
+{
   <div class="col-xs-4 col-sm-2 col-md-2">
-    <img width="100" src="@Url.Content(Model.PortraitURL)" />
-
+    @{
+      String imageBase64 = Convert.ToBase64String(Model.PortraitURL);
+      String imageSrc = String.Format("data:image/jpg;base64,{0}", imageBase64);
+    }
+    <img width="100" src="@imageSrc" />
   </div>
+}
+
   <div class="col-xs-6 col-sm-3 col-md-4">
     <span><strong>@Html.Encode(Model.FirstName) @Html.Encode(Model.LastName)</strong></span><br />
     <span>@Model.Title</span>

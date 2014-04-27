@@ -7,7 +7,7 @@
       {
         String imageBase64 = Convert.ToBase64String(Model.Author.PortraitURL);
         String imageSrc = String.Format("data:image/jpg;base64,{0}", imageBase64);
-        <img style="float:left;padding-right:5px;" src="@imageSrc" height="75" width="100" />
+        <img style="float:left;padding-right:5px;" src="@imageSrc" width="100" />
         <span><a style="color:black;" href="@Url.Action("Item", "Quote", new { id = Model.ID})">@Model.SubText</a></span>
         <br />
       }

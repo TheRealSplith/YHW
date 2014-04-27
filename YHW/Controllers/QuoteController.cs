@@ -41,19 +41,19 @@ namespace YHW.Controllers
 
         [HttpPost]
         [Authorize]
-        public JsonResult New(NewQuoteVM vm)
+        public ActionResult New(NewQuoteVM vm)
         {
             Quote q = new Quote();
             using (var context = new SocialContext())
             {
                 q.Author = context.UserProfile.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
                 if (q.Author == null)
-                    return Json(new { Success = false, Error = "User not authenticated, try logging in again!" });
+                    RedirectToAction("Home", "Index");
 
                 q.CreatedDate = DateTime.Now;
                 q.Title = vm.Title;
                 q.SubText = vm.SubText;
-                q.IsOpinion = vm.IsOpinion;
+                q.IsOpinion = vm.IsOpinion == "on";
 
                 // ThumbImage
                 if (vm.ThumbFile != null)
@@ -80,7 +80,7 @@ namespace YHW.Controllers
 
                 context.QuotePost.Add(q);
                 context.SaveChanges();
-                return Json(new { Success = true, Redirect = Url.Action("Index", "Home") });
+                return RedirectToAction("Item", "Quote", new { id = q.ID });
             }
         }
 
@@ -88,7 +88,7 @@ namespace YHW.Controllers
         {
             public HttpPostedFileBase ThumbFile { get; set; }
             public HttpPostedFileBase ImageFile { get; set; }
-            public Boolean IsOpinion { get; set; }
+            public String IsOpinion { get; set; }
             public String SubText { get; set; }
             public String Title { get; set; }
         }

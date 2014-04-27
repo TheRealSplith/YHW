@@ -41,10 +41,13 @@ namespace YHW.Controllers
 
         [Authorize]
         [HttpPost]
-        public JsonResult New(Blog b)
+        public ActionResult New(NewBlogVM vm)
         {
+            Blog b = new Blog();
             using (var context = new SocialContext())
             {
+                b.BlogText = vm.BlogText;
+                b.Title = vm.Title;
                 // calculate SubText
                 int textLength = Math.Min(100, b.BlogText.Length);
                 b.SubText = b.BlogText.Substring(0, textLength);
@@ -53,16 +56,48 @@ namespace YHW.Controllers
 
                 b.Author = context.UserProfile.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
                 if (b.Author == null)
-                    return Json(new { Success = false, Error = "User not authenticated, try logging in again!" });
+                    return RedirectToAction("Home", "Index");
 
                 b.CreatedDate = DateTime.Now;
+                b.IsOpinion = vm.IsOpinion == "on";
+
+                // ThumbImage
+                if (vm.ThumbFile != null)
+                {
+                    using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                    {
+                        vm.ThumbFile.InputStream.CopyTo(ms);
+                        byte[] array = ms.GetBuffer();
+
+                        b.ThumbURL = array;
+                    }
+                }
+                // Image
+                if (vm.ImageFile != null)
+                {
+                    using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                    {
+                        vm.ImageFile.InputStream.CopyTo(ms);
+                        byte[] array = ms.GetBuffer();
+
+                        b.ImageURL = array;
+                    }
+                }
 
                 context.BlogPost.Add(b);
                 context.SaveChanges();
-                return Json(new { Success = true, Redirect = Url.Action("Success", "Blog") });
+                return RedirectToAction("Item", "Blog", new { id = b.ID });
             }
         }
 
+        public class NewBlogVM
+        {
+            public HttpPostedFileBase ThumbFile { get; set; }
+            public HttpPostedFileBase ImageFile { get; set; }
+            public String IsOpinion { get; set; }
+            public String BlogText { get; set; }
+            public String Title { get; set; }
+        }
         public ActionResult Success()
         {
             return View();
