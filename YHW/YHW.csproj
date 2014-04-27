@@ -311,6 +311,7 @@
     <Content Include="fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Scripts\bootstrap.file-input.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
@@ -398,6 +399,7 @@
     <Content Include="Views\Shared\VideoItemPartial.cshtml" />
     <Content Include="Views\Video\Item.cshtml" />
     <Content Include="Views\Shared\CommentPartial.cshtml" />
+    <Content Include="Views\Home\Manage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -424,7 +426,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>46492</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/topicyhw</IISUrl>
+          <IISUrl>http://localhost/testyhw</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

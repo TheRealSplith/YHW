@@ -25,37 +25,46 @@
     counts[i, 0] = Model.Comments[i].Ratings.Count(r => r.IsPositive);
     counts[i, 1] = Model.Comments[i].Ratings.Count(r => !r.IsPositive);
 
-    if (String.IsNullOrEmpty(Model.Comments[i].MyAuthor.PortraitURL))
+    if (Model.Comments[i].MyAuthor.PortraitURL == null)
     {
       <div class="row">
-        @Html.Raw(Json.Encode(Model.Comments[i].MyAuthor.FirstName + " " + Model.Comments[i].MyAuthor.LastName))
-      </div>
-      <div style="margin-bottom:10px;" class="row">
-        <div class="col-md-12">
-          <span>@Html.Raw(Json.Encode(Model.Comments[i].Message))</span>
+        <div class="col-md-8 col-sm-8">
+          <span style="font-weight:bold;">
+            @Html.Encode(Model.Comments[i].MyAuthor.FirstName + " " + Model.Comments[i].MyAuthor.LastName)
+            <small>@Model.Comments[i].CreationDate.ToShortDateString()</small>
+            @if (User.Identity.Name == Model.Comments[i].MyAuthor.UserName)
+            {
+              @Ajax.ActionLink("Delete", "Delete", "Comment", new { id = Model.Comments[i].ID }, new AjaxOptions { HttpMethod = "Delete", UpdateTargetId = "MessageForm", InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace }, null)
+            }
+          </span>
+        </div>
+        <div class="col-md-8 col-sm-8">
+          @Html.Encode(Model.Comments[i].Message)
         </div>
       </div>
     }
     else
     {
       <div style="margin-bottom:10px;" class="row">
-        <div class="col-md-2 col-sm-2">
-          <img width="100" src="@Url.Content(Model.Comments[i].MyAuthor.PortraitURL)" />
+        <div class="col-md-2 col-sm-2">          
+          @{
+          String imageBase64 = Convert.ToBase64String(Model.Comments[i].MyAuthor.PortraitURL);
+          String imageSrc = String.Format("data:image/jpg;base64,{0}", imageBase64);
+          }
+          <img style="float:left;padding-right:5px;" src="@imageSrc" height="57" width="100" />
         </div>
         <div class="col-md-8 col-sm-8">
-          <div class="row">
-            <span style="font-weight:bold;">
-              @Model.Comments[i].MyAuthor.FirstName @Model.Comments[i].MyAuthor.LastName 
-              <small>@Model.Comments[i].CreationDate.ToShortDateString()</small>
-              @if (User.Identity.Name == Model.Comments[i].MyAuthor.UserName)
-              {
-                @Ajax.ActionLink("Delete", "Delete", "Comment", new { id = Model.Comments[i].ID }, new AjaxOptions { HttpMethod = "Delete", UpdateTargetId = "MessageForm", InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace }, null)
-              }
-            </span>
-          </div>
-          <div class="row">
-            <span>@Model.Comments[i].Message</span>
-          </div>
+          <span style="font-weight:bold;">            
+            @Html.Encode(Model.Comments[i].MyAuthor.FirstName + " " + Model.Comments[i].MyAuthor.LastName)
+            <small>@Model.Comments[i].CreationDate.ToShortDateString()</small>
+            @if (User.Identity.Name == Model.Comments[i].MyAuthor.UserName)
+            {
+              @Ajax.ActionLink("Delete", "Delete", "Comment", new { id = Model.Comments[i].ID }, new AjaxOptions { HttpMethod = "Delete", UpdateTargetId = "MessageForm", InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace }, null)
+            }
+          </span>
+        </div>
+        <div class="col-md-8 col-sm-8" >
+          @Html.Encode(Model.Comments[i].Message)
         </div>
       </div>
     }

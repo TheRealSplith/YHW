@@ -41,8 +41,6 @@ namespace YHW.Controllers.api
                     Console.WriteLine(e.Message);
                 }
             }
-
-                
         }
     }
 }

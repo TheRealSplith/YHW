@@ -41,8 +41,9 @@ namespace YHW.Controllers
 
         [HttpPost]
         [Authorize]
-        public JsonResult New(Quote q)
+        public JsonResult New(NewQuoteVM vm)
         {
+            Quote q = new Quote();
             using (var context = new SocialContext())
             {
                 q.Author = context.UserProfile.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
@@ -50,11 +51,46 @@ namespace YHW.Controllers
                     return Json(new { Success = false, Error = "User not authenticated, try logging in again!" });
 
                 q.CreatedDate = DateTime.Now;
+                q.Title = vm.Title;
+                q.SubText = vm.SubText;
+                q.IsOpinion = vm.IsOpinion;
+
+                // ThumbImage
+                if (vm.ThumbFile != null)
+                {
+                    using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                    {
+                        vm.ThumbFile.InputStream.CopyTo(ms);
+                        byte[] array = ms.GetBuffer();
+
+                        q.ThumbURL = array;
+                    }
+                }
+                // Image
+                if (vm.ImageFile != null)
+                {
+                    using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                    {
+                        vm.ImageFile.InputStream.CopyTo(ms);
+                        byte[] array = ms.GetBuffer();
+
+                        q.ImageURL = array;
+                    }
+                }
 
                 context.QuotePost.Add(q);
                 context.SaveChanges();
                 return Json(new { Success = true, Redirect = Url.Action("Index", "Home") });
             }
+        }
+
+        public class NewQuoteVM
+        {
+            public HttpPostedFileBase ThumbFile { get; set; }
+            public HttpPostedFileBase ImageFile { get; set; }
+            public Boolean IsOpinion { get; set; }
+            public String SubText { get; set; }
+            public String Title { get; set; }
         }
     }
 }

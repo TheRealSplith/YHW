@@ -6,33 +6,33 @@
 
 <div class="row" style="padding-bottom:10px; padding-top:10px;">
   <form role="form" class="form-horizontal">
-    <div class="col-md-offset-3" data-bind="css: { 'has-error': !Title.isValid() && Title.isModified() }">
+    <div class="" data-bind="css: { 'has-error': !Title.isValid() && Title.isModified() }">
       <div class="form-group">
-        <label for="inputTitle" class="col-sm-2 control-label">Title</label>
+        <label for="inputTitle" class="col-xs-offset-1 col-sm-2 control-label">Title</label>
         <div class="col-sm-8 col-md-8">
           <input data-bind="value: Title" class="form-control" id="inputTitle" placeholder="Title" />
           <span class="help-block" data-bind="validationMessage: Title"></span>
         </div>
       </div>
     </div>
-    <div class="col-md-offset-3" data-bind="css: { 'has-error': !BlogText.isValid() && BlogText.isModified() }">
+    <div class="" data-bind="css: { 'has-error': !BlogText.isValid() && BlogText.isModified() }">
       <div class="form-group">
-        <label for="inputSubText" class="col-sm-2 control-label">Blog Text</label>
+        <label for="inputSubText" class="col-xs-offset-1 col-sm-2 control-label">Blog Text</label>
         <div class="col-sm-8 col-md-8">
           <textarea data-bind="value: BlogText" class="form-control" id="inputSubText" placeholder="Body of Blog Post"></textarea>
           <span class="help-block" data-bind="validationMessage: BlogText"></span>
         </div>
       </div>
     </div>
-    <div class="col-md-offset-3">
+    <div class="">
       <div class="form-group">
-        <label for="inputOpinion" class="col-sm-2 control-label">Opinion</label>
+        <label for="inputOpinion" class="col-xs-offset-1 col-sm-2 control-label">Opinion</label>
         <div class="col-sm-4 col-md-4">
           <input type="checkbox" data-bind="checked: Opinion" />
         </div>
       </div>
     </div>
-    <div class="col-sm-offset-2">
+    <div class="col-md-offset-9 col-sm-offset-9 col-xs-offset-8">
       <button class="btn btn-default" data-bind="click: Submit, enable: validationModel.isValid()">Submit</button>
     </div>
   </form>

@@ -8,8 +8,8 @@ namespace YHW.Models.Content
 {
     public interface ITopicContent
     {
-        String ThumbURL { get; set; }
-        String ImageURL { get; set; }
+        Byte[] ThumbURL { get; set; }
+        Byte[] ImageURL { get; set; }
         String Title { get; set; }
         String SubText { get; set; }
         DateTime CreatedDate { get; set; }

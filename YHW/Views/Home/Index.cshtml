@@ -47,17 +47,19 @@
       <div class="carousel-inner">
         @for (int i = 0; i < Model.Count; ++i)
         {
+          String imageBase64 = Convert.ToBase64String(Model[i].ImageURL);
+          String imageSrc = String.Format("data:image/jpg;base64,{0}", imageBase64);
           if (i == 0)
           {
             <div class="item active">
-              <img src="@Url.Content(Model[i].ImageURL)" alt="http://placehold.it/350x200" class="carouselImage">
+              <img src="@imageSrc" alt="http://placehold.it/350x200" class="carouselImage">
               <div class="carousel-caption">
                 @Html.Raw(Json.Encode(Model[i].SubText))
               </div>
             </div>
           } else {
             <div class="item">
-              <img src="@Url.Content(Model[i].ImageURL)" alt="http://placehold.it/350x200" class="carouselImage">
+              <img src="@imageSrc" alt="http://placehold.it/350x200" class="carouselImage">
               <div class="carousel-caption">
                 @Html.Raw(Json.Encode(Model[i].SubText))
               </div>

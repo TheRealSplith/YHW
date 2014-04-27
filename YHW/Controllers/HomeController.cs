@@ -19,7 +19,7 @@ namespace YHW.Controllers
 
             using (var content = new SocialContext())
             {
-                var results = (from b in content.BlogPost.Where(b => !String.IsNullOrEmpty(b.ImageURL))
+                var results = (from b in content.BlogPost.Where(b => b.ImageURL != null)
                                select new
                                    {
                                        ID = b.ID,
@@ -27,7 +27,7 @@ namespace YHW.Controllers
                                        CreatedDate = b.CreatedDate
                                    })
                               .Concat(
-                                from q in content.QuotePost.Where(q => !String.IsNullOrEmpty(q.ImageURL))
+                                from q in content.QuotePost.Where(q => q.ImageURL != null)
                                 select new
                                     {
                                         ID = q.ID,
@@ -35,7 +35,7 @@ namespace YHW.Controllers
                                         CreatedDate = q.CreatedDate
                                     })
                               .Concat(
-                                from v in content.VideoPost.Where(v => !String.IsNullOrEmpty(v.ImageURL))
+                                from v in content.VideoPost.Where(v => v.ImageURL != null)
                                 select new
                                     {
                                         ID = v.ID,
@@ -83,9 +83,44 @@ namespace YHW.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
+        }
+
+        [Authorize]
+        public ActionResult Manage()
+        {
+            using (var context = new YHW.Models.SocialContext())
+            {
+                var results = context.UserProfile.Where(p => p.UserName == User.Identity.Name).FirstOrDefault();
+                if (results == null)
+                    throw new ArgumentNullException();
+
+                return View(results);
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult FileUpload(HttpPostedFileBase file)
+        {
+            if (file != null)
+            {
+                String s = file.ContentType;
+                Console.WriteLine(s);
+                using (var context = new SocialContext())
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                {
+                    file.InputStream.CopyTo(ms);
+                    byte[] array = ms.GetBuffer();
+
+                    var user = context.UserProfile.Where(p => p.UserName == User.Identity.Name).FirstOrDefault();
+                    user.PortraitURL = array;
+
+                    context.SaveChanges();
+                }
+            }
+
+            return RedirectToAction("Manage");
         }
         #endregion
 

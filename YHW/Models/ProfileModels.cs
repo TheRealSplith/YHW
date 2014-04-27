@@ -31,7 +31,7 @@ namespace YHW.Models
         [Required]
         public DateTime Birthday { get; set; }
         public Boolean? IsMale { get; set; }
-        public String PortraitURL { get; set; }
+        public Byte[] PortraitURL { get; set; }
         public String FacebookLink { get; set; }
         public String TwitterLink { get; set; }
         public String LinkedIn { get; set; }
