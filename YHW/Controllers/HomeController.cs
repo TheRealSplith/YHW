@@ -120,7 +120,7 @@ namespace YHW.Controllers
                 }
             }
 
-            return RedirectToAction("Manage");
+            return RedirectToAction("Index", "Home");
         }
         #endregion
 
