@@ -1,0 +1,25 @@
+﻿@model List<YHW.Models.Content.ITopicContent>
+
+<h1 style="margin-top: 0px; margin-bottom: 0px;">Common Core</h1>
+
+<div class="col-sm-8 col-md-6">
+  <h2 style="margin-top:0px;">Facts</h2>
+  @foreach (var fact in Model.Where(c => !c.IsOpinion))
+  {
+    String partialName = fact.TypeName + "ItemPartial";
+    <div class="row">
+      @Html.Partial(partialName, fact)
+    </div>
+  }
+</div>
+
+<div class="col-sm-6" >
+  <h2 style="margin-top:0px;">Opinions</h2>
+  @foreach (var opinion in Model.Where(c => c.IsOpinion))
+  {
+    String partialName = opinion.TypeName + "ItemPartial";
+    <div class="row">
+      @Html.Partial(partialName, opinion)
+    </div>
+  }
+</div>

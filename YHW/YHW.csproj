@@ -400,6 +400,7 @@
     <Content Include="Views\Video\Item.cshtml" />
     <Content Include="Views\Shared\CommentPartial.cshtml" />
     <Content Include="Views\Home\Manage.cshtml" />
+    <Content Include="Views\Topic\DualView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

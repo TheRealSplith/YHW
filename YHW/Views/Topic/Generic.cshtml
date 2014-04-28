@@ -6,11 +6,15 @@
 }
 else
 {
-  <h1 style="margin-top:0px;">/ Fact</h1>
+  <h1 style="margin-top:0px;"><small>/ Fact</small></h1>
 }
 
 @foreach (var item in Model)
 {
   String partialName = item.TypeName + "ItemPartial";
-  @Html.Partial(partialName, item);
+  <div class="row">
+    <div class="col-md-8 col-sm-12">      
+      @Html.Partial(partialName, item)
+    </div>
+  </div>
 }

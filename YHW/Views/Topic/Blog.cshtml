@@ -18,5 +18,9 @@ else
 
 @foreach (var quote in Model)
 {
-  @Html.Partial("BlogItemPartial", quote)
+  <div class="row">
+    <div class="col-md-8 col-sm-12">
+      @Html.Partial("BlogItemPartial", quote)
+    </div>
+  </div>
 }

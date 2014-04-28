@@ -18,5 +18,9 @@ else
 
 @foreach (var video in Model)
 {
-  @Html.Partial("VideoItemPartial", video)
+  <div class="row">
+    <div class="col-md-8 col-sm-12 yhw-content">
+      @Html.Partial("VideoItemPartial", video)
+    </div>
+  </div>
 }

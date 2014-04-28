@@ -73,8 +73,12 @@
           <span class="help-block" data-bind="validationMessage: OtherComments"></span>
         </div>
       </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10 col-md-8">
+          <button class="btn btn-success" data-bind="click: Submit, enable: validationModel.isValid()">Submit</button>
+        </div>
+      </div>
     </div>
-    <button class="btn btn-default" data-bind="click: Submit, enable: validationModel.isValid()">Submit</button>
   </form>
 </div>
 

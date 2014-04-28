@@ -19,6 +19,8 @@ body {
   padding-bottom:5px;
   margin-bottom:10px;
   border-radius:5px;
+  padding-left:5px;
+  margin-right:3px;
 }
 
 p {
@@ -108,3 +110,21 @@ li.YHW-topic {
       li.YHW-topic a:hover {
       text-decoration:none;
     }
+
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px; height: 0; overflow: hidden;
+    margin-right:5px;
+}
+ 
+.video-container iframe,
+.video-container object,
+.video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}

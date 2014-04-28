@@ -1,34 +1,32 @@
 ﻿@model YHW.Models.Content.Blog
 
-<div class="row">
-  <div class="col-md-8 col-md-12 yhw-content">
-    <div class="row">
-      <div class="col-xs-12">
-        @if (Model.Author.PortraitURL != null)
-        {
-          String imageBase64 = Convert.ToBase64String(Model.Author.PortraitURL);
-          String imageSrc = String.Format("data:image/jpg;base64,{0}", imageBase64);
-          <img style="float:left;padding-right:5px;" src="@imageSrc" height="57" width="100" />
-          <a style="color:black;" href="@Url.Action("Item", "Blog", new { id = Model.ID})">@Model.SubText</a>
-          <br />
-        }
-        else
-        {
-          <span><a style="color:black;" href="@Url.Action("Item", "Blog", new { id = Model.ID})">@Model.SubText</a></span>
-        }
-      </div>
+<div class="yhw-content">
+  <div class="row">
+    <div class="col-xs-12">
+      @if (Model.Author.PortraitURL != null)
+      {
+        String imageBase64 = Convert.ToBase64String(Model.Author.PortraitURL);
+        String imageSrc = String.Format("data:image/jpg;base64,{0}", imageBase64);
+        <img style="float:left;padding-right:5px;" src="@imageSrc" height="57" width="100" />
+        <a style="color:black;" href="@Url.Action("Item", "Blog", new { id = Model.ID})">@Model.SubText</a>
+        <br />
+      }
+      else
+      {
+        <span><a style="color:black;" href="@Url.Action("Item", "Blog", new { id = Model.ID})">@Model.SubText</a></span>
+      }
     </div>
-    <div class="row">
-      <div class="col-md-9">
-        <p>@Model.Author.FirstName @Model.Author.LastName</p>
-      </div>
-      <div class="col-md-3">
-        @{
-          var s = "http://youheardwrong.org" + Url.Action("Item", "Blog", new { id = Model.ID });
-        }
-        <div class="fb-like" data-href="@s" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></div>
-        <a href="https://twitter.com/share" data-text="@Model.Title" class="twitter-share-button" data-url="@s" data-via="youheardwrong" data-lang="en">Tweet</a>
-      </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <p>@Model.Author.FirstName @Model.Author.LastName</p>
+    </div>
+    <div class="col-md-3">
+      @{
+        var s = "http://youheardwrong.org" + Url.Action("Item", "Blog", new { id = Model.ID });
+      }
+      <div class="fb-like" data-href="@s" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></div>
+      <a href="https://twitter.com/share" data-text="@Model.Title" class="twitter-share-button" data-url="@s" data-via="youheardwrong" data-lang="en">Tweet</a>
     </div>
   </div>
 </div>
