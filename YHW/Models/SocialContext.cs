@@ -124,7 +124,7 @@ namespace YHW.Models
                 new Quote 
                 {
                     Title = "Common Core Standards Establish What To Teach, Not How To Teach",
-                    SubText = "\"The Standards establish what students need to learn but do not dictate how teachers should teach. Instead, schools and teachers will decide how best to help students reach the standards.\" - CoreStandards.org",
+                    SubText = "The Standards establish what students need to learn but do not dictate how teachers should teach. Instead, schools and teachers will decide how best to help students reach the standards. - CoreStandards.org",
                     IsOpinion = false,
                     ImageURL = array,
                     CreatedDate = DateTime.Now,

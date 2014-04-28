@@ -4,7 +4,7 @@
     ViewBag.Title = "Team";
     Layout = "~/Views/Shared/_LayoutHiddenTwitter.cshtml";
 }
-<div class="col-sm-3">
+<div class="col-md-2">
   @Html.Partial(
    "~/Views/Shared/_TextColumnWithHeader.cshtml",
    new YHW.Models.SharedViews.TextColumnWithHeaderVM()
@@ -14,9 +14,9 @@
    })
 </div>
 
-<h2>About Us / <small>Team</small></h2>
 
-<div class="col-sm-9 col-md-9 col-md-offset-3">
+<div class="col-md-10">
+  <h2>About Us / <small>Team</small></h2>
   @foreach (var item in Model)
   {
     <div class="col-sm-9 col-md-6">
@@ -32,33 +32,34 @@
         <div class="caption">
           <h3>@item.Name</h3>
           <h5>@item.Title</h5>
-          <ul>
-            @if (!String.IsNullOrEmpty(item.FacebookLink))
-            {
-              <li style="display:inline-block">
-                <a href="@item.FacebookLink" class="btn btn-social-icon btn-facebook">
-                  <i class="fa fa-facebook"></i>
-                </a>
-              </li>
-            }
-            @if (!String.IsNullOrEmpty(item.TwitterLink))
-            {
-              <li style="display:inline-block">
-                <a href="@item.TwitterLink" class="btn btn-social-icon btn-twitter">
-                  <i class="fa fa-twitter"></i>
-                </a>
-              </li>
-            }
-            @if (!string.IsNullOrEmpty(item.LinkedIn))
-            {
-              <li style="display:inline-block">
-                <a href="@item.LinkedIn" class="btn btn-social-icon btn-linkedin">
-                  <i class="fa fa-linkedin"></i>
-                </a>
-              </li>
-            }
-          </ul>
         </div>
+        <ul style="padding-left:10px;">
+          @if (!String.IsNullOrEmpty(item.FacebookLink))
+          {
+            <li style="display:inline-block">
+              <a href="@item.FacebookLink" class="btn btn-sm btn-social-icon btn-facebook">
+                <i class="fa fa-facebook"></i>
+              </a>
+            </li>
+          }
+          @if (!String.IsNullOrEmpty(item.TwitterLink))
+          {
+            <li style="display:inline-block">
+              <a href="@item.TwitterLink" class="btn btn-sm btn-social-icon btn-twitter">
+                <i class="fa fa-twitter"></i>
+              </a>
+            </li>
+          }
+          @if (!string.IsNullOrEmpty(item.LinkedIn))
+          {
+            <li style="display:inline-block">
+              <a href="@item.LinkedIn" class="btn btn-sm btn-social-icon btn-linkedin">
+                <i class="fa fa-linkedin"></i>
+              </a>
+            </li>
+          }
+        </ul>
+
       </div>
     </div>
   }

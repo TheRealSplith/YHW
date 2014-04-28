@@ -1,13 +1,13 @@
 ﻿@model List<YHW.Models.Content.Blog>
 
-<div style="font-size:xx-large; font-weight:bold">Common Core</div>
+<h1 style="margin-top: 0px; margin-bottom: 0px;">Common Core</h1>
 @if (ViewBag.isOpinion == true)
 {
-  <span style="font-size:large; font-weight:bold; padding-left: 50px;">/ Opinion <small>/ Article</small></span>
+  <h1 style="margin-top:0px;"><small>/ Opinion <small>/ Article</small></small></h1>
 }
 else
 {
-  <span style="font-size:large; font-weight:bold; padding-left: 50px;">/ Fact <small>/ Article</small></span>
+  <h1 style="margin-top:0px;"><small>/ Fact <small>/ Article</small></small></h1>
 }
 
 @* If there are no items, display a message indicating such *@

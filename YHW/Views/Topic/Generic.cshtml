@@ -1,10 +1,16 @@
-﻿
-<div style="font-size:xx-large; font-weight:bold">Common Core</div>
+﻿@model List<YHW.Models.Content.ITopicContent>
+<h1 style="margin-top: 0px; margin-bottom: 0px;">Common Core</h1>
 @if (ViewBag.isOpinion == true)
 {
-  <span style="font-size:large; font-weight:bold; padding-left: 50px;">/ Opinion</span>
+  <h1 style="margin-top:0px;"><small>/ Opinion</small></h1>
 }
 else
 {
-  <span style="font-size:large; font-weight:bold; padding-left: 50px;">/ Fact</span>
+  <h1 style="margin-top:0px;">/ Fact</h1>
+}
+
+@foreach (var item in Model)
+{
+  String partialName = item.TypeName + "ItemPartial";
+  @Html.Partial(partialName, item);
 }

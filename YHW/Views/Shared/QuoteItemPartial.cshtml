@@ -1,6 +1,6 @@
 ﻿@model YHW.Models.Content.Quote
 
-<div class="col-md-8 col-md-12" style="padding-top:10px;">
+<div class="col-md-8 col-md-12 yhw-content" >
   <div class="row">
     <div class="col-xs-12">
       @if (Model.Author.PortraitURL != null)
@@ -17,7 +17,7 @@
       }
     </div>
   </div>
-  <div class="row">
+  <div class="row" >
     <div class="col-md-9">
       <p>@Model.Author.FirstName @Model.Author.LastName</p>
     </div>
@@ -26,7 +26,7 @@
         var s = "http://youheardwrong.org" + Url.Action("Item", "Model", new { id = Model.ID });
       }
       <div class="fb-like" data-href="@s" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></div>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="@s" data-via="youheardwrong" data-lang="en">Tweet</a>
+      <a href="https://twitter.com/share" data-text="@Model.Title" class="twitter-share-button" data-url="@s" data-via="youheardwrong" data-lang="en">Tweet</a>
     </div>
   </div>
 </div>

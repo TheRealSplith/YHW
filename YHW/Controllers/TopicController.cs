@@ -54,8 +54,51 @@ namespace YHW.Controllers
             Boolean isOpinion = header == "opinion";
             using (var context = new SocialContext())
             {
+                List<YHW.Models.Content.ITopicContent> results = new List<ITopicContent>();
+
+                var items = (from v in context.VideoPost
+                             where v.IsOpinion == isOpinion
+                             select new { v.ID, ContentType = "Video", v.CreatedDate })
+                                 .Union(
+                             from b in context.BlogPost
+                             where b.IsOpinion == isOpinion
+                             select new { b.ID, ContentType = "Blog", b.CreatedDate })
+                                 .Union(
+                             from q in context.QuotePost
+                             where q.IsOpinion == isOpinion
+                             select new { q.ID, ContentType = "Quote", q.CreatedDate }).ToList();
+
+                foreach(var item in items)
+                {
+                    switch (item.ContentType)
+                    {
+                        case "Video":
+                            var vid = context.VideoPost
+                                .Include(v => v.Author)
+                                .Where(v => v.ID == item.ID).FirstOrDefault();
+                            if (vid != null)
+                                results.Add(vid);
+                            break;
+                        case "Quote":
+                            var quote = context.QuotePost
+                                .Include(q => q.Author)
+                                .Where(q => q.ID == item.ID).FirstOrDefault();
+                            if (quote != null)
+                                results.Add(quote);
+                            break;
+                        case "Blog":
+                            var blog = context.BlogPost
+                                .Include(b => b.Author)
+                                .Where(b => b.ID == item.ID).FirstOrDefault();
+                            if (blog != null)
+                                results.Add(blog);
+                            break;
+                    }
+                }
+                                 
+
                 ViewBag.isOpinion = isOpinion;
-                return PartialView();
+                return PartialView(results);
             }
         }
         public PartialViewResult Video(String header)
@@ -111,7 +154,7 @@ namespace YHW.Controllers
                     ChildItems =
                     new List<TopicSideBarCBItem> 
                     {
-                        new TopicSideBarCBItem("Blog", "blog", "Opinion", content == "blog" && isOpinion),
+                        new TopicSideBarCBItem("Article", "blog", "Opinion", content == "blog" && isOpinion),
                         new TopicSideBarCBItem("Quote", "quote", "Opinion", content == "quote" && isOpinion),
                         new TopicSideBarCBItem("Video", "video", "Opinion", content == "video" && isOpinion),
                     }
@@ -124,7 +167,7 @@ namespace YHW.Controllers
                     ChildItems =
                     new List<TopicSideBarCBItem>
                     {
-                        new TopicSideBarCBItem("Blog", "blog", "Fact", content == "blog" && isFact),
+                        new TopicSideBarCBItem("Article", "blog", "Fact", content == "blog" && isFact),
                         new TopicSideBarCBItem("Quote", "quote", "Fact", content == "quote" && isFact),
                         new TopicSideBarCBItem("Video", "video", "Fact", content == "video" && isFact),
                     }

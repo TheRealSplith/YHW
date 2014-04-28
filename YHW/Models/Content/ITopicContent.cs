@@ -8,6 +8,7 @@ namespace YHW.Models.Content
 {
     public interface ITopicContent
     {
+        Int32 ID { get; set; }
         Byte[] ThumbURL { get; set; }
         Byte[] ImageURL { get; set; }
         String Title { get; set; }

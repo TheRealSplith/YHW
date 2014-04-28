@@ -12,8 +12,17 @@ body {
   border-radius: 6px;
 }
 
+.yhw-content {
+  border: 2px solid #aaaaaa;
+  border-bottom: 3px solid #999999;
+  padding-top:5px;
+  padding-bottom:5px;
+  margin-bottom:10px;
+  border-radius:5px;
+}
+
 p {
-  font-size:16px;
+  font-size:18px;
 }
 
 .navbar-green {
