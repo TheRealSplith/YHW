@@ -9,7 +9,10 @@
   <div class="row">
     <div class="col-md-8">
       <span style="font-size:large;font-weight:bold;"><a style="color:black;" href="@Url.Action("Item", "Video", new { id = Model.ID})">@Model.Title</a></span>
-      <p>@Model.Author.FirstName @Model.Author.LastName</p>
+      <br />
+      <span>@Model.Author.FirstName @Model.Author.LastName</span>
+      <br />
+      <span>@Model.CreatedDate.ToShortDateString()</span>
     </div>
     <div class="col-md-3">
       @{

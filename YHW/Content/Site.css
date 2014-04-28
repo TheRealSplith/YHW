@@ -32,23 +32,17 @@ p {
 }
 .navbar-green a {
     color:#ffffff;
+    font-family:'late', sans-serif;
+    font-weight:bold;
+    text-decoration:none;
   }
   .navbar-green a:hover, .nav>li>a:hover {
-    background-color: #009269;
-    color: #ffffff;
+  background-color:#008d65;
+  color:#ffffff;
   }
 
 .brand img {
   height: 40px;
-}
-
-.navbar-nav a:hover{
-  background-color:#008d65;
-  color:#ffffff;
-}
-.navbar-nav a {
-  font-family:'late', sans-serif;
-  font-weight:bold;
 }
 
 .navbar-toggle {

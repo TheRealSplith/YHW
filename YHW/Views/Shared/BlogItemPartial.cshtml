@@ -19,7 +19,9 @@
   </div>
   <div class="row">
     <div class="col-md-8">
-      <p>@Model.Author.FirstName @Model.Author.LastName</p>
+      <span>@Model.Author.FirstName @Model.Author.LastName</span>
+      <br />
+      <span>@Model.CreatedDate.ToShortDateString()</span>
     </div>
     <div class="col-md-3">
       @{
