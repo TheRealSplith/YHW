@@ -217,7 +217,9 @@
     <Content Include="Content\bs.docs.min.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\images\2014_0326_1349_58.jpg" />
+    <Content Include="Content\images\AnaPortrait.jpg" />
     <Content Include="Content\images\animated-overlay.gif" />
+    <Content Include="Content\images\CarolynPortrait.jpg" />
     <Content Include="Content\images\carousel1.png" />
     <Content Include="Content\images\carousel2.png" />
     <Content Include="Content\images\Common-Core-350x200.jpg" />
@@ -226,6 +228,7 @@
     <Content Include="Content\images\icon_linkedin_32.png" />
     <Content Include="Content\images\icon_li_active.png" />
     <Content Include="Content\images\icon_twitter_32.png" />
+    <Content Include="Content\images\JustinPortrait.jpg" />
     <Content Include="Content\images\logo_name.jpg" />
     <Content Include="Content\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\images\ui-bg_flat_0_eeeeee_40x100.png" />

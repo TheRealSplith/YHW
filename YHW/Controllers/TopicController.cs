@@ -194,6 +194,7 @@ namespace YHW.Controllers
             var isFact = header == "fact";
 
             var data = new TopicSideBar();
+            data.CBSections.Add(new TopicSideBarCBSection("Common Core", "", header == ""));
             data.CBSections.Add(
                 new TopicSideBarCBSection("Fact", "fact", isFact)
                 {

@@ -133,8 +133,41 @@ namespace YHW.Models
             context.VideoPost.Add(
                 new Video
                 {
+                    Title = "Common Core: Myth or Fact? Teachers ",
+                    VideoURL = "//www.youtube.com/watch?v=07Rz5BN9EV8",
+                    IsOpinion = true,
+                    ImageURL = array,
+                    SubText = "Myth or Fact? Are Teachers For or Against the Common Core?",
+                    CreatedDate = DateTime.Now,
+                    Author = rootUser
+                });
+            context.VideoPost.Add(
+                new Video
+                {
+                    Title = "Common Core: Myth or Fact? Social Skills ",
+                    VideoURL = "//www.youtube.com/watch?v=ItUmpZBkgNk",
+                    IsOpinion = true,
+                    ImageURL = array,
+                    SubText = "Common Core: Myth or Fact? Social Skills ",
+                    CreatedDate = DateTime.Now,
+                    Author = rootUser
+                });
+            context.VideoPost.Add(
+                new Video
+                {
+                    Title = "Common Core: Myth or Fact? Obama Administration ",
+                    VideoURL = "//www.youtube.com/watch?v=Yc2YxOL0mLs",
+                    IsOpinion = true,
+                    ImageURL = array,
+                    SubText = "Common Core: Myth or Fact? Obama Administration ",
+                    CreatedDate = DateTime.Now,
+                    Author = rootUser
+                });
+            context.VideoPost.Add(
+                new Video
+                {
                     Title = "Common Core Questions",
-                    VideoURL = "//www.youtube.com/embed/N37exrQC7VA",
+                    VideoURL = "//www.youtube.com/watch?v=N37exrQC7VA",
                     IsOpinion = true,
                     ImageURL = array,
                     SubText = "Watch our latest video on the Common Core!",
@@ -146,7 +179,7 @@ namespace YHW.Models
                 {
                     Name = "Carolyn Spencer",
                     Title = "Chief Executive Officer",
-                    PortraitURL = "",
+                    PortraitURL = "~/Content/images/CarolynPortrait.jpg",
                     //FacebookLink = "https://www.facebook.com/carolynnspencer",
                     TwitterLink = "https://twitter.com/CarolynNSpencer",
                     LinkedIn = "http://www.linkedin.com/in/carolynnspencer",
@@ -157,7 +190,7 @@ namespace YHW.Models
                 {
                     Name = "Anastasia Rzhevskaya",
                     Title = "Chief Marketing Officer",
-                    PortraitURL = "",
+                    PortraitURL = "~/Content/images/AnaPortrait.jpg",
                     //FacebookLink = "https://www.facebook.com/arzhevskaya",
                     TwitterLink = "https://twitter.com/AnastasiaRzhev",
                     LinkedIn = "http://www.linkedin.com/pub/anastasia-rzhevskaya/57/9a8/a7a/",
@@ -179,7 +212,7 @@ namespace YHW.Models
                 {
                     Name = "Justin Hambrecht",
                     Title = "Chief Visualization Officer",
-                    PortraitURL = "",
+                    PortraitURL = "~/Content/images/JustinPortrait.jpg",
                     //FacebookLink = "https://www.facebook.com/justin.hambrecht",
                     TwitterLink = "https://twitter.com/JustinH____",
                     LinkedIn = "http://www.linkedin.com/in/justinhambrecht/",

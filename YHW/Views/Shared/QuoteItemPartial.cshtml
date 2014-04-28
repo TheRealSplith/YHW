@@ -18,12 +18,12 @@
     </div>
   </div>
   <div class="row" >
-    <div class="col-md-8">
+    <div class="col-sm-7 col-md-7 col-xs-8">
       <span>@Model.Author.FirstName @Model.Author.LastName</span>
       <br />
       <span>@Model.CreatedDate.ToShortDateString()</span>
     </div>
-    <div class="col-md-3">
+    <div class="col-sm-2 col-md-3 col-xs-4">
       @{
         var s = "http://youheardwrong.org" + Url.Action("Item", "Quote", new { id = Model.ID });
       }

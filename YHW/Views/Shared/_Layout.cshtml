@@ -77,45 +77,57 @@
       </div>
     </div>
   </nav>
-  <div class="container">
+  <div class="container" style="padding-bottom:10px;">
     @RenderBody()
   </div>
   <div class="container">
     <div class="row navbar-green" >
-      <div class="col-lg-12">
-        <div class="col-md-3">
+      <div class="col-md-10 col-md-offset-1" style="padding-left:0px; padding-right:0px;">
+        <div class="col-md-2">
           <ul class="list-unstyled">
-            <li>Home
+            <li><span class="header">Home</span>
             <li>
-            <li>@Html.ActionLink("Main Page", "Index", "Home")</li>
-            <li>@Html.ActionLink("Mission & Vision", "About", "Home")</li>
-            <li>@Html.ActionLink("YHW Team", "Team", "Home")</li>
-            <li>@Html.ActionLink("Contact & support", "Index", "Contact")</li>
-            <li>@Html.ActionLink("Collaborate", "Collaborate", "Contact")</li>
+            <li>@Html.ActionLink("Main Page", "Index", "Home", new { Class = "item" })</li>
           </ul>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <ul class="list-unstyled">
-            <li>Account
+            <li><span class="header">About Us</span>
             <li>
-            <li>@Html.ActionLink("Login", "Login", "Account")</li>
-            <li>@Html.ActionLink("Register", "Login", "Account")</li>
+            <li>@Html.ActionLink("Mission & Vision", "About", "Home", new { Class = "item" })</li>
+            <li>@Html.ActionLink("YHW Team", "Team", "Home", new { Class = "item" })</li>
+          </ul>
+        </div>
+        <div class="col-md-2">
+          <ul class="list-unstyled">
+            <li><span class="header">Common Core</span>
+            <li>
+            <li>@Html.ActionLink("Fact & Opinion", "Index", "Topic", new { Class = "item" })</li>
             @if (Request.IsAuthenticated)
             {
-              <li>@Html.ActionLink("Manage", "Manage", "Home")</li>
-              <li>@Ajax.ActionLink("LogOff", "Logoff", "Account", new AjaxOptions() { HttpMethod = "Post" })</li>
+              <li>@Html.ActionLink("New Quote", "New", "Quote", new { Class = "item" })</li>
+              <li>@Html.ActionLink("New Article", "New", "Blog", new { Class = "item" })</li>
             }
           </ul>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <ul class="list-unstyled">
-            <li>Common Core
+            <li><span class="header">Contact Us</span>
             <li>
-            <li>@Html.ActionLink("Content", "Index", "Topic")</li>
+            <li>@Html.ActionLink("Contact & Support", "Index", "Contact", new { Class = "item" })</li>
+            <li>@Html.ActionLink("Collaborate", "Collaborate", "Contact", new { Class = "item" })</li>
+          </ul>
+        </div>
+        <div class="col-md-offset-2 col-md-2" >
+          <ul class="list-unstyled">
+            <li><span class="header">Account</span>
+            <li>
+            <li>@Html.ActionLink("Login", "Login", "Account", new { Class = "item" })</li>
+            <li>@Html.ActionLink("Register", "Login", "Account", new { Class = "item" })</li>
             @if (Request.IsAuthenticated)
             {
-              <li>@Html.ActionLink("New Quote", "New", "Quote")</li>
-              <li>@Html.ActionLink("New Article", "New", "Blog")</li>
+              <li>@Html.ActionLink("Manage", "Manage", "Home", new { Class = "item" })</li>
+              <li>@Ajax.ActionLink("LogOff", "Logoff", "Account", new AjaxOptions() { HttpMethod = "Post" }, new { Class = "item" })</li>
             }
           </ul>
         </div>
