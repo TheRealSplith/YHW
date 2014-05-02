@@ -63,7 +63,7 @@ namespace YHW.Controllers
                         vm.ThumbFile.InputStream.CopyTo(ms);
                         byte[] array = ms.GetBuffer();
 
-                        q.ThumbURL = array;
+                        q.ThumbImage = array;
                     }
                 }
                 // Image
@@ -74,7 +74,7 @@ namespace YHW.Controllers
                         vm.ImageFile.InputStream.CopyTo(ms);
                         byte[] array = ms.GetBuffer();
 
-                        q.ImageURL = array;
+                        q.LargeImage = array;
                     }
                 }
 

@@ -142,6 +142,43 @@ li.YHW-topic {
     height: 100%;
 }
 
-.green-header {
-  color:
+.btn-yhw {
+  background-color:#00C68F;
+  border-color:#008560;
+  font-family:late, sans-serif;
+  font-weight:bold;
+  font-size:16px;
+  color:#ffffff;
 }
+
+.featurette-divider {
+  margin: 50px 20px 50px 20px;
+  border-top: 1px solid #00C68F;
+}
+
+.featurette {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+  .featurette-right h1 {
+    margin-left:50px;
+    margin-top:25px;
+    font-size:40px;
+  }
+
+  .featurette-right p {
+    font-size:22px;
+    margin-left:50px;
+  }
+
+  .featurette-left h1 {
+    font-size:40px;
+  }
+
+  .featurette-left p {
+    font-size:22px;
+  }
+
+  .featurette-left img {
+    margin-left:50px;
+    margin-top:25px;
+  }

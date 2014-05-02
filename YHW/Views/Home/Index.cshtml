@@ -14,70 +14,65 @@
     </p>
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-      <!-- Indicators -->
-      <ol class="carousel-indicators" style="bottom:20px;">
-        @for (int i = 0; i < Model.Count; ++i)
-        {
-          // Declare as active
-          if (i == 0)
-          {
-            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-          }
-          else
-          {
-            <li data-target="#carousel-example-generic" data-slide-to="@i"></li>
-          }
-        }
-      </ol>
-
-      <!-- Wrapper for slides -->
-      <div class="carousel-inner">
-        @for (int i = 0; i < Model.Count; ++i)
-        {
-          String imageBase64 = Convert.ToBase64String(Model[i].ImageURL);
-          String imageSrc = String.Format("data:image/jpg;base64,{0}", imageBase64);
-          if (i == 0)
-          {
-            <div class="item active">
-              <a href="@Url.Action("Item", Model[i].TypeName, new { id = Model[i].ID })">
-                <img style="max-height:450px; max-width: 900px;" src="@imageSrc" alt="http://placehold.it/350x200" class="carouselImage">
-              </a>
-              <div class="container">
-                <div class="carousel-caption">
-                  <p>@Html.Encode(Model[i].SubText)</p>
-                </div>
-              </div>
-            </div>
-          }
-          else
-          {
-            <div class="item">
-              <a href="@Url.Action("Item", Model[i].TypeName, new { id = Model[i].ID })">
-                <img style="max-height:450px; max-width: 900px;" src="@imageSrc" alt="http://placehold.it/350x200" class="carouselImage">
-              </a>
-              <div class="container">
-                <div class="carousel-caption">
-                  <p>@Html.Encode(Model[i].SubText)</p>
-                </div>
-              </div>
-            </div>
-          }
-        }
-      </div>
-
-      <!-- Controls -->
-      <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-      </a>
-      <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right"></span>
-      </a>
-    </div>
+@if (!Request.IsAuthenticated)
+{
+// This prompts users to engage our group!
+<div class="row" style="text-align:center;">
+  <div class="col-md-4 col-lg-4">
+    <img class="img-circle" src="@Url.Content("~/Content/images/facebook-icon-circle.png")" alt="140x140" style="width: 140px; height: 140px;">
+    <h2>Like us on Facebook!</h2>
+    <p>We post all of our new content onto Facebook as it arrives. Like us to keep up to date.</p>
+    <div class="fb-follow" data-href="https://www.facebook.com/youheardwrong" data-colorscheme="light" data-layout="button_count" data-show-faces="false"></div>
+  </div>
+  <div class="col-md-4 col-lg-4">
+    <img class="img-circle" src="@Url.Content("~/Content/images/twitter_circle_color-512.png")" alt="140x140" style="width: 140px; height: 140px;">
+    <h2>Follow us on Twitter!</h2>
+    <p>We post all of our new content onto Facebook as it arrives. Follow us on Twitter and join the conversation </p>
+    <a href="https://twitter.com/youheardwrong" class="twitter-follow-button" data-show-count="false" data-lang="en" data-size="medium">Follow @@YouHeardWrong</a>
+  </div>
+  <div class="col-md-4 col-lg-4">
+    <img class="img-circle" alt="140x140" src="@Url.Content("~/Content/images/yhw-circle-140.jpg")" style="width: 140px; height: 140px;">
+    <h2>Sign in Now!</h2>
+    <p>Sign in to Comment on articles, or upload the content you find online.</p>
+    <a href="@Url.Action("Login", "Account")"><button class="btn btn btn-yhw">Sign In!</button></a> 
   </div>
 </div>
+} else {
+// This tracks a users engagement with our product
+}
+@for (int i = 0; i < Model.Count; ++i)
+{
+  var item = Model[i];
+  if (i % 2 == 0)
+  {
+    <hr class="featurette-divider" />
+
+    <div class="row featurette-right">
+      <div class="col-sm-12 col-md-8">
+        <h1>This is a test post, but I made it longer so that I can test multi-line stuff</h1>
+        <p>Here is some stuff that appears in a featurette</p>
+      </div>
+      <div class="col-sm-offset-1 col-sm-6 col-md-offset-0 col-md-4">
+        <img src="http://placehold.it/256x256" style="max-height:256px; min-height:256px;" />
+      </div>
+    </div>
+  }
+  else
+  {
+    <hr class="featurette-divider" />
+
+    <div class="row featurette-left">
+      <div class="col-sm-offset-1 col-sm-6 col-md-offset-0 col-md-4">
+        <img src="http://placehold.it/256x256" style="max-height:256px; min-height:256px;" />
+      </div>
+      <div class="col-sm-12 col-md-8">
+        <h1>This is a test post, but I made it longer so that I can test multi-line stuff</h1>
+        <p>Here is some stuff that appears in a featurette</p>
+      </div>
+    </div>
+  }
+}
+
 <div id="fb-root"></div>
 <script>
   (function (d, s, id) {
@@ -87,19 +82,6 @@
     js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=273612212799967";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));</script>
-
-<div class="row">
-  <div class="col-sm-offset-1 col-sm-5 col-xs-6">
-    <h3>Join us on Facebook!</h3>
-    @*This is the facebbok like button*@
-    <div class="fb-follow" data-href="https://www.facebook.com/youheardwrong" data-colorscheme="light" data-layout="standard" data-show-faces="true"></div>
-  </div>
-
-  <div class="col-sm-5 col-xs-6" style="text-align:right;">
-    <h3>Join us on Twitter!</h3>
-    <a href="https://twitter.com/youheardwrong" class="twitter-follow-button" data-show-count="false" data-lang="en" data-size="large">Follow @@YouHeardWrong</a>
-  </div>
-</div>
 
 @*
 <div class="row">

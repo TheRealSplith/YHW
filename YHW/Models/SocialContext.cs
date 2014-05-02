@@ -105,7 +105,7 @@ namespace YHW.Models
 "\n\n"+
 "Despite her own decision to homeschool her kids, the author says, “Homeschooling is NOT the answer for everyone”. Different states have different regulations for home schooling, and in some states, even with homeschooling, “you are still subject to Common Core and it's many tentacles.” ",
                     IsOpinion = true,
-                    ImageURL = array,
+                    LargeImage = array,
                     SubText = "Common Core Standards Leave Parents Feeling Powerless",
                     CreatedDate = DateTime.Now,
                     Author = rootUser
@@ -115,7 +115,7 @@ namespace YHW.Models
                 {
                     Title = "The Common Core Standards do not include guidelines for sex education.",
                     IsOpinion = false,
-                    ImageURL = array,
+                    LargeImage = array,
                     SubText = "The Common Core Standards do not include guidelines for sex education.",
                     CreatedDate = DateTime.Now,
                     Author = rootUser
@@ -126,7 +126,7 @@ namespace YHW.Models
                     Title = "Common Core Standards Establish What To Teach, Not How To Teach",
                     SubText = "The Standards establish what students need to learn but do not dictate how teachers should teach. Instead, schools and teachers will decide how best to help students reach the standards. - CoreStandards.org",
                     IsOpinion = false,
-                    ImageURL = array,
+                    LargeImage = array,
                     CreatedDate = DateTime.Now,
                     Author = rootUser
                 });
@@ -136,7 +136,7 @@ namespace YHW.Models
                     Title = "Common Core: Myth or Fact? Teachers ",
                     VideoURL = "//www.youtube.com/watch?v=07Rz5BN9EV8",
                     IsOpinion = true,
-                    ImageURL = array,
+                    LargeImage = array,
                     SubText = "Myth or Fact? Are Teachers For or Against the Common Core?",
                     CreatedDate = DateTime.Now,
                     Author = rootUser
@@ -147,7 +147,7 @@ namespace YHW.Models
                     Title = "Common Core: Myth or Fact? Social Skills ",
                     VideoURL = "//www.youtube.com/watch?v=ItUmpZBkgNk",
                     IsOpinion = true,
-                    ImageURL = array,
+                    LargeImage = array,
                     SubText = "Common Core: Myth or Fact? Social Skills ",
                     CreatedDate = DateTime.Now,
                     Author = rootUser
@@ -158,7 +158,7 @@ namespace YHW.Models
                     Title = "Common Core: Myth or Fact? Obama Administration ",
                     VideoURL = "//www.youtube.com/watch?v=Yc2YxOL0mLs",
                     IsOpinion = true,
-                    ImageURL = array,
+                    LargeImage = array,
                     SubText = "Common Core: Myth or Fact? Obama Administration ",
                     CreatedDate = DateTime.Now,
                     Author = rootUser
@@ -169,7 +169,7 @@ namespace YHW.Models
                     Title = "Common Core Questions",
                     VideoURL = "//www.youtube.com/watch?v=N37exrQC7VA",
                     IsOpinion = true,
-                    ImageURL = array,
+                    LargeImage = array,
                     SubText = "Watch our latest video on the Common Core!",
                     CreatedDate = DateTime.Now,
                     Author = rootUser

@@ -11,8 +11,10 @@ namespace YHW.Models.Content
         public Int32 ID { get; set; }
         public String Title { get; set; }
         public String SubText { get; set; }
-        public Byte[] ImageURL { get; set; }
-        public Byte[] ThumbURL { get; set; }
+        public Byte[] LargeImage { get; set; }
+        public Byte[] SmallImage { get; set; }
+        public Byte[] ThumbImage { get; set; }
+        public Byte[] FBImage { get; set; }
         public String VideoURL { get; set; }
         public Boolean IsOpinion { get; set; }
         public DateTime CreatedDate { get; set; }
