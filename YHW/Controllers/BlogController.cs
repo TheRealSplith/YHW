@@ -39,6 +39,78 @@ namespace YHW.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Editor")]
+        public ActionResult Approve(Int32 id, Int32 val)
+        {
+            using (var context = new SocialContext())
+            {
+                Blog blog = context.BlogPost.Where(b => b.ID == id).Single();
+                if (val == 0 || val == 1)
+                    blog.IsApproved = val == 1;
+                else if (val == 2)
+                    context.BlogPost.Remove(blog);
+                else
+                    throw new HttpException(400, "Bad Request");
+
+                context.SaveChanges();
+                return RedirectToAction("Index", "Editor");
+            }
+        }
+
+        public FileContentResult LargeImage(int id = -1)
+        {
+            if (id == -1)
+                throw new HttpException(404, "Item not found");
+
+            using (var context = new SocialContext())
+            {
+                Blog blog = context.BlogPost.Where(b => b.ID == id).FirstOrDefault();
+                if (blog == null)
+                    throw new HttpException(404, "Item not found");
+
+                if (blog.LargeImage == null)
+                    throw new HttpException(404, "Image not found");
+
+                return new FileContentResult(blog.LargeImage, "image/jpg");
+            }
+        }
+
+        public FileContentResult SmallImage(int id = -1)
+        {
+            if (id == -1)
+                throw new HttpException(404, "Item not found");
+
+            using (var context = new SocialContext())
+            {
+                Blog blog = context.BlogPost.Where(b => b.ID == id).FirstOrDefault();
+                if (blog == null)
+                    throw new HttpException(404, "Item not found");
+
+                if (blog.SmallImage == null)
+                    throw new HttpException(404, "Image not found");
+
+                return new FileContentResult(blog.SmallImage, "image/jpg");
+            }
+        }
+
+        public FileContentResult FBImage(int id = -1)
+        {
+            if (id == -1)
+                throw new HttpException(404, "Item not found");
+
+            using (var context = new SocialContext())
+            {
+                Blog blog = context.BlogPost.Where(b => b.ID == id).FirstOrDefault();
+                if (blog == null)
+                    throw new HttpException(404, "Item not found");
+
+                if (blog.SmallImage == null)
+                    throw new HttpException(404, "Image not found");
+
+                return new FileContentResult(blog.FBImage, "image/jpg");
+            }
+        }
+
         [Authorize]
         [HttpPost]
         public ActionResult New(NewBlogVM vm)
@@ -51,6 +123,7 @@ namespace YHW.Controllers
                 // calculate SubText
                 int textLength = Math.Min(100, b.BlogText.Length);
                 b.SubText = b.BlogText.Substring(0, textLength);
+                b.ImageSubText = vm.ImageSubText;
                 if (textLength != b.BlogText.Length)
                     b.SubText += "...";
 
@@ -72,17 +145,44 @@ namespace YHW.Controllers
                         b.ThumbImage = array;
                     }
                 }
-                // Image
-                if (vm.ImageFile != null)
+                // LargeImage
+                if (vm.LargeFile != null)
                 {
                     using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
                     {
-                        vm.ImageFile.InputStream.CopyTo(ms);
+                        vm.LargeFile.InputStream.CopyTo(ms);
                         byte[] array = ms.GetBuffer();
 
                         b.LargeImage = array;
                     }
                 }
+                // SmallImage
+                if (vm.SmallFile != null)
+                {
+                    using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                    {
+                        vm.SmallFile.InputStream.CopyTo(ms);
+                        byte[] array = ms.GetBuffer();
+
+                        b.SmallImage = array;
+                    }
+                }
+                // FBImage
+                if (vm.FBFile != null)
+                {
+                    using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                    {
+                        vm.FBFile.InputStream.CopyTo(ms);
+                        byte[] array = ms.GetBuffer();
+
+                        b.FBImage = array;
+                    }
+                }
+
+                if (User.IsInRole("Editor") || User.IsInRole("Writer"))
+                    b.IsApproved = true;
+                else
+                    b.IsApproved = false;
 
                 context.BlogPost.Add(b);
                 context.SaveChanges();
@@ -93,10 +193,13 @@ namespace YHW.Controllers
         public class NewBlogVM
         {
             public HttpPostedFileBase ThumbFile { get; set; }
-            public HttpPostedFileBase ImageFile { get; set; }
+            public HttpPostedFileBase LargeFile { get; set; }
+            public HttpPostedFileBase SmallFile { get; set; }
+            public HttpPostedFileBase FBFile { get; set; }
             public String IsOpinion { get; set; }
             public String BlogText { get; set; }
             public String Title { get; set; }
+            public String ImageSubText { get; set; }
         }
         public ActionResult Success()
         {

@@ -108,7 +108,8 @@ namespace YHW.Models
                     LargeImage = array,
                     SubText = "Common Core Standards Leave Parents Feeling Powerless",
                     CreatedDate = DateTime.Now,
-                    Author = rootUser
+                    Author = rootUser,
+                    IsApproved = false
                 });
             context.QuotePost.Add(
                 new Quote 
@@ -118,7 +119,8 @@ namespace YHW.Models
                     LargeImage = array,
                     SubText = "The Common Core Standards do not include guidelines for sex education.",
                     CreatedDate = DateTime.Now,
-                    Author = rootUser
+                    Author = rootUser,
+                    IsApproved = false
                 });
             context.QuotePost.Add(
                 new Quote 
@@ -128,51 +130,56 @@ namespace YHW.Models
                     IsOpinion = false,
                     LargeImage = array,
                     CreatedDate = DateTime.Now,
-                    Author = rootUser
+                    Author = rootUser,
+                    IsApproved = false
                 });
             context.VideoPost.Add(
                 new Video
                 {
                     Title = "Common Core: Myth or Fact? Teachers ",
-                    VideoURL = "//www.youtube.com/watch?v=07Rz5BN9EV8",
+                    VideoURL = "//www.youtube.com/embed/07Rz5BN9EV8",
                     IsOpinion = true,
                     LargeImage = array,
                     SubText = "Myth or Fact? Are Teachers For or Against the Common Core?",
                     CreatedDate = DateTime.Now,
-                    Author = rootUser
+                    Author = rootUser,
+                    IsApproved = false
                 });
             context.VideoPost.Add(
                 new Video
                 {
                     Title = "Common Core: Myth or Fact? Social Skills ",
-                    VideoURL = "//www.youtube.com/watch?v=ItUmpZBkgNk",
+                    VideoURL = "//www.youtube.com/embed/ItUmpZBkgNk",
                     IsOpinion = true,
                     LargeImage = array,
                     SubText = "Common Core: Myth or Fact? Social Skills ",
                     CreatedDate = DateTime.Now,
-                    Author = rootUser
+                    Author = rootUser,
+                    IsApproved = false
                 });
             context.VideoPost.Add(
                 new Video
                 {
                     Title = "Common Core: Myth or Fact? Obama Administration ",
-                    VideoURL = "//www.youtube.com/watch?v=Yc2YxOL0mLs",
+                    VideoURL = "//www.youtube.com/embed/Yc2YxOL0mLs",
                     IsOpinion = true,
                     LargeImage = array,
                     SubText = "Common Core: Myth or Fact? Obama Administration ",
                     CreatedDate = DateTime.Now,
-                    Author = rootUser
+                    Author = rootUser,
+                    IsApproved = false
                 });
             context.VideoPost.Add(
                 new Video
                 {
                     Title = "Common Core Questions",
-                    VideoURL = "//www.youtube.com/watch?v=N37exrQC7VA",
+                    VideoURL = "//www.youtube.com/embed/N37exrQC7VA",
                     IsOpinion = true,
                     LargeImage = array,
                     SubText = "Watch our latest video on the Common Core!",
                     CreatedDate = DateTime.Now,
-                    Author = rootUser
+                    Author = rootUser,
+                    IsApproved = false
                 });
             context.YHWTeam.Add(
                 new TeamProfile

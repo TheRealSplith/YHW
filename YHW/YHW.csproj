@@ -186,6 +186,7 @@
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\EditorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuoteController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
@@ -394,6 +395,7 @@
     <Content Include="Views\Shared\CommentPartial.cshtml" />
     <Content Include="Views\Home\Manage.cshtml" />
     <Content Include="Views\Topic\DualView.cshtml" />
+    <Content Include="Views\Editor\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

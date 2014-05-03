@@ -1,0 +1,44 @@
+﻿@model List<YHW.Models.Content.ITopicContent>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutHiddenTwitter.cshtml";
+}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Type</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Commands</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var item in Model)
+    {
+      var approveClass = item.IsApproved ? "success" : "";
+      <tr class="@approveClass">
+        <td>@item.ID</td>
+        <td>@item.TypeName</td>
+        <td>@item.Title</td>
+        <td>@item.Author.FirstName @item.Author.LastName</td>
+        <td>
+          @using (Html.BeginForm("approve", item.TypeName, new { id = item.ID }, FormMethod.Post))
+          {
+            if (item.IsApproved)
+            {
+              <button type="submit" class="btn btn-warning" name="val" value="0">Disapprove!</button>
+            }
+            else
+            {
+              <button type="submit" class="btn btn-success" name="val" value="1">Approve!</button>
+            }
+            <button type="submit" class="btn btn-danger" name="val" value="2">Delete!</button>
+          }
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

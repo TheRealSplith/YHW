@@ -19,7 +19,7 @@ namespace YHW.Controllers
 
             using (var content = new SocialContext())
             {
-                var results = (from b in content.BlogPost.Where(b => b.SmallImage != null)
+                var results = (from b in content.BlogPost.Where(b => b.SmallImage != null && b.IsApproved)
                                select new
                                    {
                                        ID = b.ID,
@@ -27,7 +27,7 @@ namespace YHW.Controllers
                                        CreatedDate = b.CreatedDate
                                    })
                               .Concat(
-                                from q in content.QuotePost.Where(q => q.SmallImage != null)
+                                from q in content.QuotePost.Where(q => q.SmallImage != null && q.IsApproved)
                                 select new
                                     {
                                         ID = q.ID,
@@ -35,7 +35,7 @@ namespace YHW.Controllers
                                         CreatedDate = q.CreatedDate
                                     })
                               .Concat(
-                                from v in content.VideoPost.Where(v => v.SmallImage != null)
+                                from v in content.VideoPost.Where(v => v.IsApproved)
                                 select new
                                     {
                                         ID = v.ID,

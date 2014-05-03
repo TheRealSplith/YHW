@@ -7,11 +7,9 @@
 <h2 class="text-center">@Model.Title </h2>
 <h3><small>@Model.CreatedDate.Date.ToString("D")</small></h3>
 
-@if (Model.ImageURL != null)
+@if (Model.LargeImage != null)
 {
-  String imageBase64 = Convert.ToBase64String(Model.ImageURL);
-  String imageSrc = String.Format("data:image/jpg;base64,{0}", imageBase64);
-  <img src="@imageSrc" style="max-height:650px;" />
+  <img src="@Url.Action("LargeImage", "Blog", new { id = Model.ID })" style="max-height:650px; width:100%;" />
 }
 
 @foreach (var item in Model.BlogText.Split('\n'))

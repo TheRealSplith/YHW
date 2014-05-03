@@ -159,6 +159,11 @@ li.YHW-topic {
 .featurette {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+  .featurette-right a, .featurette-left a {
+    color:black;
+    text-decoration:none;
+  }
+
   .featurette-right h1 {
     margin-left:50px;
     margin-top:25px;

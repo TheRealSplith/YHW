@@ -14,7 +14,7 @@
     </p>
   </div>
 </div>
-@if (!Request.IsAuthenticated)
+@if (!Request.IsAuthenticated || true)
 {
 // This prompts users to engage our group!
 <div class="row" style="text-align:center;">
@@ -42,34 +42,64 @@
 }
 @for (int i = 0; i < Model.Count; ++i)
 {
-  var item = Model[i];
-  if (i % 2 == 0)
+  if (Model[i].TypeName == "Video")
   {
+    YHW.Models.Content.Video v = (YHW.Models.Content.Video)Model[i];
     <hr class="featurette-divider" />
 
     <div class="row featurette-right">
-      <div class="col-sm-12 col-md-8">
-        <h1>This is a test post, but I made it longer so that I can test multi-line stuff</h1>
-        <p>Here is some stuff that appears in a featurette</p>
-      </div>
-      <div class="col-sm-offset-1 col-sm-6 col-md-offset-0 col-md-4">
-        <img src="http://placehold.it/256x256" style="max-height:256px; min-height:256px;" />
-      </div>
+      <a href="@Url.Action("Item", Model[i].TypeName, new { id = Model[i].ID })">
+        <div class="col-sm-12 col-md-8">
+          <h1>@Model[i].Title</h1>
+          <p>@Model[i].SubText</p>
+        </div>
+        <div class="col-sm-offset-1 col-sm-6 col-md-offset-0 col-md-4">
+          <div style="margin-bottom:5px;" class="video-container">
+            @{
+              var src = v.VideoURL;
+            }
+            <iframe width="420" height="315"
+                    src="@src"
+                    frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+      </a>
     </div>
   }
   else
   {
-    <hr class="featurette-divider" />
+    if (i % 2 == 0)
+    {
+      <hr class="featurette-divider" />
 
-    <div class="row featurette-left">
-      <div class="col-sm-offset-1 col-sm-6 col-md-offset-0 col-md-4">
-        <img src="http://placehold.it/256x256" style="max-height:256px; min-height:256px;" />
+      <div class="row featurette-right">
+        <a href="@Url.Action("Item", Model[i].TypeName, new { id = Model[i].ID })">
+          <div class="col-sm-12 col-md-8">
+            <h1>@Model[i].Title</h1>
+            <p>@Model[i].SubText</p>
+          </div>
+          <div class="col-sm-offset-1 col-sm-6 col-md-offset-0 col-md-4">
+            <img src="@Url.Action("SmallImage", Model[i].TypeName, new { id = Model[i].ID })" style="max-height:256px; min-height:256px;" />
+          </div>
+        </a>
       </div>
-      <div class="col-sm-12 col-md-8">
-        <h1>This is a test post, but I made it longer so that I can test multi-line stuff</h1>
-        <p>Here is some stuff that appears in a featurette</p>
+    }
+    else
+    {
+      <hr class="featurette-divider" />
+
+      <div class="row featurette-left">
+        <a href="@Url.Action("Item", Model[i].TypeName, new { id = Model[i].ID })">
+          <div class="col-sm-offset-1 col-sm-6 col-md-offset-0 col-md-4">
+            <img src="@Url.Action("SmallImage", Model[i].TypeName, new { id = Model[i].ID })" style="max-height:256px; min-height:256px;" />
+          </div>
+          <div class="col-sm-12 col-md-8">
+            <h1>@Model[i].Title</h1>
+            <p>@Model[i].SubText</p>
+          </div>
+        </a>
       </div>
-    </div>
+    }
   }
 }
 

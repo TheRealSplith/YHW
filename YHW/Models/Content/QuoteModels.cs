@@ -15,7 +15,11 @@ namespace YHW.Models.Content
         public Byte[] FBImage { get; set; }
         public String Title { get; set; }
         public String SubText { get; set; }
+        public String ImageSubText { get; set; }
         public DateTime CreatedDate { get; set; }
+        public Boolean IsApproved { get; set; }
+        public String ApprovalMemo { get; set; }
+        public DateTime? ApprovalUpdateDate { get; set; }
         public Int32? AuthorID { get; set; }
         public Boolean IsOpinion { get; set; }
 

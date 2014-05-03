@@ -60,6 +60,10 @@
                     <ul class="dropdown-menu">
                       <li>@Html.ActionLink("Manage", "Manage", "Home")</li>
                       <li>@Html.ActionLink("Submit Content", "Index", "Submit")</li>
+                      @if (User.IsInRole("Editor"))
+                      {
+                        <li>@Html.ActionLink("Administrate", "Index", "Editor")</li>
+                      }
                       <li><a id="logoff" href="#">Log Off</a></li>
                     </ul>
                   </li>
@@ -85,26 +89,26 @@
           <ul class="list-unstyled">
             <li><span class="header">Home</span>
             <li>
-            <li>@Html.ActionLink("Main Page", "Index", "Home", new { Class = "item" })</li>
+            <li>@Html.ActionLink("Main Page", "Index", "Home", null, new { Class = "item" })</li>
           </ul>
         </div>
         <div class="col-md-2">
           <ul class="list-unstyled">
             <li><span class="header">About Us</span>
             <li>
-            <li>@Html.ActionLink("Mission & Vision", "About", "Home", new { Class = "item" })</li>
-            <li>@Html.ActionLink("YHW Team", "Team", "Home", new { Class = "item" })</li>
+            <li>@Html.ActionLink("Mission & Vision", "About", "Home", null, new { Class = "item" })</li>
+            <li>@Html.ActionLink("YHW Team", "Team", "Home", null, new { Class = "item" })</li>
           </ul>
         </div>
         <div class="col-md-2">
           <ul class="list-unstyled">
             <li><span class="header">Common Core</span>
             <li>
-            <li>@Html.ActionLink("Fact & Opinion", "Index", "Topic", new { Class = "item" })</li>
+            <li>@Html.ActionLink("Fact & Opinion", "Index", "Topic", null, new { Class = "item" })</li>
             @if (Request.IsAuthenticated)
             {
-              <li>@Html.ActionLink("New Quote", "New", "Quote", new { Class = "item" })</li>
-              <li>@Html.ActionLink("New Article", "New", "Blog", new { Class = "item" })</li>
+              <li>@Html.ActionLink("New Quote", "New", "Quote", null, new { Class = "item" })</li>
+              <li>@Html.ActionLink("New Article", "New", "Blog", null, new { Class = "item" })</li>
             }
           </ul>
         </div>
@@ -112,20 +116,20 @@
           <ul class="list-unstyled">
             <li><span class="header">Contact Us</span>
             <li>
-            <li>@Html.ActionLink("Contact & Support", "Index", "Contact", new { Class = "item" })</li>
-            <li>@Html.ActionLink("Collaborate", "Collaborate", "Contact", new { Class = "item" })</li>
+            <li>@Html.ActionLink("Contact & Support", "Index", "Contact", null, new { Class = "item" })</li>
+            <li>@Html.ActionLink("Collaborate", "Collaborate", "Contact", null, new { Class = "item" })</li>
           </ul>
         </div>
         <div class="col-md-offset-2 col-md-2" >
           <ul class="list-unstyled">
             <li><span class="header">Account</span>
             <li>
-            <li>@Html.ActionLink("Login", "Login", "Account", new { Class = "item" })</li>
-            <li>@Html.ActionLink("Register", "Login", "Account", new { Class = "item" })</li>
+            <li>@Html.ActionLink("Login", "Login", "Account", null, new { Class = "item" })</li>
+            <li>@Html.ActionLink("Register", "Login", "Account", null, new { Class = "item" })</li>
             @if (Request.IsAuthenticated)
             {
-              <li>@Html.ActionLink("Manage", "Manage", "Home", new { Class = "item" })</li>
-              <li>@Ajax.ActionLink("LogOff", "Logoff", "Account", new AjaxOptions() { HttpMethod = "Post" }, new { Class = "item" })</li>
+              <li>@Html.ActionLink("Manage", "Manage", "Home", null, new { Class = "item" })</li>
+              <li>@Ajax.ActionLink("LogOff", "Logoff", "Account", null, new AjaxOptions() { HttpMethod = "Post" }, new { Class = "item" })</li>
             }
           </ul>
         </div>

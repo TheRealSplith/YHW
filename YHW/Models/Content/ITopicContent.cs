@@ -14,7 +14,7 @@ namespace YHW.Models.Content
         /// </summary>
         Byte[] ThumbImage { get; set; }
         /// <summary>
-        /// This image is used on content pages, approximately 2:1 ratio, however big
+        /// This image is used on content pages, 1000 x 600 pixels
         /// </summary>
         Byte[] LargeImage { get; set; }
         /// <summary>
@@ -34,6 +34,10 @@ namespace YHW.Models.Content
         /// </summary>
         String SubText { get; set; }
         /// <summary>
+        /// Text that appears below an image
+        /// </summary>
+        String ImageSubText { get; set; }
+        /// <summary>
         /// This is the date the content was created
         /// </summary>
         DateTime CreatedDate { get; set; }
@@ -50,5 +54,13 @@ namespace YHW.Models.Content
         /// users whether a piece of content
         /// </summary>
         Boolean IsOpinion { get; set; }
+        /// <summary>
+        /// Whether or not the content is approved for general viewing
+        /// </summary>
+        Boolean IsApproved { get; set; }
+        /// <summary>
+        /// Author of the content
+        /// </summary>
+        YHWProfile Author { get; set; }
     }
 }

@@ -29,7 +29,27 @@ namespace YHW.Controllers
                 if (result == null)
                     return RedirectToAction("Http404", "Status", new { id = id.ToString() });
                 else
-                    return View(result);
+                    // Ensure that call is authenticated
+                    if (Request.IsAuthenticated && HttpContext.User.Identity.Name == result.Author.UserName || User.IsInRole("Editor"))
+                        return View(result);
+            }
+        }
+
+        [Authorize(Roles = "Editor")]
+        public ActionResult Approve(Int32 id, Int32 val)
+        {
+            using (var context = new SocialContext())
+            {
+                Quote quote = context.QuotePost.Where(q => q.ID == id).Single();
+                if (val == 0 || val == 1)
+                    quote.IsApproved = val == 1;
+                else if (val == 2)
+                    context.QuotePost.Remove(quote);
+                else
+                    throw new HttpException(400, "Bad Request");
+
+                context.SaveChanges();
+                return RedirectToAction("Index", "Editor");
             }
         }
 
