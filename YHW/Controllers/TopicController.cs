@@ -58,12 +58,15 @@ namespace YHW.Controllers
                     List<YHW.Models.Content.ITopicContent> results = new List<ITopicContent>();
 
                     var items = (from v in context.VideoPost
+                                 where v.IsApproved == true
                                  select new { v.ID, ContentType = "Video", v.CreatedDate })
                                      .Union(
                                  from b in context.BlogPost
+                                 where v.IsApproved == true
                                  select new { b.ID, ContentType = "Blog", b.CreatedDate })
                                      .Union(
                                  from q in context.QuotePost
+                                 where v.IsApproved == true
                                  select new { q.ID, ContentType = "Quote", q.CreatedDate }).ToList();
 
                     foreach (var item in items)
@@ -104,14 +107,17 @@ namespace YHW.Controllers
 
                 var items = (from v in context.VideoPost
                              where v.IsOpinion == isOpinion
+                                && v.IsApproved == true
                              select new { v.ID, ContentType = "Video", v.CreatedDate })
                                  .Union(
                              from b in context.BlogPost
                              where b.IsOpinion == isOpinion
+                                && b.IsApproved == true
                              select new { b.ID, ContentType = "Blog", b.CreatedDate })
                                  .Union(
                              from q in context.QuotePost
                              where q.IsOpinion == isOpinion
+                                && q.IsApproved == true
                              select new { q.ID, ContentType = "Quote", q.CreatedDate }).ToList();
 
                 foreach(var item in items)

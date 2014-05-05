@@ -4,6 +4,13 @@
     Layout = "~/Views/Shared/_LayoutRightTwitter.cshtml";
 }
 
+@if (!Model.IsApproved)
+{
+  <div class="alert alert-warning">
+    This content is <strong>still awaiting approval</strong>, and will not be visable to anyone but the Author,
+    and Editors of this site.
+  </div>
+}
 
 <h2 class="text-center">@Model.Title </h2>
 <h3><small>@Model.CreatedDate.Date.ToString("D")</small></h3>

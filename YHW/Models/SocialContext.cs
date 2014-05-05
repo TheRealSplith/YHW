@@ -137,7 +137,7 @@ namespace YHW.Models
                 new Video
                 {
                     Title = "Common Core: Myth or Fact? Teachers ",
-                    VideoURL = "//www.youtube.com/embed/07Rz5BN9EV8",
+                    VideoURL = "07Rz5BN9EV8",
                     IsOpinion = true,
                     LargeImage = array,
                     SubText = "Myth or Fact? Are Teachers For or Against the Common Core?",
@@ -149,7 +149,7 @@ namespace YHW.Models
                 new Video
                 {
                     Title = "Common Core: Myth or Fact? Social Skills ",
-                    VideoURL = "//www.youtube.com/embed/ItUmpZBkgNk",
+                    VideoURL = "ItUmpZBkgNk",
                     IsOpinion = true,
                     LargeImage = array,
                     SubText = "Common Core: Myth or Fact? Social Skills ",
@@ -161,7 +161,7 @@ namespace YHW.Models
                 new Video
                 {
                     Title = "Common Core: Myth or Fact? Obama Administration ",
-                    VideoURL = "//www.youtube.com/embed/Yc2YxOL0mLs",
+                    VideoURL = "Yc2YxOL0mLs",
                     IsOpinion = true,
                     LargeImage = array,
                     SubText = "Common Core: Myth or Fact? Obama Administration ",
@@ -173,7 +173,7 @@ namespace YHW.Models
                 new Video
                 {
                     Title = "Common Core Questions",
-                    VideoURL = "//www.youtube.com/embed/N37exrQC7VA",
+                    VideoURL = "N37exrQC7VA",
                     IsOpinion = true,
                     LargeImage = array,
                     SubText = "Watch our latest video on the Common Core!",

@@ -30,8 +30,12 @@ namespace YHW.Controllers
                     return RedirectToAction("Http404", "Status", new { id = id.ToString() });
                 else
                     // Ensure that call is authenticated
-                    if (Request.IsAuthenticated && HttpContext.User.Identity.Name == result.Author.UserName || User.IsInRole("Editor"))
+                    if ( result.IsApproved ||
+                         Request.IsAuthenticated && HttpContext.User.Identity.Name == result.Author.UserName
+                         || User.IsInRole("Editor"))
                         return View(result);
+                    else
+                        throw new HttpException(500, "Content not available right now, awaiting approval");
             }
         }
 

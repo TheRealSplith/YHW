@@ -29,7 +29,13 @@ namespace YHW.Controllers
                 if (result == null)
                     return RedirectToAction("Http404", "Status", new { id = id.ToString() });
                 else
-                    return View(result);
+                    // Ensure that call is authenticated
+                    if ( result.IsApproved ||
+                         Request.IsAuthenticated && HttpContext.User.Identity.Name == result.Author.UserName
+                         || User.IsInRole("Editor"))
+                        return View(result);
+                    else
+                        throw new HttpException(500, "Content not available right now, awaiting approval");
             }
         }
 
@@ -37,78 +43,6 @@ namespace YHW.Controllers
         public ActionResult New()
         {
             return View();
-        }
-
-        [Authorize(Roles = "Editor")]
-        public ActionResult Approve(Int32 id, Int32 val)
-        {
-            using (var context = new SocialContext())
-            {
-                Blog blog = context.BlogPost.Where(b => b.ID == id).Single();
-                if (val == 0 || val == 1)
-                    blog.IsApproved = val == 1;
-                else if (val == 2)
-                    context.BlogPost.Remove(blog);
-                else
-                    throw new HttpException(400, "Bad Request");
-
-                context.SaveChanges();
-                return RedirectToAction("Index", "Editor");
-            }
-        }
-
-        public FileContentResult LargeImage(int id = -1)
-        {
-            if (id == -1)
-                throw new HttpException(404, "Item not found");
-
-            using (var context = new SocialContext())
-            {
-                Blog blog = context.BlogPost.Where(b => b.ID == id).FirstOrDefault();
-                if (blog == null)
-                    throw new HttpException(404, "Item not found");
-
-                if (blog.LargeImage == null)
-                    throw new HttpException(404, "Image not found");
-
-                return new FileContentResult(blog.LargeImage, "image/jpg");
-            }
-        }
-
-        public FileContentResult SmallImage(int id = -1)
-        {
-            if (id == -1)
-                throw new HttpException(404, "Item not found");
-
-            using (var context = new SocialContext())
-            {
-                Blog blog = context.BlogPost.Where(b => b.ID == id).FirstOrDefault();
-                if (blog == null)
-                    throw new HttpException(404, "Item not found");
-
-                if (blog.SmallImage == null)
-                    throw new HttpException(404, "Image not found");
-
-                return new FileContentResult(blog.SmallImage, "image/jpg");
-            }
-        }
-
-        public FileContentResult FBImage(int id = -1)
-        {
-            if (id == -1)
-                throw new HttpException(404, "Item not found");
-
-            using (var context = new SocialContext())
-            {
-                Blog blog = context.BlogPost.Where(b => b.ID == id).FirstOrDefault();
-                if (blog == null)
-                    throw new HttpException(404, "Item not found");
-
-                if (blog.SmallImage == null)
-                    throw new HttpException(404, "Image not found");
-
-                return new FileContentResult(blog.FBImage, "image/jpg");
-            }
         }
 
         [Authorize]
@@ -189,6 +123,79 @@ namespace YHW.Controllers
                 return RedirectToAction("Item", "Blog", new { id = b.ID });
             }
         }
+
+        [Authorize(Roles = "Editor")]
+        public ActionResult Approve(Int32 id, Int32 val)
+        {
+            using (var context = new SocialContext())
+            {
+                Blog blog = context.BlogPost.Where(b => b.ID == id).Single();
+                if (val == 0 || val == 1)
+                    blog.IsApproved = val == 1;
+                else if (val == 2)
+                    context.BlogPost.Remove(blog);
+                else
+                    throw new HttpException(400, "Bad Request");
+
+                context.SaveChanges();
+                return RedirectToAction("Index", "Editor");
+            }
+        }
+
+        public FileContentResult LargeImage(int id = -1)
+        {
+            if (id == -1)
+                throw new HttpException(404, "Item not found");
+
+            using (var context = new SocialContext())
+            {
+                Blog blog = context.BlogPost.Where(b => b.ID == id).FirstOrDefault();
+                if (blog == null)
+                    throw new HttpException(404, "Item not found");
+
+                if (blog.LargeImage == null)
+                    throw new HttpException(404, "Image not found");
+
+                return new FileContentResult(blog.LargeImage, "image/jpg");
+            }
+        }
+
+        public FileContentResult SmallImage(int id = -1)
+        {
+            if (id == -1)
+                throw new HttpException(404, "Item not found");
+
+            using (var context = new SocialContext())
+            {
+                Blog blog = context.BlogPost.Where(b => b.ID == id).FirstOrDefault();
+                if (blog == null)
+                    throw new HttpException(404, "Item not found");
+
+                if (blog.SmallImage == null)
+                    throw new HttpException(404, "Image not found");
+
+                return new FileContentResult(blog.SmallImage, "image/jpg");
+            }
+        }
+
+        public FileContentResult FBImage(int id = -1)
+        {
+            if (id == -1)
+                throw new HttpException(404, "Item not found");
+
+            using (var context = new SocialContext())
+            {
+                Blog blog = context.BlogPost.Where(b => b.ID == id).FirstOrDefault();
+                if (blog == null)
+                    throw new HttpException(404, "Item not found");
+
+                if (blog.SmallImage == null)
+                    throw new HttpException(404, "Image not found");
+
+                return new FileContentResult(blog.FBImage, "image/jpg");
+            }
+        }
+
 
         public class NewBlogVM
         {

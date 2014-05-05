@@ -220,6 +220,7 @@
     <Content Include="Content\images\2014_0326_1349_58.jpg" />
     <Content Include="Content\images\AnaPortrait.jpg" />
     <Content Include="Content\images\animated-overlay.gif" />
+    <Content Include="Content\images\article_main.jpg" />
     <Content Include="Content\images\CarolynPortrait.jpg" />
     <Content Include="Content\images\carousel1.png" />
     <Content Include="Content\images\carousel2.png" />
@@ -232,7 +233,9 @@
     <Content Include="Content\images\icon_twitter_32.png" />
     <Content Include="Content\images\JustinPortrait.jpg" />
     <Content Include="Content\images\logo_name.jpg" />
+    <Content Include="Content\images\quote_main.jpg" />
     <Content Include="Content\images\twitter_circle_color-512.png" />
+    <Content Include="Content\images\video_main.jpg" />
     <Content Include="Content\images\WilliamMcGrawPortrait.jpg" />
     <Content Include="Content\images\yhw-circle-140.jpg" />
     <Content Include="Content\jquery-ui-1.10.4.custom.min.css" />

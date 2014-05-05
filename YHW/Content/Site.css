@@ -59,6 +59,12 @@ p {
   background-color:#008d65;
   color:#ffffff;
   }
+.nav .open > a, .nav .open > a:focus {
+  background-color: #00C68F;
+}
+  .nav .open > a:hover {
+    background-color:#008d65;
+  }
 
 .brand img {
   height: 40px;
@@ -150,6 +156,11 @@ li.YHW-topic {
   font-size:16px;
   color:#ffffff;
 }
+  .btn-yhw:hover {
+    border-color:#009468;
+    background-color:#00B67F;
+    color:#ffffff
+  }
 
 .featurette-divider {
   margin: 50px 20px 50px 20px;

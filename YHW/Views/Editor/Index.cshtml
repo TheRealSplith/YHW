@@ -22,7 +22,7 @@
       <tr class="@approveClass">
         <td>@item.ID</td>
         <td>@item.TypeName</td>
-        <td>@item.Title</td>
+        <td>@Html.ActionLink(item.Title, "Item", item.TypeName, new { id = item.ID }, null)</td>
         <td>@item.Author.FirstName @item.Author.LastName</td>
         <td>
           @using (Html.BeginForm("approve", item.TypeName, new { id = item.ID }, FormMethod.Post))

@@ -3,4 +3,104 @@
     Layout = "~/Views/Shared/_LayoutHiddenTwitter.cshtml";
 }
 
-<h2>New</h2>
+@using (Html.BeginForm("New", "Video", FormMethod.Post,
+                            new
+                            {
+                              Class = "form-horizontal",
+                              role = "form",
+                              enctype = "multipart/form-data"
+                            }))
+{
+  <div class="row" style="padding-bottom:10px; padding-top:10px;">
+    <div class="" data-bind="css: { 'has-error': !Title.isValid() && Title.isModified() }">
+      <div class="form-group">
+        <label for="inputTitle" class="col-xs-offset-1 col-xs-2 col-sm-2 control-label">Title</label>
+        <div class="col-xs-offset-1 col-sm-offset-0 col-xs-7 col-sm-8 col-md-8">
+          <input data-bind="value: Title" class="form-control" name="Title" id="inputTitle" placeholder="Title" />
+          <span class="help-block" data-bind="validationMessage: Title"></span>
+        </div>
+      </div>
+    </div>
+    <div class="" data-bind="css: { 'has-error': !SubText.isValid() && SubText.isModified() }">
+      <div class="form-group">
+        <label for="inputSubText" class="col-xs-offset-1 col-xs-2 col-sm-2 control-label">Sub Text</label>
+        <div class="col-xs-offset-1 col-sm-offset-0 col-xs-7 col-sm-8 col-md-8">
+          <input data-bind="value: SubText" class="form-control" name="SubText" id="inputSubText" placeholder="Brief description of YouTube Video" />
+          <span class="help-block" data-bind="validationMessage: SubText"></span>
+        </div>
+      </div>
+    </div>
+    <div class="" data-bind="css: { 'has-error': !YouTubeURL.isValid() && YouTubeURL.isModified() }">
+      <div class="form-group">
+        <label for="inputYouTubeURL" class="col-xs-offset-1 col-xs-2 col-sm-2 control-label">YouTube Video URL</label>
+        <div class="col-xs-offset-1 col-sm-offset-0 col-xs-7 col-sm-8 col-md-8">
+          <input data-bind="value: YouTubeURL" class="form-control" name="YouTubeURL" id="inputYouTubeURL" placeholder="URL of Youtube Video" />
+          <span class="help-block" data-bind="validationMessage: YouTubeURL"></span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputOpinion" class="col-xs-offset-1 col-xs-2 col-sm-2 control-label">Opinion</label>
+      <div class="col-xs-offset-1 col-sm-offset-0 col-sm-4 col-md-4">
+        <input type="checkbox" name="IsOpinion" id="IsOpinion" data-bind="checked: IsOpinion" />
+      </div>
+    </div>
+    <div class="col-md-offset-3 col-sm-offset-3 col-xs-offset-1">
+      <button class="btn btn-default" data-bind="enable: validationModel.isValid()">Submit</button>
+    </div>
+  </div>
+}
+
+@section scripts {
+  <script type="text/javascript">
+    function FeedbackFormVM() {
+      var self = this;
+      this.Title = ko.validatedObservable("").extend({ required: true });
+      this.SubText = ko.validatedObservable("").extend({ required: true });
+      this.YouTubeURL = ko.validatedObservable("").extend({
+        required: true,
+        pattern: {
+          message: 'Enter a YouTube video URL',
+          params: /http[s]?:\/\/(?:www\.)?youtube.*watch\?v=([a-zA-Z0-9\-_]+)/
+        }
+      });
+      this.IsOpinion = ko.observable(true);
+
+      this.validationModel = ko.validatedObservable({
+        title: self.Title,
+        subText: self.SubText,
+        youTubeUrl: self.YouTubeURL
+      });
+
+      this.Submit = function () {
+        $.post(
+          "@Url.Action("New", "Blog")",
+          {
+            ID: -1, ThumbURL: "", ImageURL: "", Title: self.Title(), SubText: null, BlogText: self.BlogText(),
+            CreatedDate: null, AuthorID: null, IsOpinion: self.Opinion()
+          },
+          function (data) {
+            if (data.Success == true)
+              window.location.href = data.Redirect;
+          }).error(function () {
+            console.log("Error");
+          });
+      };
+    }
+
+    ko.validation.configure({
+      registerExtenders: true,
+      insertMessages: false
+    });
+    ko.validation.init({ messagesOnModified: false, grouping: { deep: true, observable: true } });
+
+    // init
+    var vm = new FeedbackFormVM();
+    ko.applyBindings(vm);
+  </script>
+
+  @Scripts.Render("~/Scripts/bootstrap.file-input.js")
+  <script type="text/javascript">
+    $('input[type=file]').bootstrapFileInput();
+  </script>
+}

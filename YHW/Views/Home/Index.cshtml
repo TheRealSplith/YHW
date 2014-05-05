@@ -14,49 +14,84 @@
     </p>
   </div>
 </div>
-@if (!Request.IsAuthenticated || true)
-{
-// This prompts users to engage our group!
-<div class="row" style="text-align:center;">
-  <div class="col-md-4 col-lg-4">
-    <img class="img-circle" src="@Url.Content("~/Content/images/facebook-icon-circle.png")" alt="140x140" style="width: 140px; height: 140px;">
-    <h2>Like us on Facebook!</h2>
-    <p>We post all of our new content onto Facebook as it arrives. Like us to keep up to date.</p>
-    <div class="fb-follow" data-href="https://www.facebook.com/youheardwrong" data-colorscheme="light" data-layout="button_count" data-show-faces="false"></div>
-  </div>
-  <div class="col-md-4 col-lg-4">
-    <img class="img-circle" src="@Url.Content("~/Content/images/twitter_circle_color-512.png")" alt="140x140" style="width: 140px; height: 140px;">
-    <h2>Follow us on Twitter!</h2>
-    <p>We post all of our new content onto Facebook as it arrives. Follow us on Twitter and join the conversation </p>
-    <a href="https://twitter.com/youheardwrong" class="twitter-follow-button" data-show-count="false" data-lang="en" data-size="medium">Follow @@YouHeardWrong</a>
-  </div>
-  <div class="col-md-4 col-lg-4">
-    <img class="img-circle" alt="140x140" src="@Url.Content("~/Content/images/yhw-circle-140.jpg")" style="width: 140px; height: 140px;">
-    <h2>Sign in Now!</h2>
-    <p>Sign in to Comment on articles, or upload the content you find online.</p>
-    <a href="@Url.Action("Login", "Account")"><button class="btn btn btn-yhw">Sign In!</button></a> 
+<div class="row" style="margin-bottom:10px;">
+  <div class="col-sm-10 col-sm-offset-1">
+    <div class="video-container">
+      <iframe src="//www.youtube.com/embed/N9SsbH5U5Wg" frameborder="0" allowfullscreen></iframe>
+    </div>
   </div>
 </div>
+@if (!Request.IsAuthenticated)
+{
+  // This prompts users to engage our group!
+  <div class="row" style="text-align:center;">
+    <div class="col-md-4 col-lg-4">
+      <img class="img-circle" src="@Url.Content("~/Content/images/facebook-icon-circle.png")" alt="140x140" style="width: 140px; height: 140px;">
+      <h2>Like us on Facebook!</h2>
+      <p>We post all of our new content onto Facebook as it arrives. Like us to keep up to date.</p>
+      <div class="fb-follow" data-href="https://www.facebook.com/youheardwrong" data-colorscheme="light" data-layout="button_count" data-show-faces="false"></div>
+    </div>
+    <div class="col-md-4 col-lg-4">
+      <img class="img-circle" src="@Url.Content("~/Content/images/twitter_circle_color-512.png")" alt="140x140" style="width: 140px; height: 140px;">
+      <h2>Follow us on Twitter!</h2>
+      <p>We post all of our new content onto Facebook as it arrives. Follow us on Twitter and join the conversation </p>
+      <a href="https://twitter.com/youheardwrong" class="twitter-follow-button" data-show-count="false" data-lang="en" data-size="medium">Follow @@YouHeardWrong</a>
+    </div>
+    <div class="col-md-4 col-lg-4">
+      <img class="img-circle" alt="140x140" src="@Url.Content("~/Content/images/yhw-circle-140.jpg")" style="width: 140px; height: 140px;">
+      <h2>Sign in Now!</h2>
+      <p>Sign in to Comment on articles, or upload the content you find online.</p>
+      <a href="@Url.Action("Login", "Account")"><button class="btn btn btn-yhw">Sign In!</button></a> 
+    </div>
+  </div>
 } else {
-// This tracks a users engagement with our product
+  // This tracks a users engagement with our product
+  <div class="row" style="text-align:center;">
+    <div class="col-md-4 col-lg-4">
+      <img class="img-circle" src="@Url.Content("~/Content/images/article_main.jpg")" alt="140x140" style="width: 140px; height: 140px;">
+      <h2>Create an Article</h2>
+      <p>Click the link below to submit an article about the Common Core.</p>
+      <a href="@Url.Action("New", "Blog")" class="btn btn-info">
+        Article
+      </a>
+    </div>
+    <div class="col-md-4 col-lg-4">
+      <img class="img-circle" src="@Url.Content("~/Content/images/quote_main.jpg")" alt="140x140" style="width: 140px; height: 140px;">
+      <h2>Send us a Quote!</h2>
+      <p>Hear a teacher, student or parent speak about their experiences with the Common Core? Send us a quote now!</p>
+      <a href="@Url.Action("New", "Quote")" class="btn btn-yhw">
+        Quote
+      </a>
+    </div>
+    <div class="col-md-4 col-lg-4">
+      <img class="img-circle" src="@Url.Content("~/Content/images/video_main.jpg")" alt="140x140" style="width: 140px; height: 140px;">
+      <h2>Link us a video!</h2>
+      <p>Send us a YouTube link that you feel contributes to the conversation about the Common Core!</p>
+      <a href="@Url.Action("New", "Video")" class="btn btn-default">
+        Video
+      </a>
+    </div>
+  </div>
 }
 @for (int i = 0; i < Model.Count; ++i)
 {
   if (Model[i].TypeName == "Video")
   {
     YHW.Models.Content.Video v = (YHW.Models.Content.Video)Model[i];
+    if (i % 2 == 0)
+    {
     <hr class="featurette-divider" />
 
-    <div class="row featurette-right">
+    <div class="row featurette featurette-right">
       <a href="@Url.Action("Item", Model[i].TypeName, new { id = Model[i].ID })">
-        <div class="col-sm-12 col-md-8">
+        <div class="col-sm-12 col-md-7">
           <h1>@Model[i].Title</h1>
           <p>@Model[i].SubText</p>
         </div>
-        <div class="col-sm-offset-1 col-sm-6 col-md-offset-0 col-md-4">
-          <div style="margin-bottom:5px;" class="video-container">
+        <div class="col-sm-offset-1 col-sm-6 col-md-offset-0 col-md-5">
+          <div style="margin-bottom:5px;margin-right:20px;" class="video-container">
             @{
-              var src = v.VideoURL;
+              var src = "//www.youtube.com/embed/" + v.VideoURL;
             }
             <iframe width="420" height="315"
                     src="@src"
@@ -65,6 +100,30 @@
         </div>
       </a>
     </div>
+    }
+    else
+    {
+    <hr class="featurette-divider" />
+
+    <div class="row featurette featurette-left">
+      <div class="col-sm-offset-1 col-sm-6 col-md-offset-0 col-md-5">
+        <div style="margin-bottom:5px;margin-left:50px;" class="video-container">
+          @{
+            var src = "//www.youtube.com/embed/" + v.VideoURL;
+          }
+          <iframe width="420" height="315"
+                  src="@src"
+                  frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+      <a href="@Url.Action("Item", Model[i].TypeName, new { id = Model[i].ID })">
+        <div class="col-sm-12 col-md-7">
+          <h1>@Model[i].Title</h1>
+          <p>@Model[i].SubText</p>
+        </div>
+      </a>
+    </div>
+    }
   }
   else
   {
@@ -72,7 +131,7 @@
     {
       <hr class="featurette-divider" />
 
-      <div class="row featurette-right">
+      <div class="row featurette featurette-right">
         <a href="@Url.Action("Item", Model[i].TypeName, new { id = Model[i].ID })">
           <div class="col-sm-12 col-md-8">
             <h1>@Model[i].Title</h1>
@@ -88,7 +147,7 @@
     {
       <hr class="featurette-divider" />
 
-      <div class="row featurette-left">
+      <div class="row featurette featurette-left">
         <a href="@Url.Action("Item", Model[i].TypeName, new { id = Model[i].ID })">
           <div class="col-sm-offset-1 col-sm-6 col-md-offset-0 col-md-4">
             <img src="@Url.Action("SmallImage", Model[i].TypeName, new { id = Model[i].ID })" style="max-height:256px; min-height:256px;" />

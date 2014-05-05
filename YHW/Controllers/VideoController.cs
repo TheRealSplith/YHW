@@ -29,7 +29,13 @@ namespace YHW.Controllers
                 if (result == null)
                     return RedirectToAction("Http404", "Status", new { id = id.ToString() });
                 else
-                    return View(result);
+                    // Ensure that call is authenticated
+                    if ( result.IsApproved ||
+                         Request.IsAuthenticated && HttpContext.User.Identity.Name == result.Author.UserName
+                         || User.IsInRole("Editor"))
+                        return View(result);
+                    else
+                        throw new HttpException(500, "Content not available right now, awaiting approval");
             }
         }
 
@@ -55,6 +61,60 @@ namespace YHW.Controllers
         public ActionResult New()
         {
             return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult New(VideoVM vm)
+        {
+            Video v = new Video();
+            using (var context = new SocialContext())
+            {
+                v.Title = vm.Title;
+                v.SubText = vm.SubText;
+                // Pull out the Video ID and add the embed code
+                if (System.Text.RegularExpressions.Regex.IsMatch(vm.YouTubeURL, @"http[s]?://(www\.)?youtube.*watch\?v=([a-zA-Z0-9\-_]+)"))
+                {
+                    // after the v parameter is the YTID
+                    int vIndex = vm.YouTubeURL.IndexOf("v=");
+                    // We offset the index by 2 so that we don't have the v= at the beginning
+                    String ytID = vm.YouTubeURL.Substring(vIndex + 2);
+                    if (ytID.Contains('&'))
+                    {
+                        int ampIndex = ytID.IndexOf('&');
+                        ytID = ytID.Substring(0, ampIndex);
+                    }
+                    v.VideoURL = ytID;
+                }
+                else
+                {
+                    throw new HttpException(500, "YouTubeURL Parameter is invalid");
+                }
+                v.Author = context.UserProfile.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
+                if (v.Author == null)
+                    return RedirectToAction("HOme", "Index");
+
+                v.CreatedDate = DateTime.Now;
+                v.IsOpinion = vm.IsOpinion == "on";
+
+                if (User.IsInRole("Writer"))
+                    v.IsApproved = true;
+                else
+                    v.IsApproved = false;
+
+                context.VideoPost.Add(v);
+                context.SaveChanges();
+                return RedirectToAction("Item", "Video", new { id = v.ID });
+            }
+
+        }
+        
+        public class VideoVM
+        {
+            public String Title { get; set; }
+            public String SubText { get; set; }
+            public String IsOpinion { get; set; }
+            public String YouTubeURL { get; set; }
         }
 
     }
